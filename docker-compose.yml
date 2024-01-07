@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mssql:
+    container_name: mssql-db
+    hostname: mssql-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Pwd12345!"
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_TCP_PORT: 1433
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+      - mssql_log:/var/opt/mssql/log
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - redis_conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+
+volumes:
+  mssql_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/dockerVolumes/mssql/data
+
+  mssql_log:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/dockerVolumes/mssql/log
+
+  redis_conf:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/dockerVolumes/redis/conf
