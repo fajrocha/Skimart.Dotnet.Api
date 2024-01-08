@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Builder"
+  },
+  {
+    "Name": "Strategy"
+  },
+  {
+    "Name": "Observer"
+  },
+  {
+    "Name": "Adapter"
+  },
+  {
+    "Name": "Singleton"
+  },
+  {
+    "Name": "Decorator"
+  }
+]

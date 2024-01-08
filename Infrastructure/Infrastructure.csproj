@@ -25,4 +25,20 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Persistence\DataSeed\Data\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Persistence\DataSeed\Data\brands.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Persistence\DataSeed\Data\products.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Persistence\DataSeed\Data\types.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

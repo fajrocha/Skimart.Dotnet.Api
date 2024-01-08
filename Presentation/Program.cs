@@ -4,6 +4,7 @@ using Infrastructure.Logging;
 using Presentation.DependencyInjection;
 using Presentation.Extensions;
 using Presentation.Extensions.Auth;
+using Presentation.Extensions.Migrations;
 using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Host.BootstrapLogger();
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+await app.Services.MigrateDbs();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
