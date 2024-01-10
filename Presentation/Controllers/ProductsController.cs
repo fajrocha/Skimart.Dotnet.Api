@@ -1,5 +1,7 @@
 ﻿using Application.Cases.Products.Dtos;
+using Application.Cases.Products.Queries.GetAllProductBrands;
 using Application.Cases.Products.Queries.GetAllProducts;
+using Application.Cases.Products.Queries.GetAllProductTypes;
 using Application.Cases.Products.Queries.GetProductById;
 using Application.Cases.Shared.Dtos;
 using Application.Extensions.FluentResults;
@@ -25,7 +27,7 @@ public class ProductsController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetProducts([FromQuery] ProductParams productParams)
     {
-        var requestDto = new HttpRequestDto(HttpContext.Request.Path, HttpContext.Request.Query);
+        var requestDto = GetRequestDto(HttpContext.Request);
         var query = new GetAllProductsQuery(productParams, requestDto);
         
         var result = await _mediator.Send(query);
@@ -38,12 +40,38 @@ public class ProductsController : BaseController
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProductById(int id)
     {
-        var requestDto = new HttpRequestDto(HttpContext.Request.Path, HttpContext.Request.Query);
+        var requestDto = GetRequestDto(HttpContext.Request);
         var result = await _mediator.Send(new GetProductByIdQuery(id, requestDto));
 
         if (result.IsSuccess) 
             return Ok(result.Value);
         
         return NotFound(ErrorResponse.NotFound(result.GetReasonsAsCollection(), ErrorMessage));
+    }
+    
+    [HttpGet("brands")]
+    public async Task<IActionResult> GetProductsBrands()
+    {
+        var requestDto = GetRequestDto(HttpContext.Request);
+        var query = new GetAllBrandsQuery(requestDto);
+        var result = await _mediator.Send(query);
+            
+        return Ok(result);
+    }
+
+    // GET: api/Products/types
+    [HttpGet("types")]
+    public async Task<IActionResult> GetProductsTypes()
+    {
+        var requestDto = GetRequestDto(HttpContext.Request);
+        var query = new GetAllTypesQuery(requestDto);
+        var result = await _mediator.Send(query);
+        
+        return Ok(result);
+    }
+
+    private static HttpRequestDto GetRequestDto(HttpRequest httpRequest)
+    {
+        return new HttpRequestDto(httpRequest.Path, httpRequest.Query);
     }
 }
