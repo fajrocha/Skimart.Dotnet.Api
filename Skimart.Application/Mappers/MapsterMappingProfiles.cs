@@ -1,5 +1,6 @@
 ﻿using Domain.Entities.Product;
 using Mapster;
+using MapsterMapper;
 using Skimart.Application.Cases.Products.Dtos;
 
 namespace Skimart.Application.Mappers;

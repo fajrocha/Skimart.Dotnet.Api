@@ -1,4 +1,4 @@
-﻿using Application.Cases.Shared.Dtos;
+﻿using Skimart.Application.Cases.Shared.Dtos;
 
 namespace Skimart.Application.Abstractions.Memory.Cache;
 

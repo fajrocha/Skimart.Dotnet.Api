@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Application.Cases.Shared.Dtos;
+namespace Skimart.Application.Cases.Shared.Dtos;
 
 public record HttpRequestDto(PathString Path, IQueryCollection Query)
 {

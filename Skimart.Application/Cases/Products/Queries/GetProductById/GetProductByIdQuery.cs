@@ -1,7 +1,7 @@
-﻿using Application.Cases.Shared.Dtos;
-using FluentResults;
+﻿using FluentResults;
 using MediatR;
 using Skimart.Application.Cases.Products.Dtos;
+using Skimart.Application.Cases.Shared.Dtos;
 
 namespace Skimart.Application.Cases.Products.Queries.GetProductById;
 

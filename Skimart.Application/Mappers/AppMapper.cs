@@ -9,8 +9,24 @@ public static class AppMapper
 {
     public static void BootstrapMapster(this IServiceCollection services)
     {
-        TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetAssembly(typeof(MapsterMappingProfiles))!);
-        services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+        var config = GetConfig();
+        services.AddSingleton(config);
         services.AddScoped<IMapper, ServiceMapper>();
+    }
+
+    public static IMapper GetMapper()
+    {
+        var config = GetConfig();
+
+        return new Mapper(config);
+    }
+
+    private static TypeAdapterConfig GetConfig()
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+        config.RuleMap.Clear();
+        config.Scan(Assembly.GetAssembly(typeof(MapsterMappingProfiles))!);
+
+        return config;
     }
 }

@@ -1,6 +1,6 @@
-﻿using Application.Cases.Shared.Dtos;
-using MediatR;
+﻿using MediatR;
 using Skimart.Application.Cases.Products.Dtos;
+using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Cases.Shared.Vms;
 
 namespace Skimart.Application.Cases.Products.Queries.GetAllProducts;
