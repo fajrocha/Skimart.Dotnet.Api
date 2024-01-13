@@ -71,7 +71,8 @@ public class GetProductByIdHandlerTests
         
         Assert.True(result.IsSuccess);
         Assert.Equal(id, actualProduct.Id);
-        _cacheHandlerMock.Verify(ch => ch.CacheResponseAsync(It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Once);
+        _cacheHandlerMock.Verify(ch => 
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Once);
     }
     
     [Fact]
@@ -100,7 +101,8 @@ public class GetProductByIdHandlerTests
         Assert.True(result.IsSuccess);
         Assert.Equal(id, actualProduct.Id);
         _productRepositoryMock.Verify(pr => pr.GetEntityByIdAsync(id), Times.Never);
-        _cacheHandlerMock.Verify(ch => ch.CacheResponseAsync(It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Never);
+        _cacheHandlerMock.Verify(ch => 
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Never);
     }
     
     [Fact]
@@ -130,6 +132,7 @@ public class GetProductByIdHandlerTests
         
         Assert.True(result.IsFailed);
         Assert.Contains(ProductError.NotFound.Message, result.GetReasonsAsCollection());
-        _cacheHandlerMock.Verify(ch => ch.CacheResponseAsync(It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Never);
+        _cacheHandlerMock.Verify(ch 
+            => ch.CacheResponseAsync(requestDto, It.IsAny<object>(), It.IsAny<TimeSpan>()), Times.Never);
     }
 }

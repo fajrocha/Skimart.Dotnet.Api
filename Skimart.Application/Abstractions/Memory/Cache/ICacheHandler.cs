@@ -6,5 +6,5 @@ public interface ICacheHandler
 {
     Task<T?> GetCachedResponseAsync<T>(HttpRequestDto requestDto) where T : class;
 
-    Task CacheResponseAsync(object response, TimeSpan timeToLive);
+    Task CacheResponseAsync(HttpRequestDto requestDto, object response, TimeSpan timeToLive);
 }

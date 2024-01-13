@@ -63,7 +63,7 @@ public class GetAllTypesHandlerTests
         
         Assert.Equal(typesCount, types.Count);
         _cacheHandlerMock.Verify(ch => 
-            ch.CacheResponseAsync(It.IsAny<object>(), TimeSpan.FromSeconds(TypesTimeToLive)), Times.Once);
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), TimeSpan.FromSeconds(TypesTimeToLive)), Times.Once);
     }
     
     [Fact]
@@ -90,6 +90,6 @@ public class GetAllTypesHandlerTests
         Assert.Equal(typesCount, types.Count);
         _typesRepositoryMock.Verify(pr => pr.GetEntitiesAsync(), Times.Never);
         _cacheHandlerMock.Verify(ch => 
-            ch.CacheResponseAsync(It.IsAny<object>(), TimeSpan.FromSeconds(TypesTimeToLive)), Times.Never);
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), TimeSpan.FromSeconds(TypesTimeToLive)), Times.Never);
     }
 }

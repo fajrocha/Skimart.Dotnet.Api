@@ -54,7 +54,7 @@ public class GetAllProductHandler : IRequestHandler<GetAllProductsQuery, Paginat
             productsDto);
 
         var timeToLive = TimeSpan.FromSeconds(_cacheConfig.ProductsTimeToLive);
-        await _cacheHandler.CacheResponseAsync(paginatedProducts, timeToLive);
+        await _cacheHandler.CacheResponseAsync(requestDto, paginatedProducts, timeToLive);
 
         return paginatedProducts;
     }
