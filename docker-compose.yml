@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mssql:
-    container_name: mssql-db
+    container_name: skimart-mssql-db
     hostname: mssql-db
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -18,7 +18,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: skimart-redis
     volumes:
       - redis_conf:/usr/local/etc/redis/redis.conf
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
@@ -31,18 +31,18 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ~/dockerVolumes/mssql/data
+      device: ~/dockerVolumes/skimart/mssql/data
 
   mssql_log:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/dockerVolumes/mssql/log
+      device: ~/dockerVolumes/skimart/mssql/log
 
   redis_conf:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/dockerVolumes/redis/conf
+      device: ~/dockerVolumes/skimart/redis/conf
