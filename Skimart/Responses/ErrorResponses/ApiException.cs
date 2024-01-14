@@ -1,6 +1,4 @@
-﻿using Skimart.Responses;
-
-namespace Presentation.Responses.ErrorResponses;
+﻿namespace Skimart.Responses.ErrorResponses;
 
 public class ApiException : BaseResponse
 {

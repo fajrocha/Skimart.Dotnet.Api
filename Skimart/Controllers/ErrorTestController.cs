@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Responses.ErrorResponses;
+using Skimart.Responses.ErrorResponses;
 
 namespace Skimart.Controllers;
 

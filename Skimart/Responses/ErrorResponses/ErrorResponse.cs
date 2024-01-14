@@ -1,7 +1,6 @@
 ﻿using System.Net;
-using Skimart.Responses;
 
-namespace Presentation.Responses.ErrorResponses;
+namespace Skimart.Responses.ErrorResponses;
 
 public class ErrorResponse : BaseResponse
 {

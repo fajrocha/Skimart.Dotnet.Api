@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Responses;
-using Presentation.Responses.ErrorResponses;
 using Skimart.Application.Cases.Products.Dtos;
 using Skimart.Application.Cases.Products.Queries.GetAllProductBrands;
 using Skimart.Application.Cases.Products.Queries.GetAllProducts;
@@ -11,6 +9,7 @@ using Skimart.Application.Cases.Products.Queries.GetProductById;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Extensions.FluentResults;
 using Skimart.Responses;
+using Skimart.Responses.ErrorResponses;
 
 namespace Skimart.Controllers;
 
