@@ -41,7 +41,7 @@ public class GetAllBrandsHandler : IRequestHandler<GetAllBrandsQuery, IReadOnlyL
         var productBrands = await _brandRepos.GetEntitiesAsync();
 
         var timeToLive = TimeSpan.FromSeconds(_cacheConfig.BrandsTimeToLive);
-        await _cacheHandler.CacheResponseAsync(productBrands, timeToLive);
+        await _cacheHandler.CacheResponseAsync(query.RequestDto, productBrands, timeToLive);
         
         return productBrands;
     }

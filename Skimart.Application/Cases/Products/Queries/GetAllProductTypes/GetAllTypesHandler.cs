@@ -39,7 +39,7 @@ public class GetAllTypesHandler : IRequestHandler<GetAllTypesQuery, IReadOnlyLis
         var productTypes = await _typesRepos.GetEntitiesAsync();
         var timeToLive = TimeSpan.FromSeconds(_cacheConfig.TypesTimeToLive);
         
-        await _cacheHandler.CacheResponseAsync(productTypes, timeToLive);
+        await _cacheHandler.CacheResponseAsync(query.RequestDto, productTypes, timeToLive);
         
         return productTypes;
     }

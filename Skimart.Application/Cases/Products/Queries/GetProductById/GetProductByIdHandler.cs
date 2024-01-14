@@ -49,7 +49,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Result
         var productDto = _mapper.Map<ProductToReturnDto>(product);
 
         var timeToLive = TimeSpan.FromSeconds(_cacheConfig.ProductsTimeToLive);
-        await _cacheHandler.CacheResponseAsync(productDto, timeToLive);
+        await _cacheHandler.CacheResponseAsync(requestDto, productDto, timeToLive);
 
         return Result.Ok(productDto);
     }

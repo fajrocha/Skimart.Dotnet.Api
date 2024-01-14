@@ -83,7 +83,7 @@ public class GetAllProductHandlerTests
         Assert.True(actualProducts.PageSize == pageSize);
         Assert.True(actualProducts.Data.Count == productCount);
         _cacheHandlerMock.Verify(ch => 
-            ch.CacheResponseAsync(It.IsAny<object>(), TimeSpan.FromSeconds(ProductsTimeToLive)), Times.Once);
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), TimeSpan.FromSeconds(ProductsTimeToLive)), Times.Once);
     }
     
     [Fact]
@@ -128,6 +128,6 @@ public class GetAllProductHandlerTests
         _productRepositoryMock.Verify(pr => pr.GetEntitiesAsync(productParams), Times.Never);
         _productRepositoryMock.Verify(pr => pr.CountAsync(productParams), Times.Never);
         _cacheHandlerMock.Verify(ch => 
-            ch.CacheResponseAsync(It.IsAny<object>(), TimeSpan.FromSeconds(ProductsTimeToLive)), Times.Never);
+            ch.CacheResponseAsync(requestDto, It.IsAny<object>(), TimeSpan.FromSeconds(ProductsTimeToLive)), Times.Never);
     }
 }

@@ -7,7 +7,6 @@ namespace Skimart.Application.Helpers;
 public class CacheHandler : ICacheHandler
 {
     private readonly ICacheService _cacheService;
-    private string _cacheKey = string.Empty;
 
     public CacheHandler(ICacheService cacheService)
     {
@@ -16,20 +15,19 @@ public class CacheHandler : ICacheHandler
     
     public async Task<T?> GetCachedResponseAsync<T>(HttpRequestDto requestDto) where T : class
     {
-        _cacheKey = GetKeyFromRequest(requestDto);
-        var cachedResponse = await _cacheService.GetCachedResponseAsync(_cacheKey);
+        var cacheKey = GetKeyFromRequest(requestDto);
+        var cachedResponse = await _cacheService.GetCachedResponseAsync(cacheKey);
         
         return !string.IsNullOrEmpty(cachedResponse)
             ? SystemJsonSerializer.DeserializeCamelCase<T>(cachedResponse)
             : null;
     }
     
-    public async Task CacheResponseAsync(object response, TimeSpan timeToLive)
+    public async Task CacheResponseAsync(HttpRequestDto requestDto, object response, TimeSpan timeToLive)
     {
-        if (string.IsNullOrEmpty(_cacheKey)) 
-            return;
+        var cacheKey = GetKeyFromRequest(requestDto);
         
-        await _cacheService.CacheResponseAsync(_cacheKey, response, timeToLive);
+        await _cacheService.CacheResponseAsync(cacheKey, response, timeToLive);
     }
     
     private static string GetKeyFromRequest(HttpRequestDto request)
