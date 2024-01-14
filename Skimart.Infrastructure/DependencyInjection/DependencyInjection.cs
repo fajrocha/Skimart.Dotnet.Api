@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Skimart.Application.Abstractions.Memory.Basket;
 using Skimart.Application.Abstractions.Memory.Cache;
 using Skimart.Application.Abstractions.Persistence.Migrators;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
+using Skimart.Infrastructure.Memory.Basket;
 using Skimart.Infrastructure.Memory.Cache;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
@@ -33,6 +35,7 @@ public static class DependencyInjection
             return ConnectionMultiplexer.Connect(options);
         });
         services.AddSingleton<ICacheService, RedisCacheService>();
+        services.AddScoped<IBasketRepository, BasketRedisRepository>();
         
         return services;
     }
