@@ -1,11 +1,12 @@
-using Presentation.Extensions;
-using Presentation.Middleware;
 using Skimart.Application.DependencyInjection;
 using Skimart.DependencyInjection;
+using Skimart.Extensions;
 using Skimart.Extensions.Auth;
+using Skimart.Extensions.Cors;
 using Skimart.Extensions.Migrations;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
+using Skimart.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddApplicationServices()
 builder.AddAppAuthentication()
     .AddAppAuthorization();
 
+builder.AddCorsPolicies();
 builder.Host.BootstrapLogger();
 
 var app = builder.Build();
@@ -37,6 +39,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.AddCorsPolicies();
 
 app.MapControllers();
 

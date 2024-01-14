@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Presentation.Responses.ErrorResponses;
+using Skimart.Responses.ErrorResponses;
 
-namespace Presentation.Middleware;
+namespace Skimart.Middleware;
 
 public class ExceptionMiddleware
 {

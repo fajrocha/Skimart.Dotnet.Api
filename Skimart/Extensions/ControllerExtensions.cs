@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Presentation.Extensions;
+namespace Skimart.Extensions;
 
 public static class ControllerExtensions
 {

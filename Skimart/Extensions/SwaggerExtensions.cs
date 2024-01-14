@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace Presentation.Extensions;
+namespace Skimart.Extensions;
 
 public static class SwaggerExtensions
 {
