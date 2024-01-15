@@ -11,7 +11,7 @@ using Skimart.Application.Helpers;
 
 namespace Skimart.Application.Cases.Products.Queries.GetAllProducts;
 
-public class GetAllProductHandler : IRequestHandler<GetAllProductsQuery, PaginatedDataVm<ProductToReturnDto>>
+public class GetAllProductHandler : IRequestHandler<GetAllProductsQuery, PaginatedDataVm<ProductDto>>
 {
     private readonly ILogger<GetAllProductHandler> _logger;
     private readonly IMapper _mapper;
@@ -33,12 +33,12 @@ public class GetAllProductHandler : IRequestHandler<GetAllProductsQuery, Paginat
         _cacheHandler = cacheHandler;
     }
     
-    public async Task<PaginatedDataVm<ProductToReturnDto>> Handle(GetAllProductsQuery query, CancellationToken cancellationToken)
+    public async Task<PaginatedDataVm<ProductDto>> Handle(GetAllProductsQuery query, CancellationToken cancellationToken)
     {
         var (productParams, requestDto) = query;
 
         var cachedResponse =
-            await _cacheHandler.GetCachedResponseAsync<PaginatedDataVm<ProductToReturnDto>>(requestDto);
+            await _cacheHandler.GetCachedResponseAsync<PaginatedDataVm<ProductDto>>(requestDto);
 
         if (cachedResponse is not null)
             return cachedResponse;
@@ -46,8 +46,8 @@ public class GetAllProductHandler : IRequestHandler<GetAllProductsQuery, Paginat
         var productCount = await _productRepos.CountAsync(productParams);
         var products = await _productRepos.GetEntitiesAsync(productParams);
         
-        var productsDto = _mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
-        var paginatedProducts = new PaginatedDataVm<ProductToReturnDto>(
+        var productsDto = _mapper.Map<IReadOnlyList<ProductDto>>(products);
+        var paginatedProducts = new PaginatedDataVm<ProductDto>(
             productParams.PageIndex, 
             productParams.PageSize, 
             productCount,

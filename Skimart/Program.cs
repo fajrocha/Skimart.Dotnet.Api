@@ -4,6 +4,7 @@ using Skimart.Extensions;
 using Skimart.Extensions.Auth;
 using Skimart.Extensions.Cors;
 using Skimart.Extensions.Migrations;
+using Skimart.Extensions.Validations;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
 using Skimart.Middleware;
@@ -17,8 +18,8 @@ builder.Services.AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
     .AddPresentationServices();
 
-builder.AddAppAuthentication()
-    .AddAppAuthorization();
+builder.Services.AddControllerCallValidations();
+builder.AddAppAuthentication().AddAppAuthorization();
 
 builder.AddCorsPolicies();
 builder.Host.BootstrapLogger();

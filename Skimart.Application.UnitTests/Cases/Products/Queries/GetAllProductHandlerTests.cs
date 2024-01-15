@@ -61,8 +61,8 @@ public class GetAllProductHandlerTests
         
         var query = new GetAllProductsQuery(productParams, requestDto);
         
-        PaginatedDataVm<ProductToReturnDto>? cachedResponse = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductToReturnDto>>(requestDto))
+        PaginatedDataVm<ProductDto>? cachedResponse = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductDto>>(requestDto))
             .ReturnsAsync(cachedResponse);
 
         _productRepositoryMock.Setup(pr => pr.CountAsync(productParams)).ReturnsAsync(productCount);
@@ -103,14 +103,14 @@ public class GetAllProductHandlerTests
         
         var query = new GetAllProductsQuery(productParams, requestDto);
 
-        var products = _fixture.CreateMany<ProductToReturnDto>(productCount).ToList();
-        var cachedResponse = _fixture.Build<PaginatedDataVm<ProductToReturnDto>>()
+        var products = _fixture.CreateMany<ProductDto>(productCount).ToList();
+        var cachedResponse = _fixture.Build<PaginatedDataVm<ProductDto>>()
             .With(p => p.PageIndex, pageIndex)
             .With(p => p.PageSize, pageSize)
             .With(p => p.Data, products)
             .Create();
         
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductToReturnDto>>(requestDto))
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductDto>>(requestDto))
             .ReturnsAsync(cachedResponse);
 
         var handler = new GetAllProductHandler(

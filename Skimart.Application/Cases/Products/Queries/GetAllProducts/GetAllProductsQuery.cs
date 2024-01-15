@@ -6,7 +6,7 @@ using Skimart.Application.Cases.Shared.Vms;
 namespace Skimart.Application.Cases.Products.Queries.GetAllProducts;
 
 public record GetAllProductsQuery(ProductParams ProductParams, HttpRequestDto Request)
-    : IRequest<PaginatedDataVm<ProductToReturnDto>>
+    : IRequest<PaginatedDataVm<ProductDto>>
 {
     public void Deconstruct(out ProductParams productParams, out HttpRequestDto request)
     {

@@ -52,8 +52,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        ProductToReturnDto? cachedProduct = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductToReturnDto>(requestDto))
+        ProductDto? cachedProduct = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
             .ReturnsAsync(cachedProduct);
         
         var product = _fixture.Build<Product>().With(p => p.Id, id).Create();
@@ -84,8 +84,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        var cachedProduct = _fixture.Build<ProductToReturnDto>().With(p => p.Id, id).Create();
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductToReturnDto>(requestDto))
+        var cachedProduct = _fixture.Build<ProductDto>().With(p => p.Id, id).Create();
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
             .ReturnsAsync(cachedProduct);
         
         var handler = new GetProductByIdHandler(
@@ -114,8 +114,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        ProductToReturnDto? cachedResponse = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductToReturnDto>(requestDto))
+        ProductDto? cachedResponse = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
             .ReturnsAsync(cachedResponse);
         
         Product? product = null;

@@ -11,7 +11,7 @@ using Skimart.Application.Configurations.Memory;
 
 namespace Skimart.Application.Cases.Products.Queries.GetProductById;
 
-public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Result<ProductToReturnDto>>
+public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Result<ProductDto>>
 {
     private readonly ILogger<GetProductByIdHandler> _logger;
     private readonly IMapper _mapper;
@@ -33,10 +33,10 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Result
         _cacheHandler = cacheHandler;
     }
     
-    public async Task<Result<ProductToReturnDto>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
+    public async Task<Result<ProductDto>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
         var (id, requestDto) = query;
-        var cachedResponse = await _cacheHandler.GetCachedResponseAsync<ProductToReturnDto>(requestDto);
+        var cachedResponse = await _cacheHandler.GetCachedResponseAsync<ProductDto>(requestDto);
 
         if (cachedResponse is not null)
             return Result.Ok(cachedResponse);
@@ -44,9 +44,9 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Result
         var product = await _productRepos.GetEntityByIdAsync(id);
 
         if (product is null)
-            return Result.Fail<ProductToReturnDto>(ProductError.NotFound);
+            return Result.Fail<ProductDto>(ProductError.NotFound);
         
-        var productDto = _mapper.Map<ProductToReturnDto>(product);
+        var productDto = _mapper.Map<ProductDto>(product);
 
         var timeToLive = TimeSpan.FromSeconds(_cacheConfig.ProductsTimeToLive);
         await _cacheHandler.CacheResponseAsync(requestDto, productDto, timeToLive);

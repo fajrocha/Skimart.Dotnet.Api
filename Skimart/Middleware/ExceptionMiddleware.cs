@@ -31,7 +31,7 @@ public class ExceptionMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
 
-            const string defaultMessage = "Error while performing the request.";
+            const string defaultMessage = "Internal server error while processing request.";
             var response = _env.IsDevelopment()
                 ? new ApiException(defaultMessage, (int)statusCode, ex.Message, ex.StackTrace)
                 : new ApiException(defaultMessage, (int)statusCode);

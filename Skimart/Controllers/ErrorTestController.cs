@@ -52,7 +52,7 @@ public class ErrorTestController : BaseController
             "Not found reason 2"
         });
 
-        return BadRequest(response);
+        return NotFound(response);
     }
     
     [HttpGet("exception")]

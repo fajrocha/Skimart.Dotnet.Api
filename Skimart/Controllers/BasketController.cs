@@ -6,6 +6,8 @@ using Skimart.Application.Cases.Basket.Commands.DeleteBasket;
 using Skimart.Application.Cases.Basket.Dtos;
 using Skimart.Application.Cases.Basket.Queries.GetBasketById;
 using Skimart.Application.Extensions.FluentResults;
+using Skimart.Domain.Entities.Basket;
+using Skimart.Extensions.FluentResults;
 using Skimart.Responses.ErrorResponses;
 
 namespace Skimart.Controllers;
@@ -22,35 +24,29 @@ public class BasketController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBasketById(string id)
+    public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
     {
         var query = new GetBasketByIdQuery(id);
         var result = await _mediator.Send(query);
 
-        return result.IsSuccess ? 
-            Ok(result.Value) : 
-            NotFound(ErrorResponse.NotFound(result.GetReasonsAsCollection(), ErrorMessage));
+        return result.ToOkOrNotFound(ErrorMessage);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateOrUpdateBasket(CustomerBasketDto basket)
+    public async Task<ActionResult<CustomerBasket>> CreateOrUpdateBasket(CustomerBasketDto basket)
     {
         var command = new CreateOrUpdateBasketCommand(basket);
         var result = await _mediator.Send(command);
         
-        return result.IsSuccess ?
-            Ok(result.Value) : 
-            BadRequest(ErrorResponse.BadRequest(result.GetReasonsAsCollection(), ErrorMessage));
+        return result.ToOkOrBadRequest(ErrorMessage);
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteBasket(string id)
+    public async Task<bool> DeleteBasket(string id)
     {
         var command = new DeleteBasketCommand(id);
         var result = await _mediator.Send(command);
 
-        return result ? Ok(result) : NotFound(result);
+        return result;
     }
-    
-    
 }
