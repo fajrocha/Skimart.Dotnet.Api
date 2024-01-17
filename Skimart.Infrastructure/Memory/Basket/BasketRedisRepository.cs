@@ -27,7 +27,7 @@ public class BasketRedisRepository : IBasketRepository
             JsonSerializer.Deserialize<CustomerBasket>(customerBasket!);
     }
 
-    public async Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket basket)
+    public async Task<CustomerBasket?> CreateOrUpdateBasketAsync(CustomerBasket basket)
     {
         var timeToLive = TimeSpan.FromDays(_basketConfig.TimeToLive);
         var success = await _redis.StringSetAsync(basket.Id, JsonSerializer.Serialize(basket), timeToLive);

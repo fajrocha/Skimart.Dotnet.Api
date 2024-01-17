@@ -11,12 +11,12 @@ namespace Skimart.Application.Cases.Basket.Commands.CreateOrUpdateBasket;
 
 public class CreateOrUpdateBasketHandler : IRequestHandler<CreateOrUpdateBasketCommand, Result<CustomerBasket>>
 {
-    private readonly ILogger<DeleteBasketHandler> _logger;
+    private readonly ILogger<CreateOrUpdateBasketHandler> _logger;
     private readonly IBasketRepository _basketRepos;
     private readonly IMapper _mapper;
 
     public CreateOrUpdateBasketHandler(
-        ILogger<DeleteBasketHandler> logger, 
+        ILogger<CreateOrUpdateBasketHandler> logger, 
         IBasketRepository basketRepos, 
         IMapper mapper)
     {
@@ -29,7 +29,7 @@ public class CreateOrUpdateBasketHandler : IRequestHandler<CreateOrUpdateBasketC
     {
         var customerBasket = _mapper.Map<CustomerBasket>(command.CustomerBasketDto);
 
-        var resultingCustomerBasket = await _basketRepos.UpdateBasketAsync(customerBasket);
+        var resultingCustomerBasket = await _basketRepos.CreateOrUpdateBasketAsync(customerBasket);
 
         return resultingCustomerBasket is not null ? 
             Result.Ok(resultingCustomerBasket) :
