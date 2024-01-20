@@ -14,4 +14,5 @@ public class AppIdentityError : Error
     public static AppIdentityError UserNotFound => new("User not found.");
     public static AppIdentityError UserRegistrationFailed => new("Registration failed for the user.");
     public static AppIdentityError UserLoginFailed => new("Login failed for the user, wrong email or password.");
+    public static AppIdentityError UserAlreadyExists => new("User with given email already exists.");
 }

@@ -21,7 +21,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Cases\Auth\Queries\" />
+      <Reference Include="Microsoft.AspNetCore.Identity">
+        <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.25\Microsoft.AspNetCore.Identity.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

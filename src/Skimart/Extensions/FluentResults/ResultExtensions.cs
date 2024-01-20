@@ -20,4 +20,11 @@ public static class ResultExtensions
             ? new OkObjectResult(result.Value)
             : new NotFoundObjectResult(ErrorResponse.NotFound(result.GetReasonsAsCollection(), message));
     }
+    
+    public static ActionResult<T> ToOkOrUnauthorized<T>(this Result<T> result, string? message = null)
+    {
+        return result.IsSuccess
+            ? new OkObjectResult(result.Value)
+            : new UnauthorizedObjectResult(ErrorResponse.Unauthorized(result.GetReasonsAsCollection(), message));
+    }
 }

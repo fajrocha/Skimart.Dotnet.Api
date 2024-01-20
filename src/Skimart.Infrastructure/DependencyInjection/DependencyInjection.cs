@@ -76,8 +76,7 @@ public static class DependencyInjection
             .AddSignInManager<SignInManager<AppUser>>();
         
         services.AddScoped<IAuthMigrator, EfAuthMigrator>();
-        services.AddScoped(typeof(IUserManager<>), typeof(UserManagerService<>));
-        services.AddScoped(typeof(ISignInManager<>), typeof(SignInManagerService<>));
+        services.AddScoped<IAuthService, EfIdentityAuthService>();
         services.AddSingleton<ITokenService, JwtTokenService>();
         
         services.AddAuthorizationCore();

@@ -3,7 +3,7 @@ using FluentResults;
 using MediatR;
 using Skimart.Application.Cases.Auth.Dtos;
 
-namespace Skimart.Application.Cases.Auth.Commands;
+namespace Skimart.Application.Cases.Auth.Commands.Login;
 
 public record LoginCommand(
     [Required]
