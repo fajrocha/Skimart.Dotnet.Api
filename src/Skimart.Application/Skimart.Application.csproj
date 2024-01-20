@@ -20,4 +20,8 @@
       <ProjectReference Include="..\Skimart.Domain\Skimart.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Cases\Auth\Queries\" />
+    </ItemGroup>
+
 </Project>

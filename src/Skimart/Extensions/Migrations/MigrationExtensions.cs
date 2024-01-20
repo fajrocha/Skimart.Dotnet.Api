@@ -1,4 +1,5 @@
-﻿using Skimart.Application.Abstractions.Persistence.Migrators;
+﻿using Skimart.Application.Abstractions.Auth;
+using Skimart.Application.Abstractions.Persistence.Migrators;
 
 namespace Skimart.Extensions.Migrations;
 
@@ -14,6 +15,8 @@ public static class MigrationExtensions
         {
             var storeMigrator = scope.ServiceProvider.GetRequiredService<IDbMigrator>();
             await MigrateAndSeedData(logger, storeMigrator, "Store Context");
+            var authMigrator = scope.ServiceProvider.GetRequiredService<IAuthMigrator>();
+            await MigrateAndSeedData(logger, authMigrator, "User Context");
         }
         catch (Exception ex)
         {
