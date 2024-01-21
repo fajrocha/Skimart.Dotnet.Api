@@ -25,4 +25,7 @@ public class ErrorResponse : BaseResponse
     
     public static ErrorResponse NotFound(IEnumerable<string> reasons, string? message = null)
         => new ErrorResponse((int)HttpStatusCode.NotFound, reasons, message);
+    
+    public static ErrorResponse InternalError(IEnumerable<string> reasons, string? message = null)
+        => new ErrorResponse((int)HttpStatusCode.InternalServerError, reasons, message);
 }

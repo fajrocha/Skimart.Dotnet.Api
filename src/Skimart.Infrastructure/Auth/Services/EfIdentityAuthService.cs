@@ -38,6 +38,25 @@ public class EfIdentityAuthService : IAuthService
 
     public async Task<AppUser?> FindByEmailFromClaims(ClaimsPrincipal claims)
     {
-        return await _userManager.Users.SingleOrDefaultAsync(u => u.Email == claims.FindFirstValue(ClaimTypes.Email));
+        return await _userManager.Users.SingleOrDefaultAsync(u => u.Email == GetEmailFromClaims(claims));
+    }
+
+    public async Task<AppUser?> FindAddressByEmailFromClaims(ClaimsPrincipal claims)
+    {
+        return await _userManager.Users.Include(x => x.Address)
+            .SingleOrDefaultAsync(u => u.Email == GetEmailFromClaims(claims));
+    }
+
+    public async Task<bool> UpdateAddressAsync(AppUser user, Address newAddress)
+    {
+        user.Address = newAddress;
+        var result = await _userManager.UpdateAsync(user);
+        
+        return result.Succeeded;
+    }
+
+    private static string? GetEmailFromClaims(ClaimsPrincipal claims)
+    {
+        return claims.FindFirstValue(ClaimTypes.Email);
     }
 }

@@ -9,4 +9,6 @@ public interface IAuthService
     Task<bool> CheckPasswordAsync(AppUser user, string password);
     Task<bool> CreateUserAsync(AppUser user, string password);
     Task<AppUser?> FindByEmailFromClaims(ClaimsPrincipal claims);
+    Task<AppUser?> FindAddressByEmailFromClaims(ClaimsPrincipal claims);
+    Task<bool> UpdateAddressAsync(AppUser user, Address newAddress);
 }
