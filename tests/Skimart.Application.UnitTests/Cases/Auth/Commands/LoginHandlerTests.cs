@@ -10,16 +10,16 @@ using Skimart.Domain.Entities.Auth;
 
 namespace Skimart.Application.UnitTests.Cases.Auth.Commands;
 
-public class LoginCommandHandlerTests
+public class LoginHandlerTests
 {
     private readonly Mock<IAuthService> _authServiceMock;
-    private readonly Mock<ITokenService> _tokenGeneratorMock;
+    private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly Fixture _fixture;
 
-    public LoginCommandHandlerTests()
+    public LoginHandlerTests()
     {
         _authServiceMock = new Mock<IAuthService>();
-        _tokenGeneratorMock = new Mock<ITokenService>();
+        _tokenServiceMock = new Mock<ITokenService>();
         _fixture = new Fixture();
     }
 
@@ -31,7 +31,7 @@ public class LoginCommandHandlerTests
         AppUser? nonExistentUser = null;
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).ReturnsAsync(nonExistentUser);
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         var result = await handler.Handle(loginCommand, It.IsAny<CancellationToken>());
         
@@ -51,7 +51,7 @@ public class LoginCommandHandlerTests
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).ReturnsAsync(user);
         _authServiceMock.Setup(asm => asm.CheckPasswordAsync(user ,loginCommand.Password)).ReturnsAsync(false);
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         var result = await handler.Handle(loginCommand, It.IsAny<CancellationToken>());
         
@@ -73,9 +73,9 @@ public class LoginCommandHandlerTests
 
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).ReturnsAsync(user);
         _authServiceMock.Setup(asm => asm.CheckPasswordAsync(user ,loginCommand.Password)).ReturnsAsync(true);
-        _tokenGeneratorMock.Setup(tg => tg.CreateToken(user)).Returns(token);
+        _tokenServiceMock.Setup(tg => tg.CreateToken(user)).Returns(token);
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         var result = await handler.Handle(loginCommand, It.IsAny<CancellationToken>());
         var actualUserDto = result.Value;
@@ -96,7 +96,7 @@ public class LoginCommandHandlerTests
 
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).Throws<Exception>();
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }
@@ -114,7 +114,7 @@ public class LoginCommandHandlerTests
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).ReturnsAsync(user);
         _authServiceMock.Setup(asm => asm.CheckPasswordAsync(user ,loginCommand.Password)).Throws<Exception>();
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }
@@ -131,9 +131,9 @@ public class LoginCommandHandlerTests
 
         _authServiceMock.Setup(asm => asm.FindUserByEmailAsync(loginCommand.Email)).ReturnsAsync(user);
         _authServiceMock.Setup(asm => asm.CheckPasswordAsync(user ,loginCommand.Password)).ReturnsAsync(true);
-        _tokenGeneratorMock.Setup(tg => tg.CreateToken(user)).Throws<Exception>();
+        _tokenServiceMock.Setup(tg => tg.CreateToken(user)).Throws<Exception>();
 
-        var handler = new LoginCommandHandler(_authServiceMock.Object, _tokenGeneratorMock.Object);
+        var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
         Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }

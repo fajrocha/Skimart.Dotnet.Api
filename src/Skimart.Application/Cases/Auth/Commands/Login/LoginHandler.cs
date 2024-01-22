@@ -7,9 +7,9 @@ using Skimart.Application.Cases.Shared.Handlers;
 
 namespace Skimart.Application.Cases.Auth.Commands.Login;
 
-public class LoginCommandHandler : BaseAuthHandler, IRequestHandler<LoginCommand, Result<UserDto>>
+public class LoginHandler : BaseAuthHandler, IRequestHandler<LoginCommand, Result<UserDto>>
 {
-    public LoginCommandHandler(IAuthService authService, ITokenService tokenService) : base(authService, tokenService)
+    public LoginHandler(IAuthService authService, ITokenService tokenService) : base(authService, tokenService)
     {
     }
     
