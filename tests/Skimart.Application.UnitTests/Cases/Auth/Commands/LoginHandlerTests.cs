@@ -85,7 +85,7 @@ public class LoginHandlerTests
     }
     
     [Fact]
-    public void Handle_WhenUserCheckingThrowsException_RethrowsException()
+    public async Task Handle_WhenUserCheckingThrowsException_RethrowsException()
     {
         var loginCommand = _fixture.Create<LoginCommand>();
         var user = new AppUser
@@ -98,11 +98,11 @@ public class LoginHandlerTests
 
         var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }
     
     [Fact]
-    public void Handle_WhenUserCheckingPasswordThrowsExceptions_RethrowsException()
+    public async Task Handle_WhenUserCheckingPasswordThrowsExceptions_RethrowsException()
     {
         var loginCommand = _fixture.Create<LoginCommand>();
         var user = new AppUser
@@ -116,11 +116,11 @@ public class LoginHandlerTests
 
         var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }
     
     [Fact]
-    public void Handle_WhenTokenGenerationThrowsException_RethrowsException()
+    public async Task Handle_WhenTokenGenerationThrowsException_RethrowsException()
     {
         var loginCommand = _fixture.Create<LoginCommand>();
         var user = new AppUser
@@ -135,6 +135,6 @@ public class LoginHandlerTests
 
         var handler = new LoginHandler(_authServiceMock.Object, _tokenServiceMock.Object);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(loginCommand, It.IsAny<CancellationToken>()));
     }
 }

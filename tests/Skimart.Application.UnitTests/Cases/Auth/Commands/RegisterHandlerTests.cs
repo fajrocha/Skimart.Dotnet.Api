@@ -90,7 +90,7 @@ public class RegisterHandlerTests
     }
     
     [Fact]
-    public void Handle_UserExistenceCheckThrowsException_RethrowsException()
+    public async Task Handle_UserExistenceCheckThrowsException_RethrowsException()
     {
         var command = new RegisterCommand("TestUser", "user@email.com", "Pwd12345!");
 
@@ -98,11 +98,11 @@ public class RegisterHandlerTests
 
         var handler = new RegisterHandler(_authServiceMock.Object, _tokenServiceMock.Object, _mapper);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
     }
     
     [Fact]
-    public void Handle_UserCreationThrowsException_RethrowsException()
+    public async Task Handle_UserCreationThrowsException_RethrowsException()
     {
         var command = new RegisterCommand("TestUser", "user@email.com", "Pwd12345!");
 
@@ -113,11 +113,11 @@ public class RegisterHandlerTests
 
         var handler = new RegisterHandler(_authServiceMock.Object, _tokenServiceMock.Object, _mapper);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
     }
     
     [Fact]
-    public void Handle_TokenGenerationThrowsException_RethrowsException()
+    public async Task Handle_TokenGenerationThrowsException_RethrowsException()
     {
         var command = new RegisterCommand("TestUser", "user@email.com", "Pwd12345!");
         var token = _fixture.Create<string>();
@@ -130,6 +130,6 @@ public class RegisterHandlerTests
 
         var handler = new RegisterHandler(_authServiceMock.Object, _tokenServiceMock.Object, _mapper);
 
-        Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<Exception>(async () => await handler.Handle(command, It.IsAny<CancellationToken>()));
     }
 }
