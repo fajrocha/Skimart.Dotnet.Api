@@ -36,8 +36,4 @@
       </Reference>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Cases\Auth\Queries\" />
-    </ItemGroup>
-
 </Project>
