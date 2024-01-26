@@ -2,9 +2,12 @@
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
+using Skimart.Application.Cases.Auth.Commands.Register;
+using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Basket.Dtos;
 using Skimart.Application.Cases.Products.Dtos;
 using Skimart.Application.Cases.Shared.Dtos;
+using Skimart.Domain.Entities.Auth;
 using Skimart.Domain.Entities.Basket;
 
 namespace Skimart.Application.Mappers;
@@ -18,6 +21,8 @@ public class MapsterMappingProfiles : IRegister
     {
         AddProductMappings(config);
         AddBasketMappings(config);
+        AddAuthMappings(config);
+        
     }
 
     private static void AddProductMappings(TypeAdapterConfig config)
@@ -33,5 +38,11 @@ public class MapsterMappingProfiles : IRegister
     {
         config.ForType<CustomerBasketDto, CustomerBasket>();
         config.ForType<BasketItemDto, BasketItem>();
+    }
+    
+    private static void AddAuthMappings(TypeAdapterConfig config)
+    {
+        config.ForType<RegisterCommand, AppUser>().Map(d => d.UserName, s => s.Email);
+        config.ForType<Address, AddressDto>().TwoWays().MapToConstructor(true);
     }
 }

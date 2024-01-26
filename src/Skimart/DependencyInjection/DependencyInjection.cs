@@ -1,4 +1,5 @@
-﻿using Skimart.Configurations.Memory;
+﻿using Skimart.Configurations.Auth;
+using Skimart.Configurations.Memory;
 
 namespace Skimart.DependencyInjection;
 
@@ -13,7 +14,9 @@ public static class DependencyInjection
     
     private static IServiceCollection AddConfigurationsBinding(this IServiceCollection services)
     {
-        services.ConfigureOptions<CacheConfigSetup>();
+        services.ConfigureOptions<CacheConfigSetup>()
+            .ConfigureOptions<BasketConfigSetup>()
+            .ConfigureOptions<TokenConfigSetup>();
 
         return services;
     }

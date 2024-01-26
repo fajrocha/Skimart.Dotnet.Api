@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Skimart.Application.Abstractions.Auth;
 using Skimart.Application.Abstractions.Memory.Basket;
 using Skimart.Application.Abstractions.Memory.Cache;
 using Skimart.Application.Abstractions.Persistence.Migrators;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
+using Skimart.Domain.Entities.Auth;
+using Skimart.Infrastructure.Auth;
+using Skimart.Infrastructure.Auth.Migrators;
+using Skimart.Infrastructure.Auth.Services;
 using Skimart.Infrastructure.Memory.Basket;
 using Skimart.Infrastructure.Memory.Cache;
 using Skimart.Infrastructure.Persistence.DbContexts;
@@ -17,12 +23,14 @@ namespace Skimart.Infrastructure.DependencyInjection;
 public static class DependencyInjection
 {
     private const string DefaultConnectionProp = "DefaultConnection";
+    private const string IdentityConnectionProp = "IdentityConnection";
     
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddPersistenceServices(configuration)
-            .AddMemoryServices(configuration);
+            .AddMemoryServices(configuration)
+            .AddAuthServices(configuration);
         
         return services;
     }
@@ -50,6 +58,28 @@ public static class DependencyInjection
         services.AddScoped<IProductRepository, EfProductRepository>();
         services.AddScoped<IProductBrandRepository, EfProductBrandRepository>();
         services.AddScoped<IProductTypeRepository, EfProductTypeRepository>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connString = configuration.GetConnectionString(IdentityConnectionProp) ?? string.Empty;
+        services.AddDbContext<AppIdentityDbContext>(opt =>
+        {
+            opt.UseSqlServer(connString);
+        });
+        
+        services
+            .AddIdentityCore<AppUser>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddSignInManager<SignInManager<AppUser>>();
+        
+        services.AddScoped<IAuthMigrator, EfAuthMigrator>();
+        services.AddScoped<IAuthService, EfIdentityAuthService>();
+        services.AddSingleton<ITokenService, JwtTokenService>();
+        
+        services.AddAuthorizationCore();
         
         return services;
     }
