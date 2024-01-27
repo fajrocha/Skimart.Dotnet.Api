@@ -1,6 +1,7 @@
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 using Skimart.Infrastructure.Persistence.DbContexts;
+using Skimart.Infrastructure.Persistence.Specifications.OrderSpecifications;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.StoreOrder;
 
@@ -10,19 +11,25 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
     }
 
-    public Task<IReadOnlyList<Order>> GetOrdersOrderedDescAsync(string email)
+    public async Task<IReadOnlyList<Order>> GetOrdersByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        var spec = new OrderWithItemsSpecification(email);
+
+        return await GetEntitiesAsync(spec);
     }
 
-    public Task<Order?> GetOrdersByIdAsync(int id, string email)
+    public async Task<Order?> GetOrdersByIdAndEmailAsync(int id, string email)
     {
-        throw new NotImplementedException();
+        var spec = new OrderWithItemsSpecification(id, email);
+
+        return await GetEntityByIdAsync(spec);
     }
 
-    public Task<Order?> GetOrderByIntent(string paymentIntentId)
+    public async Task<Order?> GetOrderByIntent(string paymentIntentId)
     {
-        throw new NotImplementedException();
+        var spec = new OrderByPaymentIntentIdSpec(paymentIntentId);
+        
+        return await GetEntityByIdAsync(spec);
     }
 
     public Task<Order?> UpdateOrderPayment(string paymentIntentId, OrderStatus status)
