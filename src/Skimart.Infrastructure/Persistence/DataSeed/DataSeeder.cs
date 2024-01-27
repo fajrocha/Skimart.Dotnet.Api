@@ -2,6 +2,7 @@
 using Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Skimart.Domain.Entities.Order;
 using Skimart.Infrastructure.Persistence.DbContexts;
 
 namespace Skimart.Infrastructure.Persistence.DataSeed;
@@ -17,6 +18,7 @@ public class DataSeeder
             await GetSeedDataAndSave<ProductBrand>(context, "brands.json", logger);
             await GetSeedDataAndSave<ProductType>(context, "types.json", logger);
             await GetSeedDataAndSave<Product>(context, "products.json", logger);
+            await GetSeedDataAndSave<DeliveryMethod>(context, "delivery.json", logger);
         }
         catch (Exception ex)
         {

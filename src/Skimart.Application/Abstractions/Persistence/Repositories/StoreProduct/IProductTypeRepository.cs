@@ -2,6 +2,6 @@
 
 namespace Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
 
-public interface IProductTypeRepository : IStoreRepository<ProductType>
+public interface IProductTypeRepository : IBaseRepository<ProductType>
 {
 }

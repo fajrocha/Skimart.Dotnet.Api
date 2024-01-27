@@ -1,14 +1,17 @@
-﻿using Domain.Entities.Product;
+﻿using System.Runtime.Serialization;
+using Domain.Entities.Product;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Basket.Dtos;
+using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Products.Dtos;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Domain.Entities.Basket;
+using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Mappers;
 
@@ -22,7 +25,7 @@ public class MapsterMappingProfiles : IRegister
         AddProductMappings(config);
         AddBasketMappings(config);
         AddAuthMappings(config);
-        
+        AddOrderMappings(config);
     }
 
     private static void AddProductMappings(TypeAdapterConfig config)
@@ -44,5 +47,29 @@ public class MapsterMappingProfiles : IRegister
     {
         config.ForType<RegisterCommand, AppUser>().Map(d => d.UserName, s => s.Email);
         config.ForType<Address, AddressDto>().TwoWays().MapToConstructor(true);
+    }
+    
+    private static void AddOrderMappings(TypeAdapterConfig config)
+    {
+        config.ForType<AddressDto, ShippingAddress>().MapToConstructor(true);
+        config.ForType<Order, OrderToReturnDto>()
+            .Map(d => d.DeliveryMethod, s => s.DeliveryMethod.ShortName)
+            .Map(d => d.ShippingPrice, s => s.DeliveryMethod.Price)
+            .Map(d => d.Status, s => GetEnumMemberValue(s.Status))
+            .MapToConstructor(true);
+        config.ForType<OrderItem, OrderItemDto>()
+            .Map(d => d.ProductId, s => s.ItemOrdered.ProductItemId)
+            .Map(d => d.ProductName, s => s.ItemOrdered.ProductName)
+            .Map(d => d.PictureUrl, s => $"{ApiUrl}/{s.ItemOrdered.PictureUrl}")
+            .MapToConstructor(true);
+    }
+    
+    private static string GetEnumMemberValue(OrderStatus status)
+    {
+        var enumMemberAttribute = typeof(OrderStatus)?.GetField(status.ToString())?
+            .GetCustomAttributes(typeof(EnumMemberAttribute), true)
+            .FirstOrDefault() as EnumMemberAttribute;
+
+        return enumMemberAttribute?.Value ?? status.ToString();
     }
 }

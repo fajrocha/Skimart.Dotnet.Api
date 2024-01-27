@@ -4,7 +4,7 @@ using Skimart.Infrastructure.Persistence.DbContexts;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.StoreProduct;
 
-public class EfProductBrandRepository : StoreRepository<ProductBrand>, IProductBrandRepository
+public class EfProductBrandRepository : BaseRepository<ProductBrand>, IProductBrandRepository
 {
     public EfProductBrandRepository(StoreContext context) : base(context)
     {
