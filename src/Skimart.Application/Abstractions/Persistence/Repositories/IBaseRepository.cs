@@ -3,7 +3,7 @@ using Skimart.Domain.Entities;
 
 namespace Skimart.Application.Abstractions.Persistence.Repositories;
 
-public interface IStoreRepository<T> where T : BaseEntity
+public interface IBaseRepository<T> where T : BaseEntity
 {
     Task<IReadOnlyList<T>> GetEntitiesAsync();
     Task<IReadOnlyList<T>> GetEntitiesAsync(ISpecification<T> spec);

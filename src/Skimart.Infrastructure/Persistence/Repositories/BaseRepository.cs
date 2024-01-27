@@ -7,11 +7,11 @@ using Skimart.Infrastructure.Persistence.Specifications;
 
 namespace Skimart.Infrastructure.Persistence.Repositories;
 
-public class StoreRepository<T> : IStoreRepository<T> where T : BaseEntity
+public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
     private readonly StoreContext _context;
 
-    protected StoreRepository(StoreContext context)
+    protected BaseRepository(StoreContext context)
     {
         _context = context;
     }

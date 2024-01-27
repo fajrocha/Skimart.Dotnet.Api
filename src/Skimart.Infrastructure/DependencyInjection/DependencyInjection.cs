@@ -6,6 +6,8 @@ using Skimart.Application.Abstractions.Auth;
 using Skimart.Application.Abstractions.Memory.Basket;
 using Skimart.Application.Abstractions.Memory.Cache;
 using Skimart.Application.Abstractions.Persistence.Migrators;
+using Skimart.Application.Abstractions.Persistence.Repositories;
+using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth;
@@ -15,6 +17,8 @@ using Skimart.Infrastructure.Memory.Basket;
 using Skimart.Infrastructure.Memory.Cache;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
+using Skimart.Infrastructure.Persistence.Repositories;
+using Skimart.Infrastructure.Persistence.Repositories.StoreOrder;
 using Skimart.Infrastructure.Persistence.Repositories.StoreProduct;
 using StackExchange.Redis;
 
@@ -55,9 +59,12 @@ public static class DependencyInjection
         
         services.AddScoped<IDbMigrator, DbMigrator>();
         
+        services.AddScoped<IUnitOfWork, StoreUnitOfWork>();
         services.AddScoped<IProductRepository, EfProductRepository>();
         services.AddScoped<IProductBrandRepository, EfProductBrandRepository>();
         services.AddScoped<IProductTypeRepository, EfProductTypeRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IDeliveryMethodRepository, DeliveryMethodRepository>();
         
         return services;
     }

@@ -6,7 +6,7 @@ using Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.StoreProduct;
 
-public class EfProductRepository : StoreRepository<Product>, IProductRepository
+public class EfProductRepository : BaseRepository<Product>, IProductRepository
 {
     public EfProductRepository(StoreContext context) : base(context)
     {
