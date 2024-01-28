@@ -1,5 +1,6 @@
 ﻿using Skimart.Configurations.Auth;
 using Skimart.Configurations.Memory;
+using Skimart.Configurations.Payment;
 
 namespace Skimart.DependencyInjection;
 
@@ -16,7 +17,8 @@ public static class DependencyInjection
     {
         services.ConfigureOptions<CacheConfigSetup>()
             .ConfigureOptions<BasketConfigSetup>()
-            .ConfigureOptions<TokenConfigSetup>();
+            .ConfigureOptions<TokenConfigSetup>()
+            .ConfigureOptions<PaymentConfigSetup>();
 
         return services;
     }
