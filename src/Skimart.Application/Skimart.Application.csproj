@@ -26,4 +26,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Cases\Payment\Commands\ConfirmPayment\" />
+    </ItemGroup>
+
 </Project>
