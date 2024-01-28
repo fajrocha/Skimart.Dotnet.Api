@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skimart.Application.Abstractions.Auth;
 using Skimart.Application.Abstractions.Memory.Basket;
 using Skimart.Application.Abstractions.Memory.Cache;
+using Skimart.Application.Abstractions.Payment;
 using Skimart.Application.Abstractions.Persistence.Migrators;
 using Skimart.Application.Abstractions.Persistence.Repositories;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
@@ -15,6 +16,7 @@ using Skimart.Infrastructure.Auth.Migrators;
 using Skimart.Infrastructure.Auth.Services;
 using Skimart.Infrastructure.Memory.Basket;
 using Skimart.Infrastructure.Memory.Cache;
+using Skimart.Infrastructure.Payment.Services;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
 using Skimart.Infrastructure.Persistence.Repositories;
@@ -34,7 +36,8 @@ public static class DependencyInjection
     {
         services.AddPersistenceServices(configuration)
             .AddMemoryServices(configuration)
-            .AddAuthServices(configuration);
+            .AddAuthServices(configuration)
+            .AddPaymentServices();
         
         return services;
     }
@@ -87,6 +90,13 @@ public static class DependencyInjection
         services.AddSingleton<ITokenService, JwtTokenService>();
         
         services.AddAuthorizationCore();
+        
+        return services;
+    }
+
+    private static IServiceCollection AddPaymentServices(this IServiceCollection services)
+    {
+        services.AddScoped<IPaymentService, StripePaymentService>();
         
         return services;
     }
