@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Skimart.Infrastructure\Skimart.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
 </Project>
