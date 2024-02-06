@@ -1,0 +1,1385 @@
+{
+	"info": {
+		"_postman_id": "11208eac-2561-45bb-a0a9-c9d96e07d384",
+		"name": "Skimart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24625827"
+	},
+	"item": [
+		{
+			"name": "0 - Error tests",
+			"item": [
+				{
+					"name": "Validation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/errorTest/validation",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"errorTest",
+								"validation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exception",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/errorTest/exception",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"errorTest",
+								"exception"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/errorTest/notFound",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"errorTest",
+								"notFound"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unauthorized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/errorTest/unauthorized",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"errorTest",
+								"unauthorized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Not Found Endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/endpointthatdoesnotexist",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"endpointthatdoesnotexist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "1 - Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products/100",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products/brands",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products/types",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts sorted by Price Ascending",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/products?sort=priceAsc",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "priceAsc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts sorted by Price Descending",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products?sort=priceDesc",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "priceDesc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products?brandId=2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "brandId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products?typeId=3",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "typeId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products by Brand And Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products?typeId=3&brandId=2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "typeId",
+									"value": "3"
+								},
+								{
+									"key": "brandId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Paged Products Page 0 Size 5",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/products?pageSize=6&pageIndex=2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageIndex",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Paged Products by Brand And Type Sorted by price desc",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "https://localhost:4200",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{hostname}}/api/products?typeId=3&brandId=2&sort=priceDesc",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "typeId",
+									"value": "3"
+								},
+								{
+									"key": "brandId",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "priceDesc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get paged products by name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "https://localhost:4200",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{hostname}}/api/products?sort=priceDesc&search=blue",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "priceDesc"
+								},
+								{
+									"key": "search",
+									"value": "blue"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2 - CORS",
+			"item": [
+				{
+					"name": "Check Cors is enabled",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "https://127.0.0.1:4202",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{hostname}}/api/products?typeId=3&brandId=2&sort=priceDesc",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "typeId",
+									"value": "3"
+								},
+								{
+									"key": "brandId",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "priceDesc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3 - Basket",
+			"item": [
+				{
+					"name": "Get Basket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/basket?id=basket2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "basket2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"basket\",\n    \"items\": [\n        {\n            \"id\": 4,\n            \"productName\": \".NET Blac & White Mugg\",\n            \"price\": 8.22,\n            \"quantity\": 32,\n            \"pictureUrl\": \"https://localhost:5001/images/products/2.png\",\n            \"brand\": \".NET\",\n            \"type\": \"USB Memory Stick\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Basket (Invalid)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"id\": 4,\n            \"productName\": \".NET Blac & White Mugg\",\n            \"price\": 8.22,\n            \"quantity\": 0,\n            \"pictureUrl\": \"https://localhost:5001/images/products/2.png\",\n            \"brand\": \".NET\",\n            \"type\": \"USB Memory Stick\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Basket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/basket?id=basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "basket"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4 - Identity",
+			"item": [
+				{
+					"name": "Login as fjr and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('firstName');",
+									"    pm.expect(user).to.have.property('email');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('fjr_token', user.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"fjr@test.com\",\n\t\"password\": \"Pwd12345$\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as fjr bad password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"fjr@test.com\",\n\t\"password\": \"BadPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register as Tom and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('email');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('tom_token', user.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"displayName\": \"Tom\",\n\t\"email\": \"tom@test.com\",\n\t\"password\": \"Pwd12345!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/register",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Tom and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('email');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('tom_token', user.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"tom@test.com\",\n\t\"password\": \"Pwd12345!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User (fjr)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{fjr_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if email exists",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{bob_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/email?email=fjr@test.co",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"email"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "fjr@test.co"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Address (fjr)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{fjr_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/address",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Address (fjr)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{fjr_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Fabio\",\n  \"lastName\": \"Rocha\",\n  \"street\": \"Rua Fonte do Cristao\",\n  \"city\": \"Porto\",\n  \"province\": \"Porto\",\n  \"zipCode\": \"3840-100\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/account/address",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"address"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5 - Orders",
+			"item": [
+				{
+					"name": "Update Basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"order2\",\n    \"items\": [\n        {\n            \"id\": 5,\n            \"productName\": \"Not really correct\",\n            \"price\": 10,\n            \"quantity\": 2,\n            \"pictureUrl\": \"https://localhost:5001/images/products/2.png\",\n            \"brand\": \".NET\",\n            \"type\": \"USB Memory Stick\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout as fjr order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{fjr_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"basketId\": \"order3\",\n  \"deliveryMethodId\": 1,\n  \"shippingAddress\": \n    {\n      \"firstName\": \"Fabio\",\n      \"lastName\": \"Rocha\",\n      \"street\": \"Rua Fonte do Cristao\",\n      \"city\": \"Porto\",\n      \"province\": \"Porto\",\n      \"zipcode\": \"3840-100\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/orders",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders For User (fjr)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{fjr_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/orders",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order For User By Id (fjr)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{fjr_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/orders/2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Delivery Methods",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{fjr_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/orders/deliveryMethods",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"deliveryMethods"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6 - Payments",
+			"item": [
+				{
+					"name": "Create Basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"order2\",\n    \"items\": [\n        {\n            \"id\": 1,\n            \"productName\": \".NET Black & White Mug\",\n            \"price\": 8.5,\n            \"quantity\": 20,\n            \"pictureUrl\": \"https://localhost:5001/images/products/2.png\",\n            \"brand\": \".NET\",\n            \"type\": \"USB Memory Stick\"\n        }\n    ],\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create payment intent as fjr",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{fjr_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/payments/order2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"order2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update payment intent as fjr",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{fjr_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/payments/order2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"order2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Basket with client secret as bob",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{bob_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"order1\",\n    \"items\": [\n        {\n            \"id\": 4,\n            \"productName\": \".NET Black & White Mug\",\n            \"price\": 8.5,\n            \"quantity\": 3,\n            \"pictureUrl\": \"https://localhost:5001/images/products/2.png\",\n            \"brand\": \".NET\",\n            \"type\": \"USB Memory Stick\"\n        }\n    ],\n    \"deliveryMethodId\": null,\n    \"clientSecret\": \"pi_1G58xoBMsPE8xicUEzksgfsT\",\n    \"paymentIntentId\": \"pi_1G58xoBMsPE8xicUEzksgfsT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/basket",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"basket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "https://localhost:7070",
+			"type": "string"
+		}
+	]
+}
