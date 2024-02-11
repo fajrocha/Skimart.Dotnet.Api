@@ -49,9 +49,25 @@ public class StripePaymentService : IPaymentService
         }
     }
 
-    public Result ConfirmPayment(string bodyContent, StringValues paymentEvent)
+    public Result<string> ConfirmPayment(string bodyContent, StringValues paymentEvent)
     {
-        throw new NotImplementedException();
+        var stripeEvent = EventUtility.ConstructEvent(bodyContent, paymentEvent, _paymentConfig.WebhookSecret);
+
+        PaymentIntent intent;
+        
+        switch (stripeEvent.Type)
+        {
+            case "payment_intent.succeeded":
+                intent = (PaymentIntent)stripeEvent.Data.Object;
+                _logger.LogInformation("Payment with id {paymentIntentId} succeeded.", intent.Id);
+                return Result.Ok(intent.Id);
+            case "payment_intent.payment_failed":
+                intent = (PaymentIntent)stripeEvent.Data.Object;
+                _logger.LogInformation("Payment with id {paymentIntentId} failed.", intent.Id);
+                return Result.Fail($"Payment with id {intent.Id} failed.");
+            default:
+                throw new NotImplementedException();
+        }
     }
     
     private static long CalculateTotalPrice(CustomerBasket basket, decimal shippingPrice)

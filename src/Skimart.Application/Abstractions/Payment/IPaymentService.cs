@@ -8,5 +8,5 @@ public interface IPaymentService
 {
     Task CreateOrUpdatePaymentIntentAsync(CustomerBasket basket, decimal shippingPrice);
 
-    Result ConfirmPayment(string bodyContent, StringValues paymentEvent);
+    Result<string> ConfirmPayment(string bodyContent, StringValues paymentEvent);
 }

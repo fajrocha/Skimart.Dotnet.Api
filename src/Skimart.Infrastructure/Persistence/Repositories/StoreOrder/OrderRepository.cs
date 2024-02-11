@@ -32,8 +32,16 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
         return await GetEntityByIdAsync(spec);
     }
 
-    public Task<Order?> UpdateOrderPayment(string paymentIntentId, OrderStatus status)
+    public async Task<Order?> UpdateOrderPayment(string paymentIntentId, OrderStatus status)
     {
-        throw new NotImplementedException();
+        var spec = new OrderByPaymentIntentIdSpec(paymentIntentId);
+
+        var order = await GetEntityByIdAsync(spec);
+
+        if (order is null) return order;
+
+        order.Status = status;
+
+        return order;
     }
 }
