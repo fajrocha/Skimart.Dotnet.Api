@@ -9,7 +9,7 @@ using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
 using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Orders.Errors;
-using Skimart.Application.Extensions.UnitOfWork;
+using Skimart.Application.Extensions.Transaction;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
 

@@ -13,4 +13,5 @@ public interface IBaseRepository<T> where T : BaseEntity
     Task<T?> GetEntityByIdAsync(int id);
     Task<T?> GetEntityByIdAsync(ISpecification<T> spec);
     Task<int> CountAsync(ISpecification<T> spec);
+    Task<int> SaveChangesAsync();
 }

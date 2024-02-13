@@ -3,6 +3,7 @@ using MediatR;
 using Skimart.Application.Abstractions.Payment;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Cases.Payment.Errors;
+using Skimart.Application.Extensions.Transaction;
 using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
@@ -32,7 +33,7 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Resu
         try
         {
             var paymentResult = _paymentService.ConfirmPayment(bodyContent, paymentEvent);
-            var paymentIntent = paymentResult.Value;
+            var paymentIntent = paymentResult.PaymentIntent;
 
             if (paymentResult.IsSuccess)
             {
@@ -40,10 +41,12 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Resu
             }
             else
             {
-                await _orderRepository.UpdateOrderPayment(paymentIntent, OrderStatus.PaymentReceived);
+                await _orderRepository.UpdateOrderPayment(paymentIntent, OrderStatus.PaymentFailed);
             }
 
-            result = Result.Ok();
+            var transactionResult = await _orderRepository.SaveChangesAsync();
+
+            result = transactionResult.TransactionSuccess() ? Result.Ok() : Result.Fail("Could not update the order."); 
         }
         catch (Exception ex)
         {

@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyVersion>0.4.0</AssemblyVersion>
         <FileVersion>0.4.0</FileVersion>
+        <UserSecretsId>170f97e7-1e1e-48fc-b720-f3b0c6eaab25</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

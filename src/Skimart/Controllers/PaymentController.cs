@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
 using Skimart.Application.Cases.Payment.Commands.CreateOrUpdatePaymentIntent;
@@ -30,6 +31,7 @@ public class PaymentController : BaseController
     }
     
     [HttpPost("webhook")]
+    [AllowAnonymous]
     public async Task<ActionResult> PaymentServiceWebhook()
     {
         var bodyContent = await new StreamReader(Request.Body).ReadToEndAsync();
