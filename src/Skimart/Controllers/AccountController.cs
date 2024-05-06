@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Auth.Commands;
 using Skimart.Application.Cases.Auth.Commands.Login;
 using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Commands.UpdateAddress;
@@ -9,9 +8,7 @@ using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Queries.CheckExistingEmail;
 using Skimart.Application.Cases.Auth.Queries.GetCurrentLoggedUser;
 using Skimart.Application.Cases.Auth.Queries.GetUserAddress;
-using Skimart.Application.Extensions.FluentResults;
 using Skimart.Extensions.FluentResults;
-using Skimart.Responses.ErrorResponses;
 
 namespace Skimart.Controllers;
 

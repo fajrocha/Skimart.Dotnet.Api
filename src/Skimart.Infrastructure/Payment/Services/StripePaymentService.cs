@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Skimart.Application.Abstractions.Payment;
+using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
 using Skimart.Application.Configurations.Payment;
 using Skimart.Domain.Entities.Basket;
 using Stripe;
@@ -49,9 +50,26 @@ public class StripePaymentService : IPaymentService
         }
     }
 
-    public Result ConfirmPayment(string bodyContent, StringValues paymentEvent)
+    public PaymentResult ConfirmPayment(string bodyContent, StringValues paymentEvent)
     {
-        throw new NotImplementedException();
+        var stripeEvent = EventUtility.ConstructEvent(bodyContent, paymentEvent, _paymentConfig.WebhookSecret);
+
+        PaymentIntent intent;
+        
+        switch (stripeEvent.Type)
+        {
+            case "payment_intent.succeeded":
+                intent = (PaymentIntent)stripeEvent.Data.Object;
+                _logger.LogInformation("Payment with id {paymentIntentId} succeeded.", intent.Id);
+                return PaymentResult.SuccessPayment(intent.Id);
+            case "payment_intent.payment_failed":
+                intent = (PaymentIntent)stripeEvent.Data.Object;
+                _logger.LogInformation("Payment with id {paymentIntentId} failed.", intent.Id);
+                return PaymentResult.FailedPayment(intent.Id);
+            default:
+                _logger.LogWarning("Event type {eventType} handling not implemented.", stripeEvent.Type);
+                throw new NotImplementedException();
+        }
     }
     
     private static long CalculateTotalPrice(CustomerBasket basket, decimal shippingPrice)

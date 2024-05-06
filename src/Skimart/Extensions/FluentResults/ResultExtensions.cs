@@ -14,6 +14,13 @@ public static class ResultExtensions
             : new BadRequestObjectResult(ErrorResponse.BadRequest(result.GetReasonsAsCollection(), message));
     }
     
+    public static ActionResult ToOkOrBadRequest(this Result result, string? message = null)
+    {
+        return result.IsSuccess
+            ? new OkResult()
+            : new BadRequestObjectResult(ErrorResponse.BadRequest(result.GetReasonsAsCollection(), message));
+    }
+    
     public static ActionResult<T> ToOkOrNotFound<T>(this Result<T> result, string? message = null)
     {
         return result.IsSuccess

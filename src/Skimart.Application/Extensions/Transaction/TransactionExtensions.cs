@@ -1,6 +1,6 @@
-namespace Skimart.Application.Extensions.UnitOfWork;
+namespace Skimart.Application.Extensions.Transaction;
 
-public static class UnitOfWorkExtensions
+public static class TransactionExtensions
 {
     public static bool TransactionSuccess(this int result) => result > 0;
 

@@ -19,7 +19,8 @@ builder.Services.AddApplicationServices()
     .AddPresentationServices();
 
 builder.Services.AddControllerCallValidations();
-builder.AddAppAuthentication().AddAppAuthorization();
+builder.AddAppAuthentication();
+builder.AddAppAuthorization();
 
 builder.AddCorsPolicies();
 builder.Host.BootstrapLogger();
@@ -36,7 +37,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
