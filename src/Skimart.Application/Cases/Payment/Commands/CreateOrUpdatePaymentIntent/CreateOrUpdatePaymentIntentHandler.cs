@@ -6,7 +6,6 @@ using Skimart.Application.Abstractions.Payment;
 using Skimart.Application.Abstractions.Persistence.Repositories;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
-using Skimart.Application.Cases.Basket.Errors;
 using Skimart.Application.Cases.Payment.Errors;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
@@ -34,16 +33,16 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         var basket = await _basketRepository.GetBasketAsync(command.BasketId);
 
         if (basket is null)
-            return Result.Fail(CustomerBasketError.NotFound);
+            return Result.Fail("CustomerBasketError.NotFound");
         
-        var deliveryCheck = await CheckDeliveryMethod(basket);
+        var deliveryCheck = await GetDeliveryMethodPrice(basket);
 
         if (deliveryCheck.IsFailed) 
             return Result.Fail(deliveryCheck.Errors);
 
         var shippingPrice = deliveryCheck.Value;
         
-        var priceCheck = await CheckItemsPrices(basket);
+        var priceCheck = await VerifyItemsPrices(basket);
 
         if (priceCheck.IsFailed)
             return Result.Fail(priceCheck.Errors);
@@ -55,24 +54,23 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         return Result.Ok(basket);
     }
 
-    private async Task<Result> CheckItemsPrices(CustomerBasket basket)
+    private async Task<Result> VerifyItemsPrices(CustomerBasket basket)
     {
-        foreach (var item in basket.Items)
+        foreach (var basketItem in basket.Items)
         {
-            var itemId = item.Id;
+            var itemId = basketItem.Id;
             var productItem = await _unitOfWork.Repository<IProductRepository, Product>().GetEntityByIdAsync(itemId);
 
             if (productItem is null)
                 return Result.Fail(PaymentError.ProductIdNotFound(itemId));
 
-            if (item.Price != productItem.Price)
-                item.Price = productItem.Price;
+            basketItem.VerifyPrice(productItem);
         }
 
         return Result.Ok();
     }
 
-    private async Task<Result<decimal>> CheckDeliveryMethod(CustomerBasket basket)
+    private async Task<Result<decimal>> GetDeliveryMethodPrice(CustomerBasket basket)
     {
         if (!basket.DeliveryMethodId.HasValue)
             return Result.Fail(PaymentError.DeliveryMethodNotFound);

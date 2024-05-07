@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Skimart.Application.Abstractions.Memory.Basket;
-using Skimart.Application.Cases.Basket.Commands.DeleteBasket;
+using Skimart.Application.Basket.Commands.DeleteBasket;
 
 namespace Skimart.Application.UnitTests.Cases.Basket.Commands;
 
@@ -28,7 +29,7 @@ public class DeleteBasketHandlerTests
 
         var result = await handler.Handle(command, It.IsAny<CancellationToken>());
         
-        Assert.True(expectedResult);
+        result.IsError.Should().BeFalse();
     }
     
     [Fact]
@@ -43,6 +44,6 @@ public class DeleteBasketHandlerTests
 
         var result = await handler.Handle(command, It.IsAny<CancellationToken>());
         
-        Assert.False(expectedResult);
+        result.IsError.Should().BeTrue();
     }
 }

@@ -1,14 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Basket.Commands.CreateOrUpdateBasket;
-using Skimart.Application.Cases.Basket.Commands.DeleteBasket;
-using Skimart.Application.Cases.Basket.Dtos;
-using Skimart.Application.Cases.Basket.Queries.GetBasketById;
-using Skimart.Application.Extensions.FluentResults;
-using Skimart.Domain.Entities.Basket;
-using Skimart.Extensions.FluentResults;
-using Skimart.Responses.ErrorResponses;
+using Skimart.Application.Basket.Commands.DeleteBasket;
+using Skimart.Application.Basket.Queries.GetBasketById;
+using Skimart.Contracts.Basket.Requests;
+using Skimart.Mappers.Basket;
 
 namespace Skimart.Controllers;
 
@@ -16,7 +12,6 @@ namespace Skimart.Controllers;
 public class BasketController : BaseController
 {
     private readonly IMediator _mediator;
-    private const string ErrorMessage = "Error on Basket request.";
 
     public BasketController(IMediator mediator)
     {
@@ -24,29 +19,42 @@ public class BasketController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
+    public async Task<IActionResult> GetBasketById(string id)
     {
         var query = new GetBasketByIdQuery(id);
         var result = await _mediator.Send(query);
 
-        return result.ToOkOrNotFound(ErrorMessage);
+        return result.Match(basket =>
+            {
+                var response = basket.ToResponse();
+                return Ok(response);
+            },
+            Problem);
     }
 
     [HttpPost]
-    public async Task<ActionResult<CustomerBasket>> CreateOrUpdateBasket(CustomerBasketDto basket)
+    public async Task<IActionResult> CreateOrUpdateBasket(CustomerBasketRequest customerBasketRequest)
     {
-        var command = new CreateOrUpdateBasketCommand(basket);
+        var command = customerBasketRequest.ToCommand();
         var result = await _mediator.Send(command);
         
-        return result.ToOkOrBadRequest(ErrorMessage);
+        return result.Match(
+            resultantBasket =>
+            {
+                var response = resultantBasket.ToResponse();
+                return Ok(response);
+            },
+            Problem);
     }
 
     [HttpDelete]
-    public async Task<bool> DeleteBasket(string id)
+    public async Task<IActionResult> DeleteBasket(string id)
     {
         var command = new DeleteBasketCommand(id);
         var result = await _mediator.Send(command);
 
-        return result;
+        return result.Match(
+            _ => NoContent(), 
+            Problem);
     }
 }

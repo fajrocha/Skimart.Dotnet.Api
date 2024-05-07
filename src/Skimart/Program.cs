@@ -4,9 +4,9 @@ using Skimart.Extensions;
 using Skimart.Extensions.Auth;
 using Skimart.Extensions.Cors;
 using Skimart.Extensions.Migrations;
-using Skimart.Extensions.Validations;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
+using Skimart.Mappers;
 using Skimart.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +18,8 @@ builder.Services.AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
     .AddPresentationServices();
 
-builder.Services.AddControllerCallValidations();
+builder.Services.BootstrapMapper();
+
 builder.AddAppAuthentication();
 builder.AddAppAuthorization();
 

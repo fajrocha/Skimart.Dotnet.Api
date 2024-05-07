@@ -1,13 +1,12 @@
 ﻿using System.Reflection;
 using Mapster;
 using MapsterMapper;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Skimart.Application.Mappers;
+namespace Skimart.Mappers;
 
-public static class AppMapper
+public static class MapperBootstrap
 {
-    public static void BootstrapMapster(this IServiceCollection services)
+    public static void BootstrapMapper(this IServiceCollection services)
     {
         var config = GetConfig();
         services.AddSingleton(config);

@@ -8,9 +8,9 @@ using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
 using Skimart.Application.Cases.Auth.Queries.GetUserAddress;
 using Skimart.Application.Extensions.FluentResults;
-using Skimart.Application.Mappers;
 using Skimart.Application.UnitTests.Cases.Auth.Shared;
 using Skimart.Domain.Entities.Auth;
+using Skimart.Mappers;
 
 namespace Skimart.Application.UnitTests.Cases.Auth.Queries;
 
@@ -24,7 +24,7 @@ public class GetUserAddressHandlerTests
     public GetUserAddressHandlerTests()
     {
         _authServiceMock = new Mock<IAuthService>();
-        _mapper = AppMapper.GetMapper();
+        _mapper = MapperBootstrap.GetMapper();
         _claimsPrincipal = AuthShared.GetValidClaimsPrincipal();
         _fixture = new Fixture();
     }

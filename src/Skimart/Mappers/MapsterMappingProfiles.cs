@@ -1,19 +1,19 @@
 ﻿using System.Runtime.Serialization;
 using Domain.Entities.Product;
 using Mapster;
-using MapsterMapper;
-using Microsoft.AspNetCore.Http;
+using Skimart.Application.Basket.Commands.CreateOrUpdateBasket;
 using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Dtos;
-using Skimart.Application.Cases.Basket.Dtos;
 using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Products.Dtos;
-using Skimart.Application.Cases.Shared.Dtos;
+using Skimart.Contracts.Basket.Requests;
+using Skimart.Contracts.Basket.Responses;
+using Skimart.Contracts.Responses.Basket;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Application.Mappers;
+namespace Skimart.Mappers;
 
 public class MapsterMappingProfiles : IRegister
 {
@@ -39,8 +39,11 @@ public class MapsterMappingProfiles : IRegister
     
     private static void AddBasketMappings(TypeAdapterConfig config)
     {
-        config.ForType<CustomerBasketDto, CustomerBasket>();
-        config.ForType<BasketItemDto, BasketItem>();
+        config.ForType<BasketItemRequest, BasketItemCommand>().MapToConstructor(true);
+        config.ForType<CustomerBasketRequest, CreateOrUpdateBasketCommand>().MapToConstructor(true);
+        
+        config.ForType<BasketItem, BasketItemResponse>().MapToConstructor(true);
+        config.ForType<CustomerBasket, CustomerBasketResponse>().MapToConstructor(true);
     }
     
     private static void AddAuthMappings(TypeAdapterConfig config)

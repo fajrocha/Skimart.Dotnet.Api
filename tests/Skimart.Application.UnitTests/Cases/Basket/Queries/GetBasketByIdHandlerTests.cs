@@ -1,9 +1,9 @@
 ﻿using DeepEqual.Syntax;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Skimart.Application.Abstractions.Memory.Basket;
-using Skimart.Application.Cases.Basket.Commands.DeleteBasket;
-using Skimart.Application.Cases.Basket.Queries.GetBasketById;
+using Skimart.Application.Basket.Queries.GetBasketById;
 using Skimart.Domain.Entities.Basket;
 
 namespace Skimart.Application.UnitTests.Cases.Basket.Queries;
@@ -12,11 +12,14 @@ public class GetBasketByIdHandlerTests
 {
     private readonly Mock<ILogger<GetBasketByIdHandler>> _loggerMock;
     private readonly Mock<IBasketRepository> _basketReposMock;
+    private readonly GetBasketByIdHandler _sut;
 
     public GetBasketByIdHandlerTests()
     {
         _loggerMock = new Mock<ILogger<GetBasketByIdHandler>>();
         _basketReposMock = new Mock<IBasketRepository>();
+        
+        _sut = new GetBasketByIdHandler(_loggerMock.Object, _basketReposMock.Object);
     }
 
     [Fact]
@@ -27,36 +30,19 @@ public class GetBasketByIdHandlerTests
 
         var items = new List<BasketItem>
         {
-            new BasketItem
-            {
-                Id = 1,
-                ProductName = "Example Product",
-                Price = 19.99m,
-                Quantity = 2,
-                PictureUrl = "https://example.com/image.jpg",
-                Brand = "Example Brand",
-                Type = "Example Type"
-            },
+            new BasketItem(id: 1, productName: "Example Product", price: 19.99m, quantity: 2,
+                pictureUrl: "https://example.com/image.jpg", brand: "Example Brand", type: "Example Type"),
         };
-        
-        var expectedBasket = new CustomerBasket
-        {
-            Id = basketId,
-            Items = items,
-            DeliveryMethodId = 1,
-            ShippingPrice = 1.12m
-        };
+
+        var expectedBasket = new CustomerBasket(basketId , items, 1.12m, 1);
         
         _basketReposMock.Setup(br => br.GetBasketAsync(basketId)).ReturnsAsync(expectedBasket);
 
-        var handle = new GetBasketByIdHandler(_loggerMock.Object, _basketReposMock.Object);
-
-        var result = await handle.Handle(query, It.IsAny<CancellationToken>());
+        var result = await _sut.Handle(query, It.IsAny<CancellationToken>());
 
         var actualBasket = result.Value;
-        
-        Assert.True(result.IsSuccess);
-        expectedBasket.ShouldDeepEqual(actualBasket);
+        result.IsError.Should().BeFalse();
+        expectedBasket.Should().BeEquivalentTo(actualBasket);
     }
     
     [Fact]
@@ -68,10 +54,8 @@ public class GetBasketByIdHandlerTests
         CustomerBasket? expectedBasket = null;
         _basketReposMock.Setup(br => br.GetBasketAsync(basketId)).ReturnsAsync(expectedBasket);
 
-        var handle = new GetBasketByIdHandler(_loggerMock.Object, _basketReposMock.Object);
+        var result = await _sut.Handle(query, It.IsAny<CancellationToken>());
 
-        var result = await handle.Handle(query, It.IsAny<CancellationToken>());
-
-        Assert.True(result.IsFailed);
+        result.IsError.Should().BeTrue();
     }
 }

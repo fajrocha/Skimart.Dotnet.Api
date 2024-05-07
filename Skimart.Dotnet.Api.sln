@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skimart", "src\Skimart\Skim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skimart.Application.UnitTests", "tests\Skimart.Application.UnitTests\Skimart.Application.UnitTests.csproj", "{4F94C813-C3C3-4A84-B59B-AC72F9339508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skimart.Contracts", "src\Skimart.Contracts\Skimart.Contracts.csproj", "{05B952E4-0EA9-41A2-8E5D-1590470A7C63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{AA7AD78A-FC29-4D43-B136-33F964D7B6F3} = {FD0EBD38-A986-45F7-B011-C9273AD368CF}
 		{54D574A8-334A-4414-BEB5-30267B9201D5} = {FD0EBD38-A986-45F7-B011-C9273AD368CF}
 		{4F94C813-C3C3-4A84-B59B-AC72F9339508} = {1947F67E-2D2C-4682-9E2A-62BD1CA21AA6}
+		{05B952E4-0EA9-41A2-8E5D-1590470A7C63} = {FD0EBD38-A986-45F7-B011-C9273AD368CF}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{100308B6-783B-4FAC-8D22-8DC97AD58E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{4F94C813-C3C3-4A84-B59B-AC72F9339508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F94C813-C3C3-4A84-B59B-AC72F9339508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F94C813-C3C3-4A84-B59B-AC72F9339508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B952E4-0EA9-41A2-8E5D-1590470A7C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B952E4-0EA9-41A2-8E5D-1590470A7C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B952E4-0EA9-41A2-8E5D-1590470A7C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B952E4-0EA9-41A2-8E5D-1590470A7C63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

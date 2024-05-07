@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using DeepEqual.Syntax;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using Skimart.Application.Abstractions.Memory.Cache;

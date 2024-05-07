@@ -1,8 +1,7 @@
-﻿using System.Runtime.CompilerServices;
-using AutoFixture;
+﻿using AutoFixture;
 using Domain.Entities.Product;
 using MapsterMapper;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -13,7 +12,7 @@ using Skimart.Application.Cases.Products.Queries.GetAllProducts;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Cases.Shared.Vms;
 using Skimart.Application.Configurations.Memory;
-using Skimart.Application.Mappers;
+using Skimart.Mappers;
 
 namespace Skimart.Application.UnitTests.Cases.Products.Queries;
 
@@ -40,7 +39,7 @@ public class GetAllProductHandlerTests
         
         _productRepositoryMock = new Mock<IProductRepository>();
         _cacheHandlerMock = new Mock<ICacheHandler>();
-        _mapper = AppMapper.GetMapper();
+        _mapper = MapperBootstrap.GetMapper();
         _fixture = new Fixture();
     }
 

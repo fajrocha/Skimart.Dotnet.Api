@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Skimart.Application\Skimart.Application.csproj" />
+      <ProjectReference Include="..\Skimart.Contracts\Skimart.Contracts.csproj" />
       <ProjectReference Include="..\Skimart.Infrastructure\Skimart.Infrastructure.csproj" />
     </ItemGroup>
 

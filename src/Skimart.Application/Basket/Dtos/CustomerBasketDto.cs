@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Skimart.Application.Cases.Basket.Dtos;
 
-namespace Skimart.Application.Cases.Basket.Dtos;
+namespace Skimart.Application.Basket.Dtos;
 
 public record CustomerBasketDto(
-    [Required]
     string Id,
     List<BasketItemDto> Items,
     decimal ShippingPrice,

@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using Domain.Entities.Product;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
