@@ -1,4 +1,4 @@
-﻿using Skimart.Application.Abstractions.Memory.Cache;
+﻿using Skimart.Application.Gateways.Memory.Cache;
 using Skimart.Application.Helpers;
 using StackExchange.Redis;
 

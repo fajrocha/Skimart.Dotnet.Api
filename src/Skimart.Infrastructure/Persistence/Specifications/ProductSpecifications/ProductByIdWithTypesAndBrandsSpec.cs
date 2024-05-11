@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Product;
+﻿using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications;
 

@@ -1,18 +1,18 @@
-﻿using Domain.Entities.Product;
-using Skimart.Application.Cases.Products.Queries.GetAllProducts;
+﻿using Skimart.Application.Products.Queries.GetAllProducts;
+using Skimart.Domain.Entities.Products;
 using Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications.Extensions;
 
 namespace Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications;
 
 public class ProductsWithTypesAndBrandsSpec : BaseSpecification<Product>
 {
-    public ProductsWithTypesAndBrandsSpec(ProductParams productParams) : base(productParams.SearchOrQueryFilters())
+    public ProductsWithTypesAndBrandsSpec(GetAllProductsQuery productsQuery) : base(productsQuery.SearchOrQueryFilters())
     {
         AddInclude(p => p.ProductType);
         AddInclude(p => p.ProductBrand);
         AddOrderBy(p => p.Name);
-        ApplyPagination(productParams.PageSize * (productParams.PageIndex - 1), productParams.PageSize);
-        var sortingStrategy = productParams.Sort;
+        ApplyPagination(productsQuery.PageSize * (productsQuery.PageIndex - 1), productsQuery.PageSize);
+        var sortingStrategy = productsQuery.Sort;
 
         if (string.IsNullOrEmpty(sortingStrategy)) 
             return;

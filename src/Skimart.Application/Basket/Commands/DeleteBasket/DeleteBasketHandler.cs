@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Skimart.Application.Abstractions.Memory.Basket;
+using Skimart.Application.Gateways.Memory.Basket;
 
 namespace Skimart.Application.Basket.Commands.DeleteBasket;
 

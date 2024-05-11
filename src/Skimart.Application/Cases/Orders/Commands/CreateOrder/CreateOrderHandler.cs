@@ -1,17 +1,17 @@
-using Domain.Entities.Product;
 using FluentResults;
 using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Skimart.Application.Abstractions.Memory.Basket;
-using Skimart.Application.Abstractions.Persistence.Repositories;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
 using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Orders.Errors;
 using Skimart.Application.Extensions.Transaction;
+using Skimart.Application.Gateways.Memory.Basket;
+using Skimart.Application.Gateways.Persistence.Repositories;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
+using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Application.Cases.Orders.Commands.CreateOrder;
 

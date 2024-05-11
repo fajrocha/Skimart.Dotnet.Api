@@ -1,11 +1,9 @@
 ﻿using System.Runtime.Serialization;
-using Domain.Entities.Product;
 using Mapster;
 using Skimart.Application.Basket.Commands.CreateOrUpdateBasket;
 using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Orders.Dtos;
-using Skimart.Application.Cases.Products.Dtos;
 using Skimart.Contracts.Basket.Requests;
 using Skimart.Contracts.Basket.Responses;
 using Skimart.Contracts.Responses.Basket;
@@ -22,21 +20,11 @@ public class MapsterMappingProfiles : IRegister
     
     public void Register(TypeAdapterConfig config)
     {
-        AddProductMappings(config);
         AddBasketMappings(config);
         AddAuthMappings(config);
         AddOrderMappings(config);
     }
 
-    private static void AddProductMappings(TypeAdapterConfig config)
-    {
-        config.ForType<Product, ProductDto>()
-            .Map(d => d.ProductBrand, s => s.ProductBrand.Name)
-            .Map(d => d.ProductType, s => s.ProductType.Name)
-            .Map(d => d.PictureUrl, s => $"{ApiUrl}/{s.PictureUrl}")
-            .MapToConstructor(true);
-    }
-    
     private static void AddBasketMappings(TypeAdapterConfig config)
     {
         config.ForType<BasketItemRequest, BasketItemCommand>().MapToConstructor(true);

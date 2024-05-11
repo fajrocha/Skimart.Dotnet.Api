@@ -1,17 +1,16 @@
 ﻿using AutoFixture;
-using Domain.Entities.Product;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Skimart.Application.Abstractions.Memory.Cache;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
-using Skimart.Application.Cases.Products.Dtos;
-using Skimart.Application.Cases.Products.Queries.GetAllProducts;
 using Skimart.Application.Cases.Shared.Dtos;
-using Skimart.Application.Cases.Shared.Vms;
 using Skimart.Application.Configurations.Memory;
+using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Queries.GetAllProducts;
+using Skimart.Contracts.Products.Requests;
+using Skimart.Domain.Entities.Products;
 using Skimart.Mappers;
 
 namespace Skimart.Application.UnitTests.Cases.Products.Queries;
@@ -21,7 +20,7 @@ public class GetAllProductHandlerTests
     private const int ProductsTimeToLive = 1;
     
     private readonly Mock<ILogger<GetAllProductHandler>> _loggerMock;
-    private readonly Mock<IOptions<CacheConfig>> _cacheConfigMock;
+    private readonly Mock<IOptions<CacheConfiguration>> _cacheConfigMock;
     private readonly Mock<IProductRepository> _productRepositoryMock;
     private readonly Mock<ICacheHandler> _cacheHandlerMock;
     private readonly IMapper _mapper;
@@ -30,11 +29,11 @@ public class GetAllProductHandlerTests
     public GetAllProductHandlerTests()
     {
         _loggerMock = new Mock<ILogger<GetAllProductHandler>>();
-        _cacheConfigMock = new Mock<IOptions<CacheConfig>>();
+        _cacheConfigMock = new Mock<IOptions<CacheConfiguration>>();
         
-        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfig
+        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfiguration
         {
-            ProductsTimeToLive = ProductsTimeToLive,
+            TimeToLiveSecs = ProductsTimeToLive,
         });
         
         _productRepositoryMock = new Mock<IProductRepository>();
@@ -50,7 +49,7 @@ public class GetAllProductHandlerTests
         const int pageIndex = 1;
         const int productCount = 10;
         
-        var productParams = _fixture.Build<ProductParams>()
+        var productParams = _fixture.Build<ProductRequest>()
             .With(p => p.PageIndex, pageIndex)
             .With(p => p.PageSize, pageSize)
             .Create();
@@ -60,8 +59,8 @@ public class GetAllProductHandlerTests
         
         var query = new GetAllProductsQuery(productParams, requestDto);
         
-        PaginatedDataVm<ProductDto>? cachedResponse = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductDto>>(requestDto))
+        PaginatedDataResponse<ProductResponse>? cachedResponse = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataResponse<ProductResponse>>(requestDto))
             .ReturnsAsync(cachedResponse);
 
         _productRepositoryMock.Setup(pr => pr.CountAsync(productParams)).ReturnsAsync(productCount);
@@ -92,7 +91,7 @@ public class GetAllProductHandlerTests
         const int pageIndex = 1;
         const int productCount = 10;
         
-        var productParams = _fixture.Build<ProductParams>()
+        var productParams = _fixture.Build<ProductRequest>()
             .With(p => p.PageIndex, pageIndex)
             .With(p => p.PageSize, pageSize)
             .Create();
@@ -102,14 +101,14 @@ public class GetAllProductHandlerTests
         
         var query = new GetAllProductsQuery(productParams, requestDto);
 
-        var products = _fixture.CreateMany<ProductDto>(productCount).ToList();
-        var cachedResponse = _fixture.Build<PaginatedDataVm<ProductDto>>()
+        var products = _fixture.CreateMany<ProductResponse>(productCount).ToList();
+        var cachedResponse = _fixture.Build<PaginatedDataResponse<ProductResponse>>()
             .With(p => p.PageIndex, pageIndex)
             .With(p => p.PageSize, pageSize)
             .With(p => p.Data, products)
             .Create();
         
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataVm<ProductDto>>(requestDto))
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<PaginatedDataResponse<ProductResponse>>(requestDto))
             .ReturnsAsync(cachedResponse);
 
         var handler = new GetAllProductHandler(

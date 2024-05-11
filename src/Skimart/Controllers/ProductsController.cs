@@ -1,20 +1,17 @@
-﻿using Domain.Entities.Product;
-using MapsterMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Products.Dtos;
-using Skimart.Application.Cases.Products.Queries.GetAllProductBrands;
-using Skimart.Application.Cases.Products.Queries.GetAllProducts;
-using Skimart.Application.Cases.Products.Queries.GetAllProductTypes;
-using Skimart.Application.Cases.Products.Queries.GetProductById;
-using Skimart.Application.Cases.Shared.Dtos;
-using Skimart.Application.Cases.Shared.Vms;
-using Skimart.Application.Extensions.FluentResults;
-using Skimart.Extensions.FluentResults;
+using Skimart.Application.Products.Queries.GetAllProductBrands;
+using Skimart.Application.Products.Queries.GetAllProducts;
+using Skimart.Application.Products.Queries.GetAllProductTypes;
+using Skimart.Application.Products.Queries.GetProductById;
+using Skimart.Contracts.Products.Requests;
+using Skimart.Contracts.Products.Responses;
+using Skimart.Contracts.Shared;
+using Skimart.Domain.Entities.Products;
 using Skimart.Extensions.Request;
+using Skimart.Mappers.Products;
 using Skimart.Responses;
-using Skimart.Responses.ErrorResponses;
 
 namespace Skimart.Controllers;
 
@@ -30,38 +27,51 @@ public class ProductsController : BaseController
     }
     
     [HttpGet]
-    public async Task<PaginatedDataVm<ProductDto>> GetProducts([FromQuery] ProductParams productParams)
+    public async Task<IActionResult> GetProducts([FromQuery] ProductRequest productsRequest)
     {
-        var query = new GetAllProductsQuery(productParams, HttpContext.Request.ToDto());
+        var query = productsRequest.ToQuery();
+
+        var products = await _mediator.Send(query);
         
-        return await _mediator.Send(query);
+        return Ok(
+            new PaginatedDataResponse<ProductResponse>(
+                productsRequest.PageIndex,
+                productsRequest.PageSize,
+                products.ProductCount,
+                products.Products.ToList().ConvertAll(product => product.ToResponse())));
     }
     
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ProductDto>> GetProductById(int id)
+    public async Task<IActionResult> GetProductById(int id)
     {
-        var query = new GetProductByIdQuery(id, HttpContext.Request.ToDto());
+        var query = new GetProductByIdQuery(id);
         var result = await _mediator.Send(query);
 
-        return result.ToOkOrNotFound(ErrorMessage);
+        return result.Match(
+            product => Ok(product.ToResponse()),
+            Problem);
     }
     
     [HttpGet("brands")]
-    public async Task<IReadOnlyList<ProductBrand>> GetProductsBrands()
+    public async Task<IActionResult> GetProductsBrands()
     {
-        var query = new GetAllBrandsQuery(HttpContext.Request.ToDto());
+        var query = new GetAllBrandsQuery();
+
+        var productBrands = await _mediator.Send(query);
         
-        return await _mediator.Send(query);
+        return Ok(productBrands.ConvertAll(productBrand => productBrand.ToResponse()));
     }
 
     // GET: api/Products/types
     [HttpGet("types")]
-    public async Task<IReadOnlyList<ProductType>> GetProductsTypes()
+    public async Task<IActionResult> GetProductsTypes()
     {
-        var query = new GetAllTypesQuery(HttpContext.Request.ToDto());
+        var query = new GetAllTypesQuery();
+
+        var productTypes = await _mediator.Send(query);
         
-        return await _mediator.Send(query);
+        return Ok(productTypes.ConvertAll(productType => productType.ToResponse()));;
     }
 }

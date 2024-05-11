@@ -1,11 +1,9 @@
 ﻿using AutoFixture;
-using DeepEqual.Syntax;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
-using Skimart.Application.Abstractions.Memory.Cache;
-using Skimart.Application.Cases.Products.Dtos;
 using Skimart.Application.Cases.Shared.Dtos;
+using Skimart.Application.Gateways.Memory.Cache;
 using Skimart.Application.Helpers;
 
 namespace Skimart.Application.UnitTests.Helpers;
@@ -33,7 +31,7 @@ public class CacheHandlerTests
 
         var cacheHandler = new CacheHandler(_cacheServiceMock.Object);
 
-        var cachedData = await cacheHandler.GetCachedResponseAsync<ProductDto>(requestDto);
+        var cachedData = await cacheHandler.GetCachedResponseAsync<ProductResponse>(requestDto);
         
         Assert.Null(cachedData);
     }
@@ -44,14 +42,14 @@ public class CacheHandlerTests
         var queryCollection = new QueryCollection();
         var requestDto = new HttpRequestDto("/api/", queryCollection);
 
-        var product = _fixture.Create<ProductDto>();
+        var product = _fixture.Create<ProductResponse>();
         var productAsString = SystemJsonSerializer.SerializeCamelCase(product);
         
         _cacheServiceMock.Setup(cs => cs.GetCachedResponseAsync(It.IsAny<string>())).ReturnsAsync(productAsString);
 
         var cacheHandler = new CacheHandler(_cacheServiceMock.Object);
 
-        var cachedData = await cacheHandler.GetCachedResponseAsync<ProductDto>(requestDto);
+        var cachedData = await cacheHandler.GetCachedResponseAsync<ProductResponse>(requestDto);
         
         cachedData.ShouldDeepEqual(product);
     }
@@ -68,7 +66,7 @@ public class CacheHandlerTests
 
         var requestDto = new HttpRequestDto("/api/", queryCollection);
 
-        var product = _fixture.Create<ProductDto>();
+        var product = _fixture.Create<ProductResponse>();
         
         var cacheHandler = new CacheHandler(_cacheServiceMock.Object);
 

@@ -1,5 +1,5 @@
 using MediatR;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Orders.Queries.GetDeliveryMethods;

@@ -1,9 +1,9 @@
 using FluentResults;
 using MapsterMapper;
 using MediatR;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Orders.Errors;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 
 namespace Skimart.Application.Cases.Orders.Queries.GetOrderById;
 

@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Product;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Infrastructure.Persistence.EntityConfig;
 

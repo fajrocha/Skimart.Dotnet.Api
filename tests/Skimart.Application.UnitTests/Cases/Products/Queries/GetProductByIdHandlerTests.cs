@@ -1,18 +1,15 @@
 ﻿using AutoFixture;
-using Domain.Entities.Product;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Skimart.Application.Abstractions.Memory.Cache;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
-using Skimart.Application.Cases.Products.Dtos;
-using Skimart.Application.Cases.Products.Errors;
-using Skimart.Application.Cases.Products.Queries.GetProductById;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Configurations.Memory;
-using Skimart.Application.Extensions.FluentResults;
+using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Queries.GetProductById;
+using Skimart.Domain.Entities.Products;
 using Skimart.Mappers;
 
 namespace Skimart.Application.UnitTests.Cases.Products.Queries;
@@ -22,7 +19,7 @@ public class GetProductByIdHandlerTests
     private const int ProductsTimeToLive = 1;
     
     private readonly Mock<ILogger<GetProductByIdHandler>> _loggerMock;
-    private readonly Mock<IOptions<CacheConfig>> _cacheConfigMock;
+    private readonly Mock<IOptions<CacheConfiguration>> _cacheConfigMock;
     private readonly Mock<IProductRepository> _productRepositoryMock;
     private readonly Mock<ICacheHandler> _cacheHandlerMock;
     private readonly IMapper _mapper;
@@ -31,10 +28,10 @@ public class GetProductByIdHandlerTests
     public GetProductByIdHandlerTests()
     {
         _loggerMock = new Mock<ILogger<GetProductByIdHandler>>();
-        _cacheConfigMock = new Mock<IOptions<CacheConfig>>();
-        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfig
+        _cacheConfigMock = new Mock<IOptions<CacheConfiguration>>();
+        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfiguration
         {
-            ProductsTimeToLive = ProductsTimeToLive,
+            TimeToLiveSecs = ProductsTimeToLive,
         });
         
         _productRepositoryMock = new Mock<IProductRepository>();
@@ -52,8 +49,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        ProductDto? cachedProduct = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
+        ProductResponse? cachedProduct = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductResponse>(requestDto))
             .ReturnsAsync(cachedProduct);
         
         var product = _fixture.Build<Product>().With(p => p.Id, id).Create();
@@ -84,8 +81,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        var cachedProduct = _fixture.Build<ProductDto>().With(p => p.Id, id).Create();
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
+        var cachedProduct = _fixture.Build<ProductResponse>().With(p => p.Id, id).Create();
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductResponse>(requestDto))
             .ReturnsAsync(cachedProduct);
         
         var handler = new GetProductByIdHandler(
@@ -114,8 +111,8 @@ public class GetProductByIdHandlerTests
 
         var query = new GetProductByIdQuery(id, requestDto);
         
-        ProductDto? cachedResponse = null;
-        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductDto>(requestDto))
+        ProductResponse? cachedResponse = null;
+        _cacheHandlerMock.Setup(ch => ch.GetCachedResponseAsync<ProductResponse>(requestDto))
             .ReturnsAsync(cachedResponse);
         
         Product? product = null;

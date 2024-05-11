@@ -1,0 +1,7 @@
+﻿using Skimart.Domain.Entities.Products;
+
+namespace Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+
+public interface IProductTypeRepository : IBaseRepository<ProductType>
+{
+}

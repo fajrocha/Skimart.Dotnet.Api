@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Abstractions.Persistence.Specifications;
+using Skimart.Application.Gateways.Persistence.Specifications;
 using Skimart.Domain.Entities;
 
 namespace Skimart.Infrastructure.Persistence.Specifications;

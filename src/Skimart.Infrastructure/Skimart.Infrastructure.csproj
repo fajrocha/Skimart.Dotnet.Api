@@ -27,4 +27,8 @@
       <ProjectReference Include="..\Skimart.Application\Skimart.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Abstractions\" />
+    </ItemGroup>
+
 </Project>

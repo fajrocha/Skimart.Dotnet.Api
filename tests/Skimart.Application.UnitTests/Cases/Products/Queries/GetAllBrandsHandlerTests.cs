@@ -1,14 +1,14 @@
 ﻿using AutoFixture;
-using Domain.Entities.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Skimart.Application.Abstractions.Memory.Cache;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
-using Skimart.Application.Cases.Products.Queries.GetAllProductBrands;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Configurations.Memory;
+using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Queries.GetAllProductBrands;
+using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Application.UnitTests.Cases.Products.Queries;
 
@@ -17,7 +17,7 @@ public class GetAllBrandsHandlerTests
     private const int BrandsTimeToLive = 1;
     
     private readonly Mock<ILogger<GetAllBrandsHandler>> _loggerMock;
-    private readonly Mock<IOptions<CacheConfig>> _cacheConfigMock;
+    private readonly Mock<IOptions<CacheConfiguration>> _cacheConfigMock;
     private readonly Mock<IProductBrandRepository> _typesRepositoryMock;
     private readonly Mock<ICacheHandler> _cacheHandlerMock;
     private readonly Fixture _fixture;
@@ -25,9 +25,9 @@ public class GetAllBrandsHandlerTests
     public GetAllBrandsHandlerTests()
     {
         _loggerMock = new Mock<ILogger<GetAllBrandsHandler>>();
-        _cacheConfigMock = new Mock<IOptions<CacheConfig>>();
+        _cacheConfigMock = new Mock<IOptions<CacheConfiguration>>();
         
-        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfig
+        _cacheConfigMock.Setup(s => s.Value).Returns(new CacheConfiguration
         {
             BrandsTimeToLive = BrandsTimeToLive,
         });

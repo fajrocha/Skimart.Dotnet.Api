@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Skimart.Application.Abstractions.Memory.Basket;
 using Skimart.Application.Basket.Commands.DeleteBasket;
+using Skimart.Application.Gateways.Memory.Basket;
 
 namespace Skimart.Application.UnitTests.Cases.Basket.Commands;
 

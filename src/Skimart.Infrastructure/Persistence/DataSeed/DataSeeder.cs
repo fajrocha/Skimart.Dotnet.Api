@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Skimart.Domain.Entities.Order;
+using Skimart.Domain.Entities.Products;
 using Skimart.Infrastructure.Persistence.DbContexts;
 
 namespace Skimart.Infrastructure.Persistence.DataSeed;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Abstractions.Persistence.Repositories;
-using Skimart.Application.Abstractions.Persistence.Specifications;
+using Skimart.Application.Gateways.Persistence.Repositories;
+using Skimart.Application.Gateways.Persistence.Specifications;
 using Skimart.Domain.Entities;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Specifications;
@@ -16,12 +16,12 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
         _context = context;
     }
     
-    public async Task<IReadOnlyList<T>> GetEntitiesAsync()
+    public async Task<List<T>> GetEntitiesAsync()
     {
         return await _context.Set<T>().ToListAsync();
     }
     
-    public async Task<IReadOnlyList<T>> GetEntitiesAsync(ISpecification<T> spec)
+    public async Task<List<T>> GetEntitiesAsync(ISpecification<T> spec)
     {
         return await ApplySpecification(spec).ToListAsync();
     }

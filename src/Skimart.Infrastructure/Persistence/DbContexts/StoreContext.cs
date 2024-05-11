@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using Skimart.Domain.Entities.Order;
+using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Infrastructure.Persistence.DbContexts;
 

@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Abstractions.Memory.Basket;
-using Skimart.Application.Abstractions.Memory.Cache;
-using Skimart.Application.Abstractions.Payment;
 using Skimart.Application.Abstractions.Persistence.Migrators;
-using Skimart.Application.Abstractions.Persistence.Repositories;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Gateways.Auth;
+using Skimart.Application.Gateways.Memory.Basket;
+using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Gateways.Payment;
+using Skimart.Application.Gateways.Persistence.Repositories;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth;
 using Skimart.Infrastructure.Auth.Migrators;
@@ -20,8 +21,8 @@ using Skimart.Infrastructure.Payment.Services;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
 using Skimart.Infrastructure.Persistence.Repositories;
-using Skimart.Infrastructure.Persistence.Repositories.StoreOrder;
-using Skimart.Infrastructure.Persistence.Repositories.StoreProduct;
+using Skimart.Infrastructure.Persistence.Repositories.Orders;
+using Skimart.Infrastructure.Persistence.Repositories.Products;
 using StackExchange.Redis;
 
 namespace Skimart.Infrastructure.DependencyInjection;
@@ -96,7 +97,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddPaymentServices(this IServiceCollection services)
     {
-        services.AddScoped<IPaymentService, StripePaymentService>();
+        services.AddScoped<IPaymentGateway, StripePaymentGateway>();
         
         return services;
     }

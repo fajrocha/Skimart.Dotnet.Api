@@ -1,21 +1,21 @@
 ﻿using FluentResults;
 using MediatR;
-using Skimart.Application.Abstractions.Payment;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Cases.Payment.Errors;
 using Skimart.Application.Extensions.Transaction;
+using Skimart.Application.Gateways.Payment;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
 
 public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Result>
 {
-    private readonly IPaymentService _paymentService;
+    private readonly IPaymentGateway _paymentGateway;
     private readonly IOrderRepository _orderRepository;
 
-    public ConfirmPaymentHandler(IPaymentService paymentService, IOrderRepository orderRepository)
+    public ConfirmPaymentHandler(IPaymentGateway paymentGateway, IOrderRepository orderRepository)
     {
-        _paymentService = paymentService;
+        _paymentGateway = paymentGateway;
         _orderRepository = orderRepository;
     }
     
@@ -32,7 +32,7 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Resu
 
         try
         {
-            var paymentResult = _paymentService.ConfirmPayment(bodyContent, paymentEvent);
+            var paymentResult = _paymentGateway.ConfirmPayment(bodyContent, paymentEvent);
             var paymentIntent = paymentResult.PaymentIntent;
 
             if (paymentResult.IsSuccess)

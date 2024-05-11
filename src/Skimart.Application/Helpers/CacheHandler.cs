@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using Skimart.Application.Abstractions.Memory.Cache;
 using Skimart.Application.Cases.Shared.Dtos;
+using Skimart.Application.Gateways.Memory.Cache;
 
 namespace Skimart.Application.Helpers;
 

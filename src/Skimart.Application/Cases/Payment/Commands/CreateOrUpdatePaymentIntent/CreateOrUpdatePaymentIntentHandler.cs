@@ -1,14 +1,14 @@
-using Domain.Entities.Product;
 using FluentResults;
 using MediatR;
-using Skimart.Application.Abstractions.Memory.Basket;
-using Skimart.Application.Abstractions.Payment;
-using Skimart.Application.Abstractions.Persistence.Repositories;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreOrder;
-using Skimart.Application.Abstractions.Persistence.Repositories.StoreProduct;
 using Skimart.Application.Cases.Payment.Errors;
+using Skimart.Application.Gateways.Memory.Basket;
+using Skimart.Application.Gateways.Payment;
+using Skimart.Application.Gateways.Persistence.Repositories;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
+using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Application.Cases.Payment.Commands.CreateOrUpdatePaymentIntent;
 
@@ -16,16 +16,16 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPaymentService _paymentService;
+    private readonly IPaymentGateway _paymentGateway;
 
     public CreateOrUpdatePaymentIntentHandler(
         IBasketRepository basketRepository, 
         IUnitOfWork unitOfWork,
-        IPaymentService paymentService)
+        IPaymentGateway paymentGateway)
     {
         _basketRepository = basketRepository;
         _unitOfWork = unitOfWork;
-        _paymentService = paymentService;
+        _paymentGateway = paymentGateway;
     }
     
     public async Task<Result<CustomerBasket>> Handle(CreateOrUpdatePaymentIntentCommand command, CancellationToken cancellationToken)
@@ -47,7 +47,7 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         if (priceCheck.IsFailed)
             return Result.Fail(priceCheck.Errors);
 
-        await _paymentService.CreateOrUpdatePaymentIntentAsync(basket, shippingPrice);
+        await _paymentGateway.CreateOrUpdatePaymentIntentAsync(basket, shippingPrice);
         
         await _basketRepository.CreateOrUpdateBasketAsync(basket);
 

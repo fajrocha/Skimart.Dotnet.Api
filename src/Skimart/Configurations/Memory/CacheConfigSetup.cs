@@ -3,9 +3,9 @@ using Skimart.Application.Configurations.Memory;
 
 namespace Skimart.Configurations.Memory;
 
-public class CacheConfigSetup : IConfigureOptions<CacheConfig> 
+public class CacheConfigSetup : IConfigureOptions<CacheConfiguration> 
 {
-    private const string SectionName = "CacheService";
+    private const string SectionName = "CacheConfiguration";
     private readonly IConfiguration _configuration;
 
     public CacheConfigSetup(IConfiguration configuration)
@@ -13,7 +13,7 @@ public class CacheConfigSetup : IConfigureOptions<CacheConfig>
         _configuration = configuration;
     }
 
-    public void Configure(CacheConfig options)
+    public void Configure(CacheConfiguration options)
     {
         _configuration.GetSection(SectionName).Bind(options);
     }
