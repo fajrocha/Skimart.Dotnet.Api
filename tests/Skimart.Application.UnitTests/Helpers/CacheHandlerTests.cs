@@ -27,7 +27,7 @@ public class CacheHandlerTests
         var queryCollection = new QueryCollection();
         var requestDto = new HttpRequestDto("/api/", queryCollection);
         
-        _cacheServiceMock.Setup(cs => cs.GetCachedResponseAsync(It.IsAny<string>())).ReturnsAsync(cachedDataAsString);
+        _cacheServiceMock.Setup(cs => cs.GetCachedValueAsync(It.IsAny<string>())).ReturnsAsync(cachedDataAsString);
 
         var cacheHandler = new CacheHandler(_cacheServiceMock.Object);
 
@@ -45,7 +45,7 @@ public class CacheHandlerTests
         var product = _fixture.Create<ProductResponse>();
         var productAsString = SystemJsonSerializer.SerializeCamelCase(product);
         
-        _cacheServiceMock.Setup(cs => cs.GetCachedResponseAsync(It.IsAny<string>())).ReturnsAsync(productAsString);
+        _cacheServiceMock.Setup(cs => cs.GetCachedValueAsync(It.IsAny<string>())).ReturnsAsync(productAsString);
 
         var cacheHandler = new CacheHandler(_cacheServiceMock.Object);
 
@@ -73,6 +73,6 @@ public class CacheHandlerTests
         var timeToLive = TimeSpan.FromSeconds(1);
         await cacheHandler.CacheResponseAsync(requestDto, product, timeToLive);
         
-        _cacheServiceMock.Verify(cs => cs.CacheResponseAsync(It.IsAny<string>(), product, timeToLive), Times.Once);
+        _cacheServiceMock.Verify(cs => cs.CreateCacheResponseAsync(It.IsAny<string>(), product, timeToLive), Times.Once);
     }
 }

@@ -50,6 +50,8 @@ public static class DependencyInjection
             var options = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis") ?? string.Empty);
             return ConnectionMultiplexer.Connect(options);
         });
+        services.AddStackExchangeRedisCache(opts =>
+            opts.Configuration = configuration.GetConnectionString("Redis"));
         services.AddSingleton<ICacheService, RedisCacheService>();
         services.AddScoped<IBasketRepository, BasketRedisRepository>();
         

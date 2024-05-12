@@ -12,7 +12,7 @@ public class BasketRedisRepository : IBasketRepository
     private readonly IDatabase _redis;
     private readonly BasketConfig _basketConfig;
 
-    public BasketRedisRepository(IOptions<BasketConfig> basketConfig,IConnectionMultiplexer redis)
+    public BasketRedisRepository(IOptions<BasketConfig> basketConfig, IConnectionMultiplexer redis)
     {
         _basketConfig = basketConfig.Value;
         _redis = redis.GetDatabase();

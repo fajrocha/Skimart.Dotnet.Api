@@ -15,19 +15,13 @@ public class CacheHandler : ICacheHandler
     
     public async Task<T?> GetCachedResponseAsync<T>(HttpRequestDto requestDto) where T : class
     {
-        var cacheKey = GetKeyFromRequest(requestDto);
-        var cachedResponse = await _cacheService.GetCachedResponseAsync(cacheKey);
-        
-        return !string.IsNullOrEmpty(cachedResponse)
-            ? SystemJsonSerializer.DeserializeCamelCase<T>(cachedResponse)
-            : null;
+        throw new NotImplementedException();
+
     }
     
     public async Task CacheResponseAsync(HttpRequestDto requestDto, object response, TimeSpan timeToLive)
     {
-        var cacheKey = GetKeyFromRequest(requestDto);
-        
-        await _cacheService.CacheResponseAsync(cacheKey, response, timeToLive);
+        throw new NotImplementedException();
     }
     
     private static string GetKeyFromRequest(HttpRequestDto request)

@@ -6,12 +6,17 @@ public static class SerializationExtensions
 {
     public static T DeserializeCamelCase<T>(this string objectToDeserialize)
     {
-        var options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
-        return JsonSerializer.Deserialize<T>(objectToDeserialize, options) 
+        return JsonSerializer.Deserialize<T>(objectToDeserialize, DefaultOptions) 
                ?? throw new InvalidOperationException($"Could not deserialize object of type {typeof(T)}");
     }
+    
+    public static string SerializeCamelCase<T>(this T objectToSerialize)
+    {
+        return JsonSerializer.Serialize(objectToSerialize, DefaultOptions);
+    }
+    
+    private static JsonSerializerOptions DefaultOptions  => new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
 }

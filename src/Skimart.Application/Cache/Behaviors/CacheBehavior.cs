@@ -1,8 +1,6 @@
-﻿using ErrorOr;
-using MediatR;
+﻿using MediatR;
 using Skimart.Application.Extensions.Serialization;
 using Skimart.Application.Gateways.Memory.Cache;
-using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Application.Cache.Behaviors;
 
@@ -21,22 +19,16 @@ public class CacheBehavior<TRequest, TResponse>
     {
         var cacheKey = request.CacheKey;
 
-        var cachedData = await _cacheService.GetCachedResponseAsync(cacheKey);
+        var cachedData = await _cacheService.GetCachedValueAsync(cacheKey);
 
-        if (cachedData is not null) 
-            return cachedData.DeserializeCamelCase<TResponse>();
+        if (cachedData is not null)
+        {
+            var a = cachedData.DeserializeCamelCase<TResponse>();
+            return a;
+        }
         
         var response = await next();
-        
-        if (response is IErrorOr)
-        {
-            var value = response.ToErrorOr().Value as TResponse;
-            await _cacheService.CacheResponseAsync(cacheKey, null, TimeSpan.FromSeconds(60));
-        }
-        else
-        {
-            await _cacheService.CacheResponseAsync(cacheKey, response.ToErrorOr(), TimeSpan.FromSeconds(60));
-        }
+        await _cacheService.CacheValueAsync(cacheKey, response!, TimeSpan.FromSeconds(60));
 
         return response;
     }

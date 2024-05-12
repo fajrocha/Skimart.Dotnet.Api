@@ -1,4 +1,5 @@
-﻿using Skimart.Application.Gateways.Memory.Cache;
+﻿using Skimart.Application.Extensions.Serialization;
+using Skimart.Application.Gateways.Memory.Cache;
 using Skimart.Application.Helpers;
 using StackExchange.Redis;
 
@@ -13,16 +14,16 @@ public class RedisCacheService : ICacheService
         _database = redis.GetDatabase();
     }
     
-    public async Task CacheResponseAsync(string cacheKey, object? response, TimeSpan timeToLive)
+    public async Task CacheValueAsync(string cacheKey, object? response, TimeSpan timeToLive)
     {
         if (response is null) return;
 
-        var serializedResponse = SystemJsonSerializer.SerializeCamelCase(response);
+        var serializedResponse = response.SerializeCamelCase();
 
         await _database.StringSetAsync(cacheKey, serializedResponse, timeToLive);
     }
 
-    public async Task<string?> GetCachedResponseAsync(string cacheKey)
+    public async Task<string?> GetCachedValueAsync(string cacheKey)
     {
         return await _database.StringGetAsync(cacheKey);
     }
