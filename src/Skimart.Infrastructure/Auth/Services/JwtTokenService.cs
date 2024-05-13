@@ -20,12 +20,12 @@ public class JwtTokenService : ITokenService
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenConfig.Key));
     }
     
-    public string CreateToken(AppUser user)
+    public string CreateToken(AppUser appUser)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.GivenName, user.DisplayName),
+            new Claim(ClaimTypes.Email, appUser.Email),
+            new Claim(ClaimTypes.GivenName, appUser.DisplayName),
         };
 
         var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

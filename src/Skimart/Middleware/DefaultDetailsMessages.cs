@@ -7,8 +7,8 @@ public static class DefaultDetailsMessages
         return code switch
         {
             400 => "Bad request occurred.",
-            401 => "Unauthorized user.",
-            403 => "Forbidden user.",
+            401 => "Unauthorized to make the request.",
+            403 => "Forbidden to make the request.",
             404 => "Resource was not found.",
             500 => "Internal error occurred.",
             _ => "Internal error occurred."

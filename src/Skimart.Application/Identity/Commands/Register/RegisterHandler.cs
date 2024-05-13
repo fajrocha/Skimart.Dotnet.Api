@@ -2,12 +2,12 @@
 using MapsterMapper;
 using MediatR;
 using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
 using Skimart.Application.Cases.Shared.Handlers;
+using Skimart.Application.Identity.DTOs;
 using Skimart.Domain.Entities.Auth;
 
-namespace Skimart.Application.Cases.Auth.Commands.Register;
+namespace Skimart.Application.Identity.Commands.Register;
 
 public class RegisterHandler :  BaseAuthHandler,IRequestHandler<RegisterCommand, Result<UserDto>>
 {

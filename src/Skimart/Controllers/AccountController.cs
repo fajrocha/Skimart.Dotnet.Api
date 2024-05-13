@@ -1,14 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Auth.Commands.Login;
-using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Commands.UpdateAddress;
 using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Queries.CheckExistingEmail;
-using Skimart.Application.Cases.Auth.Queries.GetCurrentLoggedUser;
 using Skimart.Application.Cases.Auth.Queries.GetUserAddress;
+using Skimart.Application.Identity.Commands.Register;
+using Skimart.Application.Identity.DTOs;
+using Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
+using Skimart.Contracts.Identity.Requests;
 using Skimart.Extensions.FluentResults;
+using Skimart.Identity.Mappers;
 
 namespace Skimart.Controllers;
 
@@ -60,11 +62,14 @@ public class AccountController : BaseController
     
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<UserDto>> Login(LoginCommand loginCommand)
+    public async Task<IActionResult> Login(LoginRequest loginRequest)
     {
-        var result = await _mediator.Send(loginCommand);
+        var command = loginRequest.ToCommand();
+        var result = await _mediator.Send(command);
         
-        return result.ToOkOrUnauthorized(ErrorMessage);
+        return result.Match(
+            user => Ok(user.ToResponse()),
+            Problem);
     }
     
     [HttpPost("register")]

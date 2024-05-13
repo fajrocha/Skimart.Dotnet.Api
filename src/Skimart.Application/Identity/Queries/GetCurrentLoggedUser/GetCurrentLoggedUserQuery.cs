@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using FluentResults;
 using MediatR;
-using Skimart.Application.Cases.Auth.Dtos;
+using Skimart.Application.Identity.DTOs;
 
-namespace Skimart.Application.Cases.Auth.Queries.GetCurrentLoggedUser;
+namespace Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
 
 public record GetCurrentLoggedUserQuery(ClaimsPrincipal Claims) : IRequest<Result<UserDto>>;

@@ -1,11 +1,11 @@
 ﻿using FluentResults;
 using MediatR;
 using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
 using Skimart.Application.Cases.Shared.Handlers;
+using Skimart.Application.Identity.DTOs;
 
-namespace Skimart.Application.Cases.Auth.Queries.GetCurrentLoggedUser;
+namespace Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
 
 public class GetCurrentLoggedUserHandler : BaseAuthHandler, IRequestHandler<GetCurrentLoggedUserQuery, Result<UserDto>>
 {

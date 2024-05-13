@@ -4,5 +4,5 @@ namespace Skimart.Application.Abstractions.Auth;
 
 public interface ITokenService
 {
-    string CreateToken(AppUser user);
+    string CreateToken(AppUser appUser);
 }

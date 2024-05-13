@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FluentResults;
 using MediatR;
-using Skimart.Application.Cases.Auth.Dtos;
+using Skimart.Application.Identity.DTOs;
 using static Skimart.Domain.AppConstants;
 
-namespace Skimart.Application.Cases.Auth.Commands.Register;
+namespace Skimart.Application.Identity.Commands.Register;
 
 public record RegisterCommand(
     [Required] 

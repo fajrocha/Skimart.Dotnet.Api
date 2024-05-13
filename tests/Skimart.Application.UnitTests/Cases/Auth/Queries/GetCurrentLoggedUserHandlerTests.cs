@@ -5,8 +5,9 @@ using Moq;
 using Skimart.Application.Abstractions.Auth;
 using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
-using Skimart.Application.Cases.Auth.Queries.GetCurrentLoggedUser;
 using Skimart.Application.Extensions.FluentResults;
+using Skimart.Application.Identity.Dtos;
+using Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
 using Skimart.Application.UnitTests.Cases.Auth.Shared;
 using Skimart.Domain.Entities.Auth;
 

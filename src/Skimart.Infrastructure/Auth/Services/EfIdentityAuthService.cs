@@ -22,16 +22,16 @@ public class EfIdentityAuthService : IAuthService
         return await _userManager.FindByEmailAsync(email);
     }
     
-    public async Task<bool> CheckPasswordAsync(AppUser user, string password)
+    public async Task<bool> CheckPasswordAsync(AppUser appUser, string password)
     {
-        var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        var result = await _signInManager.CheckPasswordSignInAsync(appUser, password, false);
 
         return result.Succeeded;
     }
 
-    public async Task<bool> CreateUserAsync(AppUser user, string password)
+    public async Task<bool> CreateUserAsync(AppUser appUser, string password)
     {
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await _userManager.CreateAsync(appUser, password);
 
         return result.Succeeded;
     }
@@ -47,10 +47,10 @@ public class EfIdentityAuthService : IAuthService
             .SingleOrDefaultAsync(u => u.Email == GetEmailFromClaims(claims));
     }
 
-    public async Task<bool> UpdateAddressAsync(AppUser user, Address newAddress)
+    public async Task<bool> UpdateAddressAsync(AppUser appUser, Address newAddress)
     {
-        user.Address = newAddress;
-        var result = await _userManager.UpdateAsync(user);
+        appUser.Address = newAddress;
+        var result = await _userManager.UpdateAsync(appUser);
         
         return result.Succeeded;
     }

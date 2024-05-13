@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 using Mapster;
 using Skimart.Application.Basket.Commands.CreateOrUpdateBasket;
-using Skimart.Application.Cases.Auth.Commands.Register;
 using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Orders.Dtos;
+using Skimart.Application.Identity.Commands.Register;
 using Skimart.Contracts.Basket.Requests;
 using Skimart.Contracts.Basket.Responses;
 using Skimart.Contracts.Responses.Basket;
