@@ -5,7 +5,7 @@ using Skimart.Application.Gateways.Memory.Basket;
 using Skimart.Domain.Entities.Basket;
 using StackExchange.Redis;
 
-namespace Skimart.Infrastructure.Memory.Basket;
+namespace Skimart.Infrastructure.Basket;
 
 public class BasketRedisRepository : IBasketRepository
 {

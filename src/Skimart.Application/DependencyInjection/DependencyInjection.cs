@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Skimart.Application.Cache.Behaviors;
 using Skimart.Application.Gateways.Memory.Cache;
 using Skimart.Application.Helpers;
 using Skimart.Application.Validation;
@@ -17,7 +16,6 @@ public static class DependencyInjection
         {
             config.RegisterServicesFromAssemblyContaining(currentClass);
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            config.AddOpenBehavior(typeof(CacheBehavior<,>));
         });
         services.AddValidatorsFromAssemblyContaining(currentClass);
         

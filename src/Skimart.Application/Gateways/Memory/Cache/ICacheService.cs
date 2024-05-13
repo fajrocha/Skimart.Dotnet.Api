@@ -2,6 +2,7 @@
 
 public interface ICacheService
 {
-    Task CacheValueAsync(string cacheKey, object response, TimeSpan timeToLive);
-    Task<string?> GetCachedValueAsync(string cacheKey);
+    Task SetCacheValueAsync<T>(string cacheKey, T? value, TimeSpan timeToLive) where T : class;
+    Task<T?> GetOrCacheValueAsync<T>(string cacheKey, Func<Task<T?>> factory, TimeSpan timeToLive) where T : class;
+    Task<T?> GetCachedValueAsync<T>(string cacheKey) where T : class;
 }

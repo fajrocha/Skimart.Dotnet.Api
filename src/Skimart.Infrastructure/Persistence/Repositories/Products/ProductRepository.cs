@@ -6,13 +6,13 @@ using Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.Products;
 
-public class EfProductRepository : BaseRepository<Product>, IProductRepository
+public class ProductRepository : BaseRepository<Product>, IProductRepository
 {
-    public EfProductRepository(StoreContext context) : base(context)
+    public ProductRepository(StoreContext context) : base(context)
     {
     }
 
-    public async Task<IReadOnlyList<Product>> GetEntitiesAsync(GetAllProductsQuery productsQuery)
+    public async Task<List<Product>> GetEntitiesAsync(GetAllProductsQuery productsQuery)
     {
         var spec = new ProductsWithTypesAndBrandsSpec(productsQuery);
 

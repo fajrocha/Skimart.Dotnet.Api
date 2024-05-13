@@ -5,6 +5,6 @@ namespace Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
 
 public interface IProductRepository : IBaseRepository<Product>
 {
-    Task<IReadOnlyList<Product>> GetEntitiesAsync(GetAllProductsQuery productsQuery);
+    Task<List<Product>> GetEntitiesAsync(GetAllProductsQuery productsQuery);
     Task<int> CountAsync(GetAllProductsQuery productQuery);
 }

@@ -15,8 +15,8 @@ using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth;
 using Skimart.Infrastructure.Auth.Migrators;
 using Skimart.Infrastructure.Auth.Services;
-using Skimart.Infrastructure.Memory.Basket;
-using Skimart.Infrastructure.Memory.Cache;
+using Skimart.Infrastructure.Basket;
+using Skimart.Infrastructure.Cache;
 using Skimart.Infrastructure.Payment.Services;
 using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
@@ -66,7 +66,8 @@ public static class DependencyInjection
         services.AddScoped<IDbMigrator, DbMigrator>();
         
         services.AddScoped<IUnitOfWork, StoreUnitOfWork>();
-        services.AddScoped<IProductRepository, EfProductRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.Decorate<IProductRepository, ProductCacheRepository>();
         services.AddScoped<IProductBrandRepository, EfProductBrandRepository>();
         services.AddScoped<IProductTypeRepository, EfProductTypeRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();

@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Skimart.Application.Extensions.Serialization;
 using Skimart.Application.Products.Queries.GetAllProductBrands;
 using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Application.Products.Queries.GetAllProductTypes;
@@ -48,7 +50,7 @@ public class ProductsController : BaseController
     {
         var query = new GetProductByIdQuery(id);
         var result = await _mediator.Send(query);
-
+        
         return result.Match(
             product => Ok(product.ToResponse()),
             Problem);

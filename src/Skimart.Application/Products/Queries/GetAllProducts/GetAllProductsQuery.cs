@@ -9,7 +9,15 @@ public record GetAllProductsQuery(
     int? BrandId,
     int? TypeId,
     string? Sort,
-    string Search) : IRequest<ProductsResponseDto>, ICacheRequest
+    string Search) : IRequest<ProductsResponseDto>
 {
-    public string CacheKey => $"{nameof(GetAllProductsQuery)}-Request-{DateTime.UtcNow:yyyyMMdd}";
+    public override string ToString()
+    {
+        return $"{nameof(PageIndex)}:{PageIndex}," +
+               $"{nameof(PageSize)}:{PageSize}," +
+               $"{nameof(BrandId)}:{BrandId}," +
+               $"{nameof(TypeId)}:{TypeId}," +
+               $"{nameof(Sort)}:{Sort}," +
+               $"{nameof(Search)}:{Search}";
+    }
 }
