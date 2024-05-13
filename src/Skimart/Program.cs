@@ -28,7 +28,7 @@ builder.Host.BootstrapLogger();
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
+// app.UseMiddleware<ExceptionMiddleware>();
 await app.Services.MigrateDbs();
 
 // Configure the HTTP request pipeline.
@@ -38,7 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseStatusCodePagesWithReExecute("/errors/{0}");
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -1,5 +1,4 @@
-﻿using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Abstractions.Persistence.Migrators;
+﻿using Skimart.Application.Abstractions.Persistence.Migrators;
 using Skimart.Application.Gateways.Auth;
 
 namespace Skimart.Extensions.Migrations;
@@ -15,9 +14,9 @@ public static class MigrationExtensions
         try
         {
             var storeMigrator = scope.ServiceProvider.GetRequiredService<IDbMigrator>();
-            await MigrateAndSeedData(logger, storeMigrator, "Store Context");
+            await MigrateAndSeedData(logger!, storeMigrator, "Store Context");
             var authMigrator = scope.ServiceProvider.GetRequiredService<IAuthMigrator>();
-            await MigrateAndSeedData(logger, authMigrator, "User Context");
+            await MigrateAndSeedData(logger!, authMigrator, "User Context");
         }
         catch (Exception ex)
         {
@@ -27,7 +26,7 @@ public static class MigrationExtensions
 
     private static async Task MigrateAndSeedData(ILogger logger, IDbMigrator dbMigrator, string contextName)
     {
-        logger?.LogInformation("Starting doing the {contextName} migration...", contextName);
+        logger.LogInformation("Starting doing the {contextName} migration...", contextName);
         await dbMigrator.MigrateAsync();
         await dbMigrator.SeedDataAsync();
     }

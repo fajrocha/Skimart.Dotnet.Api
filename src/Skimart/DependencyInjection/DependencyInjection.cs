@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Skimart.ApiHandlers;
 using Skimart.Configurations.Auth;
 using Skimart.Configurations.Memory;
 using Skimart.Configurations.Payment;
@@ -12,8 +11,6 @@ public static class DependencyInjection
     {
         services.AddConfigurationsBinding();
 
-        services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthMiddlewareResultHandler>();
-        
         return services;
     }
     

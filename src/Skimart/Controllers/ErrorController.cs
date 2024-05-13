@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Responses;
-using Skimart.Responses.ErrorResponses;
+using Skimart.Middleware;
 
 namespace Skimart.Controllers;
 
 [AllowAnonymous]
-[Route("errors/{code}")]
+[Route("error")]
 [ApiExplorerSettings(IgnoreApi = true)]
 public class ErrorController : BaseController
 {
-    public IActionResult Error(int code)
+    public IActionResult HandleError()
     {
-        return new ObjectResult(new BaseResponse(false, code));
+        return Problem();
     }
+    
+    [Route("{code}")]
+    public IActionResult Error(int code) => Problem(statusCode: code, detail: code.ToDetailMessage());
 }
