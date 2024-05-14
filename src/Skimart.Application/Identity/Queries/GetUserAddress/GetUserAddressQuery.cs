@@ -1,8 +1,7 @@
-﻿using System.Security.Claims;
-using FluentResults;
+﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Cases.Auth.Dtos;
+using Skimart.Domain.Entities.Auth;
 
-namespace Skimart.Application.Cases.Auth.Queries.GetUserAddress;
+namespace Skimart.Application.Identity.Queries.GetUserAddress;
 
-public record GetUserAddressQuery(ClaimsPrincipal Claims) : IRequest<Result<AddressDto>>;
+public record GetUserAddressQuery : IRequest<ErrorOr<Address>>;

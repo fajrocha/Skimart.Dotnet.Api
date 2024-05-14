@@ -1,6 +1,6 @@
 using Moq;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Queries.CheckExistingEmail;
+using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Identity.Queries.CheckExistingEmail;
 using Skimart.Domain.Entities.Auth;
 
 namespace Skimart.Application.UnitTests.Cases.Auth.Queries;

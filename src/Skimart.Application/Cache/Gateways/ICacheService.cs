@@ -1,4 +1,4 @@
-﻿namespace Skimart.Application.Gateways.Memory.Cache;
+﻿namespace Skimart.Application.Cache.Gateways;
 
 public interface ICacheService
 {

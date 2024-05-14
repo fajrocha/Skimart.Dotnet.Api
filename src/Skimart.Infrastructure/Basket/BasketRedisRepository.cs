@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Configurations.Memory;
-using Skimart.Application.Gateways.Memory.Basket;
 using Skimart.Domain.Entities.Basket;
 using StackExchange.Redis;
 

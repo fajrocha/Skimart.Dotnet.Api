@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Gateways.Auth;
+using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth.DataSeed;
 

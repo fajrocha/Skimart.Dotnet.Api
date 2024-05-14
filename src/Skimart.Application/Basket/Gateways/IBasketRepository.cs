@@ -1,6 +1,6 @@
 ﻿using Skimart.Domain.Entities.Basket;
 
-namespace Skimart.Application.Gateways.Memory.Basket;
+namespace Skimart.Application.Basket.Gateways;
 
 public interface IBasketRepository
 {

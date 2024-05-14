@@ -1,5 +1,5 @@
 ﻿using Skimart.Application.Abstractions.Persistence.Migrators;
-using Skimart.Application.Gateways.Auth;
+using Skimart.Application.Identity.Gateways;
 
 namespace Skimart.Extensions.Migrations;
 

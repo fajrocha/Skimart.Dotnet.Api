@@ -1,39 +1,45 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using FluentResults;
-using MapsterMapper;
+﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Dtos;
-using Skimart.Application.Cases.Auth.Errors;
+using Skimart.Application.Identity.Errors;
+using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;
+using Error = ErrorOr.Error;
 
-namespace Skimart.Application.Cases.Auth.Commands.UpdateAddress;
+namespace Skimart.Application.Identity.Commands.UpdateAddress;
 
-public class UpdateAddressHandler : IRequestHandler<UpdateAddressCommand, Result<AddressDto>>
+public class UpdateAddressHandler : IRequestHandler<UpdateAddressCommand, ErrorOr<Address>>
 {
     private readonly IAuthService _authService;
-    private readonly IMapper _mapper;
+    private readonly ICurrentUserProvider _currentUserProvider;
 
-    public UpdateAddressHandler(IAuthService authService, IMapper mapper)
+    public UpdateAddressHandler(IAuthService authService, ICurrentUserProvider currentUserProvider)
     {
         _authService = authService;
-        _mapper = mapper;
+        _currentUserProvider = currentUserProvider;
     }
     
-    public async Task<Result<AddressDto>> Handle(UpdateAddressCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Address>> Handle(UpdateAddressCommand command, CancellationToken cancellationToken)
     {
-        var user = await _authService.FindAddressByEmailFromClaims(command.Claims);
+        var userFromToken = _currentUserProvider.GetCurrentUserFromClaims();
+        var user = await _authService.FindUserWithAddressByEmail(userFromToken.Email);
 
         if (user is null)
-        {
-            return Result.Fail(AppIdentityError.UserNotFound);
-        }
+            return Error.Failure(description: IdentityErrors.UserFromTokenNotFound);
 
-        var addressDto = command.AddressDto;
-        var address = _mapper.Map<Address>(addressDto);
+        UpdateAddress(user.Address, command);
 
-        var result = await _authService.UpdateAddressAsync(user, address);
+        var result = await _authService.UpdateAddressAsync(user);
         
-        return result ? Result.Ok(addressDto) : Result.Fail(AppIdentityError.AddressUpdateFailed);
+        return result ? user.Address : Error.Failure(IdentityErrors.UpdatingAddressFailed);
+    }
+
+    private static void UpdateAddress(Address address, UpdateAddressCommand updateCommand)
+    {
+        address.FirstName = updateCommand.FirstName;
+        address.LastName = updateCommand.LastName;
+        address.Street = updateCommand.Street;
+        address.City = updateCommand.City;
+        address.Province = updateCommand.Province;
+        address.ZipCode = updateCommand.ZipCode;
     }
 }

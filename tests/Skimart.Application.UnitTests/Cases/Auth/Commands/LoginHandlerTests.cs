@@ -1,12 +1,11 @@
 ﻿using AutoFixture;
 using DeepEqual.Syntax;
 using Moq;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
 using Skimart.Application.Extensions.FluentResults;
 using Skimart.Application.Identity.Commands.Login;
 using Skimart.Application.Identity.Dtos;
+using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;
 
 namespace Skimart.Application.UnitTests.Cases.Auth.Commands;

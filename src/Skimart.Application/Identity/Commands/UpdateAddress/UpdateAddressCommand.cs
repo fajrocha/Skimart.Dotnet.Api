@@ -1,8 +1,13 @@
-﻿using System.Security.Claims;
-using FluentResults;
+﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Cases.Auth.Dtos;
+using Skimart.Domain.Entities.Auth;
 
-namespace Skimart.Application.Cases.Auth.Commands.UpdateAddress;
+namespace Skimart.Application.Identity.Commands.UpdateAddress;
 
-public record UpdateAddressCommand(AddressDto AddressDto, ClaimsPrincipal Claims) : IRequest<Result<AddressDto>>;
+public record UpdateAddressCommand(
+    string FirstName,
+    string LastName, 
+    string Street, 
+    string City, 
+    string Province, 
+    string ZipCode): IRequest<ErrorOr<Address>>;

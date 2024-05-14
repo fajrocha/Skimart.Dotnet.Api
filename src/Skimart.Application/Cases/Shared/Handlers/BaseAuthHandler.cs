@@ -1,4 +1,4 @@
-using Skimart.Application.Abstractions.Auth;
+using Skimart.Application.Identity.Gateways;
 
 namespace Skimart.Application.Cases.Shared.Handlers;
 
@@ -11,5 +11,10 @@ public abstract class BaseAuthHandler
     {
         _authService = authService;
         _tokenService = tokenService;
+    }
+
+    protected BaseAuthHandler()
+    {
+        throw new NotImplementedException();
     }
 }

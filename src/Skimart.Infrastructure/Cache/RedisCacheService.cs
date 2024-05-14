@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Extensions.Serialization;
-using Skimart.Application.Gateways.Memory.Cache;
 
 namespace Skimart.Infrastructure.Cache;
 

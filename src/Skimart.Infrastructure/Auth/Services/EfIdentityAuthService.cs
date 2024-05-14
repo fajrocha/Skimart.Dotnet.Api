@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Abstractions.Auth;
+using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;
 
 namespace Skimart.Infrastructure.Auth.Services;
@@ -36,27 +36,16 @@ public class EfIdentityAuthService : IAuthService
         return result.Succeeded;
     }
 
-    public async Task<AppUser?> FindByEmailFromClaims(ClaimsPrincipal claims)
-    {
-        return await _userManager.Users.SingleOrDefaultAsync(u => u.Email == GetEmailFromClaims(claims));
-    }
-
-    public async Task<AppUser?> FindAddressByEmailFromClaims(ClaimsPrincipal claims)
+    public async Task<AppUser?> FindUserWithAddressByEmail(string email)
     {
         return await _userManager.Users.Include(x => x.Address)
-            .SingleOrDefaultAsync(u => u.Email == GetEmailFromClaims(claims));
+            .SingleOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<bool> UpdateAddressAsync(AppUser appUser, Address newAddress)
+    public async Task<bool> UpdateAddressAsync(AppUser appUser)
     {
-        appUser.Address = newAddress;
         var result = await _userManager.UpdateAsync(appUser);
         
         return result.Succeeded;
-    }
-
-    private static string? GetEmailFromClaims(ClaimsPrincipal claims)
-    {
-        return claims.FindFirstValue(ClaimTypes.Email);
     }
 }

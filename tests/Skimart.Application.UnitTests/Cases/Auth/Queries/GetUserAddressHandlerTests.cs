@@ -3,11 +3,11 @@ using AutoFixture;
 using DeepEqual.Syntax;
 using MapsterMapper;
 using Moq;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Dtos;
 using Skimart.Application.Cases.Auth.Errors;
-using Skimart.Application.Cases.Auth.Queries.GetUserAddress;
 using Skimart.Application.Extensions.FluentResults;
+using Skimart.Application.Identity.DTOs;
+using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Identity.Queries.GetUserAddress;
 using Skimart.Application.UnitTests.Cases.Auth.Shared;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Mappers;
@@ -36,7 +36,7 @@ public class GetUserAddressHandlerTests
 
         AppUser? user = null;
         
-        _authServiceMock.Setup(asm => asm.FindAddressByEmailFromClaims(query.Claims)).ReturnsAsync(user);
+        _authServiceMock.Setup(asm => asm.FindUserWithAddressByEmail(query.Claims)).ReturnsAsync(user);
 
         var handler = new GetUserAddressHandler(_authServiceMock.Object, _mapper);
 
@@ -65,7 +65,7 @@ public class GetUserAddressHandlerTests
             Address = address
         };
         var expectedAddressDto = _mapper.Map<AddressDto>(address);
-        _authServiceMock.Setup(asm => asm.FindAddressByEmailFromClaims(query.Claims)).ReturnsAsync(user);
+        _authServiceMock.Setup(asm => asm.FindUserWithAddressByEmail(query.Claims)).ReturnsAsync(user);
         
         var handler = new GetUserAddressHandler(_authServiceMock.Object, _mapper);
         
@@ -81,7 +81,7 @@ public class GetUserAddressHandlerTests
     {
         var query = new GetUserAddressQuery(_claimsPrincipal);
         
-        _authServiceMock.Setup(asm => asm.FindAddressByEmailFromClaims(query.Claims)).Throws<Exception>();
+        _authServiceMock.Setup(asm => asm.FindUserWithAddressByEmail(query.Claims)).Throws<Exception>();
         
         var handler = new GetUserAddressHandler(_authServiceMock.Object, _mapper);
         

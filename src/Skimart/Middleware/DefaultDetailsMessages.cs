@@ -2,7 +2,7 @@
 
 public static class DefaultDetailsMessages
 {
-    public static string ToDetailMessage(this int code)
+    public static string ToDefaultDetailMessage(this int code)
     {
         return code switch
         {

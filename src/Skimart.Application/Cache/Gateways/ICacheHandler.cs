@@ -1,6 +1,6 @@
 ﻿using Skimart.Application.Cases.Shared.Dtos;
 
-namespace Skimart.Application.Gateways.Memory.Cache;
+namespace Skimart.Application.Cache.Gateways;
 
 public interface ICacheHandler
 {

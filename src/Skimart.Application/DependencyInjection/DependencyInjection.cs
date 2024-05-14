@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Helpers;
 using Skimart.Application.Validation;
 

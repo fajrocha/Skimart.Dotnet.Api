@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Gateways.Memory.Cache;
+using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Gateways.Persistence.Specifications;
 using Skimart.Domain.Entities;

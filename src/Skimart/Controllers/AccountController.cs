@@ -1,15 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Auth.Commands.UpdateAddress;
-using Skimart.Application.Cases.Auth.Dtos;
-using Skimart.Application.Cases.Auth.Queries.CheckExistingEmail;
-using Skimart.Application.Cases.Auth.Queries.GetUserAddress;
-using Skimart.Application.Identity.Commands.Register;
-using Skimart.Application.Identity.DTOs;
+using Skimart.Application.Identity.Queries.CheckExistingEmail;
 using Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
+using Skimart.Application.Identity.Queries.GetUserAddress;
 using Skimart.Contracts.Identity.Requests;
-using Skimart.Extensions.FluentResults;
 using Skimart.Identity.Mappers;
 
 namespace Skimart.Controllers;
@@ -25,39 +20,45 @@ public class AccountController : BaseController
     }
     
     [HttpGet]
-    public async Task<ActionResult<UserDto>> GetCurrentUser()
+    public async Task<IActionResult> GetCurrentUser()
     {
-        var query = new GetCurrentLoggedUserQuery(User);
+        var query = new GetCurrentLoggedUserQuery();
         var result = await _mediator.Send(query);
-        
-        return result.ToOkOrNotFound(ErrorMessage);
+
+        return result.Match(
+            currentUser => Ok(currentUser.ToResponse()),
+            Problem);
     }
     
     [HttpGet("email")]
     [AllowAnonymous]
-    public async Task<bool> CheckEmailExists([FromQuery] string email)
+    public async Task<IActionResult> CheckEmailExists([FromQuery] string email)
     {
         var query = new CheckExistingEmailQuery(email);
         
-        return await _mediator.Send(query);
+        return Ok(await _mediator.Send(query));
     }
     
     [HttpGet("address")]
-    public async Task<ActionResult<AddressDto>> GetAddress()
+    public async Task<IActionResult> GetAddress()
     {
-        var query = new GetUserAddressQuery(User);
+        var query = new GetUserAddressQuery();
         var result = await _mediator.Send(query);
-        
-        return result.ToOkOrNotFound(ErrorMessage) ;
+
+        return result.Match(
+            address => Ok(address.ToResponse()),
+            Problem);
     }
     
     [HttpPut("address")]
-    public async Task<ActionResult<AddressDto>> UpdateAddress(AddressDto addressDto)
+    public async Task<IActionResult> UpdateAddress(AddressUpdateRequest addressUpdateRequest)
     {
-        var query = new UpdateAddressCommand(addressDto, User);
-        var result = await _mediator.Send(query);
-        
-        return result.ToOkOrBadRequest(ErrorMessage) ;
+        var command = addressUpdateRequest.ToCommand();
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            address => Ok(address.ToResponse()),
+            Problem);
     }
     
     [HttpPost("login")]
@@ -74,10 +75,13 @@ public class AccountController : BaseController
     
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ActionResult<UserDto>> Register(RegisterCommand registerCommand)
+    public async Task<IActionResult> Register(RegisterRequest registerRequest)
     {
-        var result = await _mediator.Send(registerCommand);
+        var command = registerRequest.ToCommand();
+        var result = await _mediator.Send(command);
         
-        return result.ToOkOrBadRequest(ErrorMessage);
+        return result.Match(
+            user => Ok(user.ToResponse()),
+            Problem);
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using Skimart.Application.Basket.Commands.DeleteBasket;
-using Skimart.Application.Gateways.Memory.Basket;
+using Skimart.Application.Basket.Gateways;
 
 namespace Skimart.Application.UnitTests.Cases.Basket.Commands;
 

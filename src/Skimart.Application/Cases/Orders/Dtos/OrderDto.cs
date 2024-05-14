@@ -1,4 +1,4 @@
-using Skimart.Application.Cases.Auth.Dtos;
+using Skimart.Application.Identity.DTOs;
 
 namespace Skimart.Application.Cases.Orders.Dtos;
 

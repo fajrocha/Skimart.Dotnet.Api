@@ -1,15 +1,22 @@
 ﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Abstractions.Auth;
+using Microsoft.AspNetCore.Identity;
 using Skimart.Application.Cases.Shared.Handlers;
 using Skimart.Application.Identity.DTOs;
+using Skimart.Application.Identity.Errors;
+using Skimart.Application.Identity.Gateways;
 
 namespace Skimart.Application.Identity.Commands.Login;
 
-public class LoginHandler : BaseAuthHandler, IRequestHandler<LoginCommand, ErrorOr<UserDto>>
+public class LoginHandler : IRequestHandler<LoginCommand, ErrorOr<UserDto>>
 {
-    public LoginHandler(IAuthService authService, ITokenService tokenService) : base(authService, tokenService)
+    private readonly IAuthService _authService;
+    private readonly ITokenService _tokenService;
+
+    public LoginHandler(IAuthService authService, ITokenService tokenService)
     {
+        _authService = authService;
+        _tokenService = tokenService;
     }
     
     public async Task<ErrorOr<UserDto>> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -17,12 +24,12 @@ public class LoginHandler : BaseAuthHandler, IRequestHandler<LoginCommand, Error
         var user = await _authService.FindUserByEmailAsync(command.Email);
 
         if (user is null) 
-            return Error.Unauthorized(description: LoginErrors.LoginFailed);
+            return Error.Unauthorized(description: IdentityErrors.LoginFailed);
 
         var result = await _authService.CheckPasswordAsync(user, command.Password);
 
         return result ? 
             new UserDto(user.Email, user.DisplayName, _tokenService.CreateToken(user)) :
-            Error.Unauthorized(description: LoginErrors.LoginFailed);
+            Error.Unauthorized(description: IdentityErrors.LoginFailed);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Skimart.Application.Gateways.Memory.Basket;
+using Skimart.Application.Basket.Gateways;
 using Skimart.Domain.Entities.Basket;
 
 namespace Skimart.Application.Basket.Queries.GetBasketById;

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Skimart.Application.Abstractions.Auth;
+using Skimart.Application.Identity.Gateways;
 
-namespace Skimart.Application.Cases.Auth.Queries.CheckExistingEmail;
+namespace Skimart.Application.Identity.Queries.CheckExistingEmail;
 
 public class CheckExistingEmailHandler : IRequestHandler<CheckExistingEmailQuery, bool>
 {

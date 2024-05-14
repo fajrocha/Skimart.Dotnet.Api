@@ -3,8 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Skimart.Application.Abstractions.Auth;
 using Skimart.Application.Configurations.Auth;
+using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;
 
 namespace Skimart.Infrastructure.Auth.Services;

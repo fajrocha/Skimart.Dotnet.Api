@@ -3,8 +3,8 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Skimart.Application.Basket.Commands.CreateOrUpdateBasket;
+using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Basket.Mappers;
-using Skimart.Application.Gateways.Memory.Basket;
 using Skimart.Domain.Entities.Basket;
 
 namespace Skimart.Application.UnitTests.Cases.Basket.Commands;

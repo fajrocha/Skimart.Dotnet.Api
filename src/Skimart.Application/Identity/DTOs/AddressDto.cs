@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Skimart.Application.Cases.Auth.Dtos;
+namespace Skimart.Application.Identity.DTOs;
 
 public record AddressDto(
     [Required] string FirstName,

@@ -1,7 +1,7 @@
 using FluentResults;
 using MediatR;
+using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Cases.Payment.Errors;
-using Skimart.Application.Gateways.Memory.Basket;
 using Skimart.Application.Gateways.Payment;
 using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;

@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
+using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Cases.Shared.Dtos;
-using Skimart.Application.Gateways.Memory.Cache;
 using Skimart.Application.Helpers;
+using Skimart.Contracts.Products.Responses;
 
 namespace Skimart.Application.UnitTests.Helpers;
 

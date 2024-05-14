@@ -1,28 +1,31 @@
-﻿using FluentResults;
+﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Abstractions.Auth;
-using Skimart.Application.Cases.Auth.Errors;
-using Skimart.Application.Cases.Shared.Handlers;
 using Skimart.Application.Identity.DTOs;
+using Skimart.Application.Identity.Errors;
+using Skimart.Application.Identity.Gateways;
+using Error = ErrorOr.Error;
 
 namespace Skimart.Application.Identity.Queries.GetCurrentLoggedUser;
 
-public class GetCurrentLoggedUserHandler : BaseAuthHandler, IRequestHandler<GetCurrentLoggedUserQuery, Result<UserDto>>
+public class GetCurrentLoggedUserHandler : IRequestHandler<GetCurrentLoggedUserQuery, ErrorOr<CurrentUserDto>>
 {
-    public GetCurrentLoggedUserHandler(IAuthService authService, ITokenService tokenService) 
-        : base(authService, tokenService)
+    private readonly IAuthService _authService;
+    private readonly ICurrentUserProvider _currentUserProvider;
+
+    public GetCurrentLoggedUserHandler(IAuthService authService, ICurrentUserProvider currentUserProvider)
     {
+        _authService = authService;
+        _currentUserProvider = currentUserProvider;
     }
 
-    public async Task<Result<UserDto>> Handle(GetCurrentLoggedUserQuery query, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CurrentUserDto>> Handle(GetCurrentLoggedUserQuery query, CancellationToken cancellationToken)
     {
-        var user = await _authService.FindByEmailFromClaims(query.Claims);
+        var currentUser = _currentUserProvider.GetCurrentUserFromClaims();
+        var user = await _authService.FindUserByEmailAsync(currentUser.Email);
 
         if (user is null) 
-            return Result.Fail(AppIdentityError.NoLoggedUser);
+            return Error.Failure(description: IdentityErrors.UserFromTokenNotFound);
 
-        var userToReturn = new UserDto(user.Email, user.DisplayName, _tokenService.CreateToken(user));
-        
-        return Result.Ok(userToReturn);
+        return currentUser;
     }
 }

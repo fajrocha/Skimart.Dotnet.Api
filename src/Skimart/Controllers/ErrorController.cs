@@ -15,5 +15,5 @@ public class ErrorController : BaseController
     }
     
     [Route("{code}")]
-    public IActionResult Error(int code) => Problem(statusCode: code, detail: code.ToDetailMessage());
+    public IActionResult Error(int code) => Problem(statusCode: code, detail: code.ToDefaultDetailMessage());
 }
