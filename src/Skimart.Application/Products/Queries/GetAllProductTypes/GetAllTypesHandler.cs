@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Gateways;
 using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Application.Products.Queries.GetAllProductTypes;

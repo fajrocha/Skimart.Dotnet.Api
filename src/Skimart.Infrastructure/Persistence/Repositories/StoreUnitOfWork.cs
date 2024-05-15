@@ -1,5 +1,6 @@
 using System.Collections;
 using Skimart.Application.Gateways.Persistence.Repositories;
+using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities;
 using Skimart.Infrastructure.Persistence.DbContexts;
 

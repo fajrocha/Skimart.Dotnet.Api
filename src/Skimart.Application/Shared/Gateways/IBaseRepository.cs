@@ -1,6 +1,6 @@
 using Skimart.Domain.Entities;
 
-namespace Skimart.Application.Gateways.Persistence.Repositories;
+namespace Skimart.Application.Shared.Gateways;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {

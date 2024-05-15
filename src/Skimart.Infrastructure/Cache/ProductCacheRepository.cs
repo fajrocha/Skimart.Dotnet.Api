@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
+using Skimart.Application.Cache;
 using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Configurations.Memory;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Gateways;
 using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Domain.Entities.Products;
 
@@ -45,13 +46,9 @@ public class ProductCacheRepository : IProductRepository
 
     public async Task<Product?> GetEntityByIdAsync(int id)
     {
-        var cacheKey = new CacheKeyBuilder()
-            .WithPrefix(CacheKeyBuilder.GetById<Product>())
-            .WithKey($"{nameof(id)}:{id}")
-            .Build();
-
         return await _cacheService.GetOrCacheValueAsync(
-            cacheKey,
+            key => key.WithPrefix(CacheKeyBuilder.KeyGetById<Product>())
+                .WithName(CacheKeyBuilder.KeyGetById(id)),
             async () => await _decorated.GetEntityByIdAsync(id),
             TimeSpan.FromSeconds(_cacheConfiguration.ProductsTimeToLiveSecs));
     }
@@ -63,13 +60,9 @@ public class ProductCacheRepository : IProductRepository
 
     public async Task<List<Product>> GetEntitiesAsync(GetAllProductsQuery productsQuery)
     {
-        var cacheKey = new CacheKeyBuilder()
-            .WithPrefix(CacheKeyBuilder.GetAll<Product>())
-            .WithKey(productsQuery.ToString())
-            .Build();
-
         return await _cacheService.GetOrCacheValueAsync(
-            cacheKey,
+            key => key.WithPrefix(CacheKeyBuilder.KeyGetAll<Product>())
+                .WithName(productsQuery.ToString()),
             async () => await _decorated.GetEntitiesAsync(productsQuery),
             TimeSpan.FromSeconds(_cacheConfiguration.ProductsTimeToLiveSecs)) ?? new List<Product>();
     }

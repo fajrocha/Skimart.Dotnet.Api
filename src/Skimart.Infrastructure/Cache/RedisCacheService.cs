@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Skimart.Application.Cache;
 using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Extensions.Serialization;
 
@@ -37,6 +38,27 @@ public class RedisCacheService : ICacheService
             return cachedValue;
 
         cachedValue = await factory();
+        await SetCacheValueAsync(cacheKey, cachedValue, timeToLive);
+
+        return cachedValue;
+    }
+    
+    public async Task<T?> GetOrCacheValueAsync<T>(
+        Action<CacheKeyBuilder> cacheKeyFactory, 
+        Func<Task<T?>> valueFactory, 
+        TimeSpan timeToLive)
+        where T : class
+    {
+        var cacheKeyBuilder = new CacheKeyBuilder();
+        cacheKeyFactory(cacheKeyBuilder);
+        var cacheKey = cacheKeyBuilder.Build();
+        
+        var cachedValue = await GetCachedValueAsync<T>(cacheKey);
+
+        if (cachedValue is not null) 
+            return cachedValue;
+
+        cachedValue = await valueFactory();
         await SetCacheValueAsync(cacheKey, cachedValue, timeToLive);
 
         return cachedValue;

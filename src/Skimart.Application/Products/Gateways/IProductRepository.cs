@@ -1,7 +1,8 @@
 ﻿using Skimart.Application.Products.Queries.GetAllProducts;
+using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Products;
 
-namespace Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+namespace Skimart.Application.Products.Gateways;
 
 public interface IProductRepository : IBaseRepository<Product>
 {

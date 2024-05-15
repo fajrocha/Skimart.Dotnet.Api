@@ -8,8 +8,9 @@ using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Gateways.Payment;
 using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
 using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Products.Gateways;
+using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth;
 using Skimart.Infrastructure.Auth.Migrators;
@@ -67,8 +68,10 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, StoreUnitOfWork>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.Decorate<IProductRepository, ProductCacheRepository>();
-        services.AddScoped<IProductBrandRepository, EfProductBrandRepository>();
-        services.AddScoped<IProductTypeRepository, EfProductTypeRepository>();
+        services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
+        services.Decorate<IProductBrandRepository, ProductBrandCacheRepository>();
+        services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+        services.Decorate<IProductTypeRepository, ProductTypeCacheRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IDeliveryMethodRepository, DeliveryMethodRepository>();
         

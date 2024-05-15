@@ -1,4 +1,4 @@
-﻿using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+﻿using Skimart.Application.Products.Gateways;
 using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Domain.Entities.Products;
 using Skimart.Infrastructure.Persistence.DbContexts;

@@ -1,17 +1,12 @@
-﻿using ErrorOr;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Extensions.Serialization;
 using Skimart.Application.Products.Queries.GetAllProductBrands;
-using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Application.Products.Queries.GetAllProductTypes;
 using Skimart.Application.Products.Queries.GetProductById;
 using Skimart.Contracts.Products.Requests;
 using Skimart.Contracts.Products.Responses;
 using Skimart.Contracts.Shared;
-using Skimart.Domain.Entities.Products;
-using Skimart.Extensions.Request;
 using Skimart.Mappers.Products;
 using Skimart.Responses;
 
@@ -20,7 +15,6 @@ namespace Skimart.Controllers;
 [AllowAnonymous]
 public class ProductsController : BaseController
 {
-    private const string ErrorMessage = "Error on Product request.";
     private readonly IMediator _mediator;
 
     public ProductsController(IMediator mediator)

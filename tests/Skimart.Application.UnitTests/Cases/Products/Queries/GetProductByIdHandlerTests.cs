@@ -7,7 +7,7 @@ using Moq;
 using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Cases.Shared.Dtos;
 using Skimart.Application.Configurations.Memory;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreProduct;
+using Skimart.Application.Products.Gateways;
 using Skimart.Application.Products.Queries.GetProductById;
 using Skimart.Domain.Entities.Products;
 using Skimart.Mappers;

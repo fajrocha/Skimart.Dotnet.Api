@@ -19,8 +19,6 @@ public static class DependencyInjection
         });
         services.AddValidatorsFromAssemblyContaining(currentClass);
         
-        services.AddScoped<ICacheHandler, CacheHandler>();
-        
         return services;
     }
 }

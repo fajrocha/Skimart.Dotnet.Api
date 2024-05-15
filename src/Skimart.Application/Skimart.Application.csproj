@@ -29,4 +29,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Gateways\Persistence\Repositories\Products\" />
+    </ItemGroup>
+
 </Project>

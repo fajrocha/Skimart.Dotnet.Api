@@ -1,7 +1,5 @@
 ﻿using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Skimart.Application.Cases.Shared.Handlers;
 using Skimart.Application.Identity.DTOs;
 using Skimart.Application.Identity.Errors;
 using Skimart.Application.Identity.Gateways;
