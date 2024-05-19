@@ -1,25 +1,19 @@
 using ErrorOr;
-using FluentResults;
-using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Skimart.Application.Basket.Gateways;
-using Skimart.Application.Cases.Orders.Dtos;
-using Skimart.Application.Cases.Orders.Errors;
-using Skimart.Application.Cases.Orders.Mappers;
 using Skimart.Application.Extensions.Transaction;
-using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Orders.Mappers;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
 using Error = ErrorOr.Error;
-using Result = FluentResults.Result;
 
-namespace Skimart.Application.Cases.Orders.Commands.CreateOrder;
+namespace Skimart.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Order>>
 {

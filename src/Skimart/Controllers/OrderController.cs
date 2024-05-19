@@ -1,14 +1,10 @@
 using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Orders.Commands.CreateOrder;
-using Skimart.Application.Cases.Orders.Dtos;
-using Skimart.Application.Cases.Orders.Queries.GetDeliveryMethods;
-using Skimart.Application.Cases.Orders.Queries.GetOrderById;
-using Skimart.Application.Cases.Orders.Queries.GetOrdersByEmail;
+using Skimart.Application.Orders.Queries.GetDeliveryMethods;
+using Skimart.Application.Orders.Queries.GetOrderById;
+using Skimart.Application.Orders.Queries.GetOrdersByEmail;
 using Skimart.Contracts.Orders.Requests;
-using Skimart.Domain.Entities.Order;
-using Skimart.Extensions.FluentResults;
 using Skimart.Mappers.Orders;
 
 namespace Skimart.Controllers;
@@ -16,7 +12,6 @@ namespace Skimart.Controllers;
 public class OrdersController : BaseController
 {
     private readonly IMediator _mediator;
-    private const string ErrorMessage = "Error on Order request.";
 
     public OrdersController(IMediator mediator)
     {

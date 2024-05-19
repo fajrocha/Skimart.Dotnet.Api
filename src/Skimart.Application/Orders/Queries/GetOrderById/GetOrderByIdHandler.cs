@@ -1,5 +1,4 @@
 using ErrorOr;
-using FluentResults;
 using MapsterMapper;
 using MediatR;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
@@ -7,7 +6,7 @@ using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Order;
 using Error = ErrorOr.Error;
 
-namespace Skimart.Application.Cases.Orders.Queries.GetOrderById;
+namespace Skimart.Application.Orders.Queries.GetOrderById;
 
 public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, ErrorOr<Order>>
 {

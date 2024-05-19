@@ -1,4 +1,4 @@
-﻿namespace Skimart.Application.Cases.Orders.Commands.CreateOrder;
+﻿namespace Skimart.Application.Orders.Commands.CreateOrder;
 
 public record CreateOrderShippingAddressCommand(
     string FirstName,

@@ -1,7 +1,7 @@
-﻿using Skimart.Application.Cases.Orders.Commands.CreateOrder;
+﻿using Skimart.Application.Orders.Commands.CreateOrder;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Application.Cases.Orders.Mappers;
+namespace Skimart.Application.Orders.Mappers;
 
 public static class OrdersMappers
 {

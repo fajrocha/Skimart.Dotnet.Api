@@ -2,7 +2,7 @@ using MediatR;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Application.Cases.Orders.Queries.GetOrdersByEmail;
+namespace Skimart.Application.Orders.Queries.GetOrdersByEmail;
 
 public class GetOrdersByEmailHandler : IRequestHandler<GetOrdersByEmailQuery, List<Order>>
 {

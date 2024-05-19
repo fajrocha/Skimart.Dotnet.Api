@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Skimart.Application.Cases.Orders.Commands.CreateOrder;
+using Skimart.Application.Orders.Commands.CreateOrder;
 using Skimart.Contracts.Orders.Requests;
 using Skimart.Contracts.Orders.Responses;
 using Skimart.Domain.Entities.Order;

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Skimart.Application.Cases.Orders.Commands.CreateOrder;
+namespace Skimart.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderShippingAddressValidator : AbstractValidator<CreateOrderShippingAddressCommand>
 {

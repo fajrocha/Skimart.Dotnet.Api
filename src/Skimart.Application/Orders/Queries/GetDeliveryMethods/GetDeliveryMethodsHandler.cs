@@ -2,7 +2,7 @@ using MediatR;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Application.Cases.Orders.Queries.GetDeliveryMethods;
+namespace Skimart.Application.Orders.Queries.GetDeliveryMethods;
 
 public class GetDeliveryMethodsHandler : IRequestHandler<GetDeliveryMethodsQuery, List<DeliveryMethod>>
 {
