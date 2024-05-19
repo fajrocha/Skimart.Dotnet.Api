@@ -1,7 +1,7 @@
-using FluentResults;
+using ErrorOr;
 using MediatR;
-using Skimart.Application.Cases.Orders.Dtos;
+using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Orders.Queries.GetOrderById;
 
-public record GetOrderByIdQuery(int Id, string Email) : IRequest<Result<OrderToReturnDto>>;
+public record GetOrderByIdQuery(int Id) : IRequest<ErrorOr<Order>>;

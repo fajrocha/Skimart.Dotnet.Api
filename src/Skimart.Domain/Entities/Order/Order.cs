@@ -2,18 +2,19 @@ namespace Skimart.Domain.Entities.Order;
 
 public class Order : BaseEntity
 {
+    private decimal _subtotal;
+    
     public Order()
     {
     }
     
-    public Order(IReadOnlyList<OrderItem> orderItems, string buyerEmail, ShippingAddress shippingAddress, 
-        DeliveryMethod deliveryMethod, decimal subtotal, string paymentIntentId)
+    public Order(List<OrderItem> orderItems, string buyerEmail, ShippingAddress shippingAddress, 
+        DeliveryMethod deliveryMethod, string paymentIntentId)
     {
         BuyerEmail = buyerEmail;
         ShippingAddress = shippingAddress;
         DeliveryMethod = deliveryMethod;
         OrderItems = orderItems;
-        Subtotal = subtotal;
         PaymentIntentId = paymentIntentId;
     }
 
@@ -21,13 +22,14 @@ public class Order : BaseEntity
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     public ShippingAddress ShippingAddress { get; set; }
     public DeliveryMethod DeliveryMethod { get; set; }
-    public IReadOnlyList<OrderItem> OrderItems { get; set; }
-    public decimal Subtotal { get; set; }
-    public OrderStatus Status { get; set; } = OrderStatus.Pending;
-    public string PaymentIntentId { get; set; }
+    public List<OrderItem> OrderItems { get; set; } = new();
     
-    public decimal GetTotal()
+    public decimal Subtotal
     {
-        return Subtotal + DeliveryMethod.Price;
+        get => OrderItems.Sum(item => item.Price * item.Quantity);
+        private set => _subtotal = value;
     }
+    
+    public OrderStatus Status { get; set; }
+    public string PaymentIntentId { get; set; }
 }

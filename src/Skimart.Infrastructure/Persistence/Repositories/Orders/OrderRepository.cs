@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
 using Skimart.Infrastructure.Persistence.DbContexts;
@@ -11,7 +12,7 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
     }
 
-    public async Task<IReadOnlyList<Order>> GetOrdersByEmailAsync(string email)
+    public async Task<List<Order>> GetOrdersByEmailAsync(string email)
     {
         var spec = new OrderWithItemsSpecification(email);
 

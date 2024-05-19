@@ -6,8 +6,10 @@ using Skimart.Application.Cases.Orders.Dtos;
 using Skimart.Application.Cases.Orders.Queries.GetDeliveryMethods;
 using Skimart.Application.Cases.Orders.Queries.GetOrderById;
 using Skimart.Application.Cases.Orders.Queries.GetOrdersByEmail;
+using Skimart.Contracts.Orders.Requests;
 using Skimart.Domain.Entities.Order;
 using Skimart.Extensions.FluentResults;
+using Skimart.Mappers.Orders;
 
 namespace Skimart.Controllers;
 
@@ -22,41 +24,46 @@ public class OrdersController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
+    public async Task<IActionResult> CreateOrder(OrderRequest orderRequest)
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var command = new CreateOrderCommand(email, orderDto);
+        var command = orderRequest.ToCommand();
 
         var result = await _mediator.Send(command);
 
-        return result.ToOkOrBadRequest(ErrorMessage);
+        return result.Match(
+            order => Ok(order.ToResponse()),
+                Problem);
     }
     
     [HttpGet]
-    public async Task<IReadOnlyList<OrderToReturnDto>> GetOrderForUser()
+    public async Task<IActionResult> GetOrderForUser()
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
         var query = new GetOrdersByEmailQuery(email);
+        var orders = await _mediator.Send(query);
 
-        return await _mediator.Send(query);
+        return Ok(orders.ToResponse());
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<OrderToReturnDto>> GetOrderForUserById(int id)
+    public async Task<IActionResult> GetOrderForUserById(int id)
     {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var query = new GetOrderByIdQuery(id, email);
+        var query = new GetOrderByIdQuery(id);
 
         var result = await _mediator.Send(query);
 
-        return result.ToOkOrNotFound(ErrorMessage);
+        return result.Match(
+            order => Ok(order.ToResponse()),
+            Problem);
     }
     
     [HttpGet("deliveryMethods")]
-    public async Task<IReadOnlyList<DeliveryMethod>> GetODeliveryMethods()
+    public async Task<IActionResult> GetODeliveryMethods()
     {
         var query = new GetDeliveryMethodsQuery();
 
-        return await _mediator.Send(query);
+        var deliveryMethods = await _mediator.Send(query);
+        
+        return Ok(deliveryMethods.ToResponse());
     }
 }

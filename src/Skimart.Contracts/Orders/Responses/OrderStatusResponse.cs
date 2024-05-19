@@ -1,10 +1,10 @@
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Skimart.Domain.Entities.Order;
+namespace Skimart.Contracts.Orders.Responses;
 
-// [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum OrderStatus
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum OrderStatusResponse
 {
     [EnumMember(Value = "Pending")]
     Pending,

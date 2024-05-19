@@ -4,7 +4,7 @@ using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Orders.Queries.GetDeliveryMethods;
 
-public class GetDeliveryMethodsHandler : IRequestHandler<GetDeliveryMethodsQuery, IReadOnlyList<DeliveryMethod>>
+public class GetDeliveryMethodsHandler : IRequestHandler<GetDeliveryMethodsQuery, List<DeliveryMethod>>
 {
     private readonly IDeliveryMethodRepository _deliveryMethodRepository;
 
@@ -13,8 +13,7 @@ public class GetDeliveryMethodsHandler : IRequestHandler<GetDeliveryMethodsQuery
         _deliveryMethodRepository = deliveryMethodRepository;
     }
 
-
-    public async Task<IReadOnlyList<DeliveryMethod>> Handle(GetDeliveryMethodsQuery request, CancellationToken cancellationToken)
+    public async Task<List<DeliveryMethod>> Handle(GetDeliveryMethodsQuery request, CancellationToken cancellationToken)
     {
         return await _deliveryMethodRepository.GetEntitiesAsync();
     }
