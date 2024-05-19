@@ -6,6 +6,7 @@ using Skimart.Application.Cases.Payment.Commands.CreateOrUpdatePaymentIntent;
 using Skimart.Application.Extensions.FluentResults;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Extensions.FluentResults;
+using Skimart.Mappers.Basket;
 
 namespace Skimart.Controllers;
 
@@ -21,13 +22,15 @@ public class PaymentController : BaseController
     }
     
     [HttpPost("{basketId}")]
-    public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePaymentIntent(string basketId)
+    public async Task<IActionResult> CreateOrUpdatePaymentIntent(string basketId)
     {
         var command = new CreateOrUpdatePaymentIntentCommand(basketId);
 
         var result = await _mediator.Send(command);
         
-        return result.ToOkOrBadRequest(ErrorMessage);
+        return result.Match(
+            basket => Ok(basket.ToResponse()),
+                Problem);
     }
     
     [HttpPost("webhook")]

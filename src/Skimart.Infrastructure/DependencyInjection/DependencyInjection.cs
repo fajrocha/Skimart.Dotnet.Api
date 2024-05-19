@@ -102,7 +102,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddPaymentServices(this IServiceCollection services)
     {
-        services.AddScoped<IPaymentGateway, StripePaymentGateway>();
+        services.AddScoped<IPaymentGateway, StripePaymentService>();
         
         return services;
     }

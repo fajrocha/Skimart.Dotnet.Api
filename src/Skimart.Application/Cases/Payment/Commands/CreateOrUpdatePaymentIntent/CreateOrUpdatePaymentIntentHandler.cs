@@ -1,3 +1,4 @@
+using ErrorOr;
 using FluentResults;
 using MediatR;
 using Skimart.Application.Basket.Gateways;
@@ -10,10 +11,12 @@ using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
+using Error = ErrorOr.Error;
+using Result = ErrorOr.Result;
 
 namespace Skimart.Application.Cases.Payment.Commands.CreateOrUpdatePaymentIntent;
 
-public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, Result<CustomerBasket>>
+public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, ErrorOr<CustomerBasket>>
 {
     private readonly IBasketRepository _basketRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -29,33 +32,35 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         _paymentGateway = paymentGateway;
     }
     
-    public async Task<Result<CustomerBasket>> Handle(CreateOrUpdatePaymentIntentCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<CustomerBasket>> Handle(CreateOrUpdatePaymentIntentCommand command, CancellationToken cancellationToken)
     {
         var basket = await _basketRepository.GetBasketAsync(command.BasketId);
 
         if (basket is null)
-            return Result.Fail("CustomerBasketError.NotFound");
+            return Error.Failure(description: "Customer basket was not found.");
         
-        var deliveryCheck = await GetDeliveryMethodPrice(basket);
+        if (!basket.DeliveryMethodId.HasValue)
+            return Error.Failure(description: "No delivery method on basket.");
 
-        if (deliveryCheck.IsFailed) 
-            return Result.Fail(deliveryCheck.Errors);
+        var deliveryMethod = await _unitOfWork.Repository<IDeliveryMethodRepository, DeliveryMethod>()
+            .GetEntityByIdAsync((int)basket.DeliveryMethodId);
 
-        var shippingPrice = deliveryCheck.Value;
+        if (deliveryMethod is null)
+        {
+            return Error.Failure(description: "Delivery method was not found on storage.");
+        }
+
+        var shippingPrice = deliveryMethod.Price;
         
-        var priceCheck = await VerifyItemsPrices(basket);
-
-        if (priceCheck.IsFailed)
-            return Result.Fail(priceCheck.Errors);
+        await VerifyItemsPrices(basket);
 
         await _paymentGateway.CreateOrUpdatePaymentIntentAsync(basket, shippingPrice);
-        
         await _basketRepository.CreateOrUpdateBasketAsync(basket);
 
-        return Result.Ok(basket);
+        return basket;
     }
 
-    private async Task<Result> VerifyItemsPrices(CustomerBasket basket)
+    private async Task VerifyItemsPrices(CustomerBasket basket)
     {
         foreach (var basketItem in basket.Items)
         {
@@ -63,25 +68,9 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
             var productItem = await _unitOfWork.Repository<IProductRepository, Product>().GetEntityByIdAsync(itemId);
 
             if (productItem is null)
-                return Result.Fail(PaymentError.ProductIdNotFound(itemId));
+                throw new InvalidOperationException($"Product with id {itemId} was not found.");
 
             basketItem.VerifyPrice(productItem);
         }
-
-        return Result.Ok();
-    }
-
-    private async Task<Result<decimal>> GetDeliveryMethodPrice(CustomerBasket basket)
-    {
-        if (!basket.DeliveryMethodId.HasValue)
-            return Result.Fail(PaymentError.DeliveryMethodNotFound);
-        
-        var deliveryMethod = await _unitOfWork.Repository<IDeliveryMethodRepository, DeliveryMethod>()
-            .GetEntityByIdAsync((int)basket.DeliveryMethodId);
-
-        if (deliveryMethod is null)
-            return Result.Fail(PaymentError.DeliveryMethodNotFound);
-
-        return deliveryMethod.Price;
     }
 }

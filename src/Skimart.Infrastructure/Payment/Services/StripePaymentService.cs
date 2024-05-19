@@ -10,12 +10,12 @@ using Stripe;
 
 namespace Skimart.Infrastructure.Payment.Services;
 
-public class StripePaymentGateway : IPaymentGateway
+public class StripePaymentService : IPaymentGateway
 {
-    private readonly ILogger<StripePaymentGateway> _logger;
+    private readonly ILogger<StripePaymentService> _logger;
     private readonly PaymentConfiguration _paymentConfig;
 
-    public StripePaymentGateway(ILogger<StripePaymentGateway> logger ,IOptions<PaymentConfiguration> paymentConfig)
+    public StripePaymentService(ILogger<StripePaymentService> logger ,IOptions<PaymentConfiguration> paymentConfig)
     {
         _logger = logger;
         _paymentConfig = paymentConfig.Value;
