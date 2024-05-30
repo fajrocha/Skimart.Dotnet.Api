@@ -3,8 +3,8 @@ using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Gateways.Persistence.Specifications;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities;
-using Skimart.Infrastructure.Persistence.DbContexts;
 using Skimart.Infrastructure.Persistence.Specifications;
+using Skimart.Infrastructure.Store.DbContexts;
 
 namespace Skimart.Infrastructure.Persistence.Repositories;
 

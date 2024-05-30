@@ -18,11 +18,11 @@ using Skimart.Infrastructure.Auth.Services;
 using Skimart.Infrastructure.Basket;
 using Skimart.Infrastructure.Cache;
 using Skimart.Infrastructure.Payment.Services;
-using Skimart.Infrastructure.Persistence.DbContexts;
-using Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
 using Skimart.Infrastructure.Persistence.Repositories;
 using Skimart.Infrastructure.Persistence.Repositories.Orders;
 using Skimart.Infrastructure.Persistence.Repositories.Products;
+using Skimart.Infrastructure.Store.DbContexts;
+using Skimart.Infrastructure.Store.Migrators.EntityFramework;
 using StackExchange.Redis;
 
 namespace Skimart.Infrastructure.DependencyInjection;
@@ -61,7 +61,7 @@ public static class DependencyInjection
     private static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connString = configuration.GetConnectionString(DefaultConnectionProp) ?? string.Empty;
-        services.AddDbContext<StoreContext>(o => o.UseSqlServer(connString));
+        services.AddDbContext<StoreContext>(o => o.UseNpgsql(connString));
         
         services.AddScoped<IDbMigrator, DbMigrator>();
         
@@ -83,7 +83,7 @@ public static class DependencyInjection
         var connString = configuration.GetConnectionString(IdentityConnectionProp) ?? string.Empty;
         services.AddDbContext<AppIdentityDbContext>(opt =>
         {
-            opt.UseSqlServer(connString);
+            opt.UseNpgsql(connString);
         });
         
         services

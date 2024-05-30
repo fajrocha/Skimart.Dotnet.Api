@@ -1,6 +1,6 @@
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Domain.Entities.Order;
-using Skimart.Infrastructure.Persistence.DbContexts;
+using Skimart.Infrastructure.Store.DbContexts;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.Orders;
 

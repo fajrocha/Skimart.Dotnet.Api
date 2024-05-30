@@ -1,20 +1,16 @@
 version: '3.8'
 
 services:
-  mssql:
-    container_name: skimart-mssql-db
-    hostname: mssql-db
-    image: mcr.microsoft.com/mssql/server:2022-latest
+  postgres:
+    container_name: skimart-postgres-db
+    hostname: postgres-db
+    image: postgres
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "Pwd12345!"
-      MSSQL_DATA_DIR: /var/opt/mssql/data
-      MSSQL_TCP_PORT: 1433
+      POSTGRES_USER: faroc
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
     ports:
-      - "1433:1433"
-    volumes:
-      - mssql_data:/var/opt/mssql/data
-      - mssql_log:/var/opt/mssql/log
+      - "5432:5432"
 
   redis:
     image: redis:latest
@@ -26,20 +22,6 @@ services:
       - "6379:6379"
 
 volumes:
-  mssql_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/dockerVolumes/skimart/mssql/data
-
-  mssql_log:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/dockerVolumes/skimart/mssql/log
-
   redis_conf:
     driver: local
     driver_opts:

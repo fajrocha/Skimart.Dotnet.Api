@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
-using Skimart.Infrastructure.Persistence.DbContexts;
+using Skimart.Infrastructure.Store.DbContexts;
 
-namespace Skimart.Infrastructure.Persistence.DataSeed;
+namespace Skimart.Infrastructure.Store.DataSeed;
 
 public class DataSeeder
 {
-    private const string PathToFiles = "../Skimart.Infrastructure/Persistence/DataSeed/Data";
+    private const string PathToFiles = "../Skimart.Infrastructure/Store/DataSeed/Data";
 
     public static async Task SeedAsync(StoreContext context, ILogger logger)
     {

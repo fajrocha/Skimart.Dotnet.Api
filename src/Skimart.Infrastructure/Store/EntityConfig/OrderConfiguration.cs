@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Infrastructure.Persistence.EntityConfig;
+namespace Skimart.Infrastructure.Store.EntityConfig;
 
 public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {

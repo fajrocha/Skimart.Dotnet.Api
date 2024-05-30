@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Skimart.Application.Abstractions.Persistence.Migrators;
-using Skimart.Infrastructure.Persistence.DataSeed;
-using Skimart.Infrastructure.Persistence.DbContexts;
+using Skimart.Infrastructure.Store.DataSeed;
+using Skimart.Infrastructure.Store.DbContexts;
 
-namespace Skimart.Infrastructure.Persistence.Migrators.EntityFramework;
+namespace Skimart.Infrastructure.Store.Migrators.EntityFramework;
 
 public class DbMigrator : IDbMigrator
 {
