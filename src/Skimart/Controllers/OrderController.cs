@@ -5,7 +5,8 @@ using Skimart.Application.Orders.Queries.GetDeliveryMethods;
 using Skimart.Application.Orders.Queries.GetOrderById;
 using Skimart.Application.Orders.Queries.GetOrdersByEmail;
 using Skimart.Contracts.Orders.Requests;
-using Skimart.Mappers.Orders;
+using Skimart.Orders;
+using Skimart.Orders.Mappers;
 
 namespace Skimart.Controllers;
 

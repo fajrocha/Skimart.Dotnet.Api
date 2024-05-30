@@ -1,12 +1,13 @@
 using Skimart.Application.DependencyInjection;
+using Skimart.CORS.Extensions;
 using Skimart.DependencyInjection;
 using Skimart.Extensions;
-using Skimart.Extensions.Auth;
-using Skimart.Extensions.Cors;
-using Skimart.Extensions.Migrations;
+using Skimart.Identity.Extensions;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
 using Skimart.Mappers;
+using Skimart.Migrations.Extensions;
+using Skimart.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

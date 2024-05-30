@@ -2,7 +2,7 @@ using ErrorOr;
 using MediatR;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Gateways.Payment;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Orders.Gateways;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Basket;

@@ -1,4 +1,4 @@
-﻿using Skimart.Application.Abstractions.Persistence.Migrators;
+﻿using Skimart.Application.Shared.Gateways;
 
 namespace Skimart.Application.Identity.Gateways;
 

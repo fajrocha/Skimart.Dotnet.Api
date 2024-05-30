@@ -24,8 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ApiHandlers\" />
-      <Folder Include="Extensions\ErrorCodes\" />
+      <Folder Include="Payment\" />
       <Folder Include="wwwroot\" />
     </ItemGroup>
 

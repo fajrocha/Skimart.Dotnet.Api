@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
-using Skimart.Infrastructure.Store.DbContexts;
 
 namespace Skimart.Infrastructure.Store.DataSeed;
 

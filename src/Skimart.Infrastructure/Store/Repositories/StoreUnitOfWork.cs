@@ -1,10 +1,8 @@
 using System.Collections;
-using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities;
-using Skimart.Infrastructure.Store.DbContexts;
 
-namespace Skimart.Infrastructure.Persistence.Repositories;
+namespace Skimart.Infrastructure.Store.Repositories;
 
 public class StoreUnitOfWork : IUnitOfWork
 {

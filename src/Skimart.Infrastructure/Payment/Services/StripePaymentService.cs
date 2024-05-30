@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
-using Skimart.Application.Configurations.Payment;
 using Skimart.Application.Gateways.Payment;
 using Skimart.Application.Payment.Commands.ConfirmPayment;
+using Skimart.Application.Payment.Configurations;
 using Skimart.Domain.Entities.Basket;
 using Stripe;
 

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Skimart.Application.Identity.Gateways;
-using Skimart.Configurations.Auth;
-using Skimart.Configurations.Memory;
-using Skimart.Configurations.Payment;
+using Skimart.Basket.Configurations;
+using Skimart.Cache.Configurations;
 using Skimart.Identity;
+using Skimart.Identity.Configurations;
+using Skimart.Payment.Configurations;
 
 namespace Skimart.DependencyInjection;
 

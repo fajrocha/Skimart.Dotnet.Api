@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Skimart.Application.Gateways.Persistence.Specifications;
+using Skimart.Application.Shared.Gateways;
 
 namespace Skimart.Infrastructure.Persistence.Specifications;
 

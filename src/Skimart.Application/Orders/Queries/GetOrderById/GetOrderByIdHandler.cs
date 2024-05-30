@@ -1,8 +1,8 @@
 using ErrorOr;
 using MapsterMapper;
 using MediatR;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Orders.Gateways;
 using Skimart.Domain.Entities.Order;
 using Error = ErrorOr.Error;
 

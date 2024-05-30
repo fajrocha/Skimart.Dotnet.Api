@@ -3,7 +3,7 @@ using MediatR;
 using Skimart.Application.Cases.Payment.Errors;
 using Skimart.Application.Extensions.Transaction;
 using Skimart.Application.Gateways.Payment;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Orders.Gateways;
 using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Cases.Payment.Commands.ConfirmPayment;

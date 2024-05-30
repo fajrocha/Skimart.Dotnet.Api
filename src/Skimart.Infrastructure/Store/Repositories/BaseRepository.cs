@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Skimart.Application.Cache.Gateways;
-using Skimart.Application.Gateways.Persistence.Specifications;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities;
 using Skimart.Infrastructure.Persistence.Specifications;
-using Skimart.Infrastructure.Store.DbContexts;
+using Skimart.Infrastructure.Store;
 
 namespace Skimart.Infrastructure.Persistence.Repositories;
 

@@ -2,27 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Skimart.Application.Abstractions.Persistence.Migrators;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Gateways.Payment;
-using Skimart.Application.Gateways.Persistence.Repositories;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Orders.Gateways;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Auth;
 using Skimart.Infrastructure.Auth;
-using Skimart.Infrastructure.Auth.Migrators;
-using Skimart.Infrastructure.Auth.Services;
 using Skimart.Infrastructure.Basket;
 using Skimart.Infrastructure.Cache;
+using Skimart.Infrastructure.Identity.Migrators;
+using Skimart.Infrastructure.Identity.Services;
 using Skimart.Infrastructure.Payment.Services;
 using Skimart.Infrastructure.Persistence.Repositories;
 using Skimart.Infrastructure.Persistence.Repositories.Orders;
 using Skimart.Infrastructure.Persistence.Repositories.Products;
-using Skimart.Infrastructure.Store.DbContexts;
+using Skimart.Infrastructure.Store;
 using Skimart.Infrastructure.Store.Migrators.EntityFramework;
+using Skimart.Infrastructure.Store.Repositories;
 using StackExchange.Redis;
 
 namespace Skimart.Infrastructure.DependencyInjection;
@@ -92,7 +91,7 @@ public static class DependencyInjection
             .AddSignInManager<SignInManager<AppUser>>();
         
         services.AddScoped<IAuthMigrator, EfAuthMigrator>();
-        services.AddScoped<IAuthService, EfIdentityAuthService>();
+        services.AddScoped<IAuthService, IdentityAuthService>();
         services.AddSingleton<ITokenService, JwtTokenService>();
         
         services.AddAuthorizationCore();

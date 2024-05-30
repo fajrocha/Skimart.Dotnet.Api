@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Skimart.Application.Cache;
+using Skimart.Application.Cache.Configurations;
 using Skimart.Application.Cache.Gateways;
-using Skimart.Application.Configurations.Memory;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Domain.Entities.Products;

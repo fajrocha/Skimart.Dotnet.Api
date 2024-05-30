@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Skimart.Application.Abstractions.Persistence.Migrators;
+using Skimart.Application.Shared.Gateways;
 using Skimart.Infrastructure.Store.DataSeed;
-using Skimart.Infrastructure.Store.DbContexts;
 
 namespace Skimart.Infrastructure.Store.Migrators.EntityFramework;
 

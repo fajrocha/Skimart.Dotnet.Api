@@ -31,7 +31,7 @@
 
     <ItemGroup>
       <Folder Include="Abstractions\" />
-      <Folder Include="Auth\Migrations\" />
+      <Folder Include="Identity\Migrations\" />
       <Folder Include="Cache\Helpers\" />
       <Folder Include="Store\Migrations\" />
     </ItemGroup>

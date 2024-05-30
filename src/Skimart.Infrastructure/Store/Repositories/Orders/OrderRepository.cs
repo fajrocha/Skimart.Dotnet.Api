@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
+using Skimart.Application.Orders.Gateways;
 using Skimart.Domain.Entities.Order;
 using Skimart.Infrastructure.Persistence.Specifications.OrderSpecifications;
-using Skimart.Infrastructure.Store.DbContexts;
+using Skimart.Infrastructure.Store;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.Orders;
 

@@ -2,7 +2,7 @@
 using Skimart.Application.Products.Queries.GetAllProducts;
 using Skimart.Domain.Entities.Products;
 using Skimart.Infrastructure.Persistence.Specifications.ProductSpecifications;
-using Skimart.Infrastructure.Store.DbContexts;
+using Skimart.Infrastructure.Store;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.Products;
 
