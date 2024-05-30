@@ -1,10 +1,7 @@
 using ErrorOr;
-using FluentResults;
 using MediatR;
 using Skimart.Application.Basket.Gateways;
-using Skimart.Application.Cases.Payment.Errors;
 using Skimart.Application.Gateways.Payment;
-using Skimart.Application.Gateways.Persistence.Repositories;
 using Skimart.Application.Gateways.Persistence.Repositories.StoreOrder;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Gateways;
@@ -12,9 +9,8 @@ using Skimart.Domain.Entities.Basket;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
 using Error = ErrorOr.Error;
-using Result = ErrorOr.Result;
 
-namespace Skimart.Application.Cases.Payment.Commands.CreateOrUpdatePaymentIntent;
+namespace Skimart.Application.Payment.Commands.CreateOrUpdatePaymentIntent;
 
 public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, ErrorOr<CustomerBasket>>
 {

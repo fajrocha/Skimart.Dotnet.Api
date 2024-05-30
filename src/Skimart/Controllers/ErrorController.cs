@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Middleware;
+using Skimart.Responses;
 
 namespace Skimart.Controllers;
 

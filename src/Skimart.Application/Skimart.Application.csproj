@@ -30,7 +30,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Cases\Payment\" />
       <Folder Include="Gateways\Persistence\Repositories\Products\" />
+      <Folder Include="Payment\" />
     </ItemGroup>
 
 </Project>

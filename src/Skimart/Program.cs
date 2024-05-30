@@ -7,7 +7,6 @@ using Skimart.Extensions.Migrations;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
 using Skimart.Mappers;
-using Skimart.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

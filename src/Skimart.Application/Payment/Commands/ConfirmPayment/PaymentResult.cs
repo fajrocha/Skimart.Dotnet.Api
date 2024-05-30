@@ -1,4 +1,4 @@
-﻿namespace Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
+﻿namespace Skimart.Application.Payment.Commands.ConfirmPayment;
 
 public record PaymentResult(bool IsSuccess, string PaymentIntent)
 {

@@ -1,4 +1,4 @@
-﻿namespace Skimart.Middleware;
+﻿namespace Skimart.Responses;
 
 public static class DefaultDetailsMessages
 {
