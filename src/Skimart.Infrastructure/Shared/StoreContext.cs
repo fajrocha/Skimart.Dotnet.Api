@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Skimart.Application.Shared.Gateways;
 using Skimart.Domain.Entities.Order;
 using Skimart.Domain.Entities.Products;
 
 namespace Skimart.Infrastructure.Shared;
 
-public class StoreContext : DbContext
+public class StoreContext : DbContext, IUnitOfWork
 {
     public StoreContext(DbContextOptions<StoreContext> options) : base(options)
     {
@@ -17,6 +18,11 @@ public class StoreContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+    
+    public Task<int> CommitAsync()
+    {
+        return base.SaveChangesAsync();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

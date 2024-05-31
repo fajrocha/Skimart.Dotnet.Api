@@ -15,16 +15,19 @@ namespace Skimart.Application.Payment.Commands.CreateOrUpdatePaymentIntent;
 public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdatePaymentIntentCommand, ErrorOr<CustomerBasket>>
 {
     private readonly IBasketRepository _basketRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductRepository _productRepository;
+    private readonly IDeliveryMethodRepository _deliveryMethodRepository;
     private readonly IPaymentGateway _paymentGateway;
 
     public CreateOrUpdatePaymentIntentHandler(
-        IBasketRepository basketRepository, 
-        IUnitOfWork unitOfWork,
+        IBasketRepository basketRepository,
+        IProductRepository productRepository,
+        IDeliveryMethodRepository deliveryMethodRepository,
         IPaymentGateway paymentGateway)
     {
         _basketRepository = basketRepository;
-        _unitOfWork = unitOfWork;
+        _productRepository = productRepository;
+        _deliveryMethodRepository = deliveryMethodRepository;
         _paymentGateway = paymentGateway;
     }
     
@@ -38,8 +41,7 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         if (!basket.DeliveryMethodId.HasValue)
             return Error.Failure(description: "No delivery method on basket.");
 
-        var deliveryMethod = await _unitOfWork.Repository<IDeliveryMethodRepository, DeliveryMethod>()
-            .GetEntityByIdAsync((int)basket.DeliveryMethodId);
+        var deliveryMethod = await _deliveryMethodRepository.GetEntityByIdAsync((int)basket.DeliveryMethodId);
 
         if (deliveryMethod is null)
         {
@@ -61,7 +63,7 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         foreach (var basketItem in basket.Items)
         {
             var itemId = basketItem.Id;
-            var productItem = await _unitOfWork.Repository<IProductRepository, Product>().GetEntityByIdAsync(itemId);
+            var productItem = await _productRepository.GetEntityByIdAsync(itemId);
 
             if (productItem is null)
                 throw new InvalidOperationException($"Product with id {itemId} was not found.");

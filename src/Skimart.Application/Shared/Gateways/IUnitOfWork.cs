@@ -2,11 +2,7 @@ using Skimart.Domain.Entities;
 
 namespace Skimart.Application.Shared.Gateways;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork
 {
-    TRepos Repository<TRepos, TEntity>() 
-        where TRepos : IBaseRepository<TEntity>
-        where TEntity : BaseEntity;
-
-    Task<int> CompleteAsync();
+    Task<int> CommitAsync();
 }

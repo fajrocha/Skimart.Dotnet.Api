@@ -20,17 +20,26 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
     private readonly ILogger<CreateOrderHandler> _logger;
     private readonly IBasketRepository _basketRepos;
     private readonly ICurrentUserProvider _currentUserProvider;
+    private readonly IProductRepository _productRepository;
+    private readonly IOrderRepository _orderRepository;
+    private readonly IDeliveryMethodRepository _deliveryMethodRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateOrderHandler(
         ILogger<CreateOrderHandler> logger,
         IBasketRepository basketReposes,
         ICurrentUserProvider currentUserProvider,
+        IProductRepository productRepository,
+        IOrderRepository orderRepository,
+        IDeliveryMethodRepository deliveryMethodRepository,
         IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _basketRepos = basketReposes;
         _currentUserProvider = currentUserProvider;
+        _productRepository = productRepository;
+        _orderRepository = orderRepository;
+        _deliveryMethodRepository = deliveryMethodRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -48,8 +57,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         }
         
         var deliveryMethodId = command.DeliveryMethodId;
-        var deliveryMethod = await _unitOfWork.Repository<IDeliveryMethodRepository, DeliveryMethod>()
-            .GetEntityByIdAsync(deliveryMethodId);
+        var deliveryMethod = await _deliveryMethodRepository.GetEntityByIdAsync(deliveryMethodId);
 
         if (deliveryMethod is null)
         {
@@ -67,8 +75,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         var orderItems = result.Value;
 
         var paymentIntentId = basket.PaymentIntentId;
-        var order = await _unitOfWork.Repository<IOrderRepository, Order>()
-            .GetOrderByIntent(paymentIntentId);
+        var order = await _orderRepository.GetOrderByIntent(paymentIntentId);
 
         if (order is null)
         {
@@ -79,7 +86,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
                 command.ShippingAddress.ToAddress(),
                 deliveryMethod,
                 paymentIntentId);
-            await _unitOfWork.Repository<IOrderRepository, Order>().AddAsync(order);
+            await _orderRepository.AddAsync(order);
         }
         else
         {
@@ -87,10 +94,10 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
             order.OrderItems = orderItems;
             order.ShippingAddress = command.ShippingAddress.ToAddress();
             order.DeliveryMethod = deliveryMethod;
-            _unitOfWork.Repository<IOrderRepository, Order>().UpdateAsync(order);
+            _orderRepository.UpdateAsync(order);
         }
         
-        var transactionResult = await _unitOfWork.CompleteAsync();
+        var transactionResult = await _unitOfWork.CommitAsync();
 
         if (transactionResult.TransactionFailed())
         {
@@ -107,7 +114,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         
         foreach (var item in basket.Items)
         {
-            var productItem = await _unitOfWork.Repository<IProductRepository, Product>().GetEntityByIdAsync(item.Id);
+            var productItem = await _productRepository.GetEntityByIdAsync(item.Id);
 
             if (productItem is null)
                 return Error.Failure("Product not found.");

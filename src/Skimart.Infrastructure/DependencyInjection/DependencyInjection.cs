@@ -64,7 +64,7 @@ public static class DependencyInjection
         
         services.AddScoped<IDbMigrator, DbMigrator>();
         
-        services.AddScoped<IUnitOfWork, StoreUnitOfWork>();
+        services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<StoreContext>());
         services.AddScoped<IProductRepository, ProductRepository>();
         services.Decorate<IProductRepository, ProductCacheRepository>();
         services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
