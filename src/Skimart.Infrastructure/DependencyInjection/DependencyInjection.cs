@@ -15,13 +15,13 @@ using Skimart.Infrastructure.Basket;
 using Skimart.Infrastructure.Cache;
 using Skimart.Infrastructure.Identity.Migrators;
 using Skimart.Infrastructure.Identity.Services;
+using Skimart.Infrastructure.Orders.Repositories;
 using Skimart.Infrastructure.Payment.Services;
-using Skimart.Infrastructure.Persistence.Repositories;
-using Skimart.Infrastructure.Persistence.Repositories.Orders;
-using Skimart.Infrastructure.Persistence.Repositories.Products;
+using Skimart.Infrastructure.Products.Repositories;
+using Skimart.Infrastructure.Shared;
+using Skimart.Infrastructure.Shared.Migrators.EntityFramework;
+using Skimart.Infrastructure.Shared.Repositories;
 using Skimart.Infrastructure.Store;
-using Skimart.Infrastructure.Store.Migrators.EntityFramework;
-using Skimart.Infrastructure.Store.Repositories;
 using StackExchange.Redis;
 
 namespace Skimart.Infrastructure.DependencyInjection;

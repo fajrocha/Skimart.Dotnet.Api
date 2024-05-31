@@ -1,9 +1,9 @@
 ﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Extensions.Transaction;
 using Skimart.Application.Orders.Gateways;
 using Skimart.Application.Payment.Errors;
 using Skimart.Application.Payment.Gateways;
+using Skimart.Application.Shared.Extensions;
 using Skimart.Domain.Entities.Order;
 
 namespace Skimart.Application.Payment.Commands.ConfirmPayment;
