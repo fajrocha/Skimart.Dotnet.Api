@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Skimart.Application.Basket.Errors;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Domain.Entities.Basket;
 
@@ -24,7 +25,7 @@ public class GetBasketByIdHandler : IRequestHandler<GetBasketByIdQuery, ErrorOr<
         if (customerBasket is null)
         {
             _logger.LogWarning("Basket with id {basketId} not found.", query.Id);
-            return Error.NotFound(description: "Basket requested was not found.");
+            return Error.NotFound(description: BasketErrors.BasketNotFound);
         }
 
         return customerBasket;

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
-using Skimart.Application.Cache;
-using Skimart.Application.Cache.Configurations;
-using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Products.Gateways;
 using Skimart.Domain.Entities.Products;
+using Skimart.Infrastructure.Cache.Abstractions;
+using Skimart.Infrastructure.Cache.Configurations;
+using Skimart.Infrastructure.Cache.Helpers;
 
-namespace Skimart.Infrastructure.Cache;
+namespace Skimart.Infrastructure.Cache.Repositories;
 
 public class ProductBrandCacheRepository : IProductBrandRepository
 {

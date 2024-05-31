@@ -1,4 +1,7 @@
-﻿namespace Skimart.Application.Cache.Gateways;
+﻿using Skimart.Infrastructure.Cache.Configurations;
+using Skimart.Infrastructure.Cache.Helpers;
+
+namespace Skimart.Infrastructure.Cache.Abstractions;
 
 public interface ICacheService
 {

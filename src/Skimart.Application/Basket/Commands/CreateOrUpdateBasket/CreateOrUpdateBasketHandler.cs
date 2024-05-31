@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Skimart.Application.Basket.Errors;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Basket.Mappers;
 using Skimart.Domain.Entities.Basket;
@@ -29,6 +30,6 @@ public class CreateOrUpdateBasketHandler : IRequestHandler<CreateOrUpdateBasketC
 
         return resultingCustomerBasket is not null ? 
             resultingCustomerBasket :
-            Error.Failure(description: "Failed to create or update the basket.");
+            Error.Failure(description: BasketErrors.FailedToUpdateOrCreateBasket);
     }
 }

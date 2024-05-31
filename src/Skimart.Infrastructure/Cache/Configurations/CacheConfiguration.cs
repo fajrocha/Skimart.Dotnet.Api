@@ -1,4 +1,4 @@
-﻿namespace Skimart.Application.Cache.Configurations;
+﻿namespace Skimart.Infrastructure.Cache.Configurations;
 
 public class CacheConfiguration
 {

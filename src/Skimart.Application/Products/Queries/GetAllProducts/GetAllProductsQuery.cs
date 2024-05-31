@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Skimart.Application.Cache;
 
 namespace Skimart.Application.Products.Queries.GetAllProducts;
 

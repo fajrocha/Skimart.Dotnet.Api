@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Skimart.Application.Cache;
-using Skimart.Application.Cache.Gateways;
 using Skimart.Application.Shared.Extensions;
+using Skimart.Infrastructure.Cache.Abstractions;
+using Skimart.Infrastructure.Cache.Configurations;
+using Skimart.Infrastructure.Cache.Helpers;
 
-namespace Skimart.Infrastructure.Cache;
+namespace Skimart.Infrastructure.Cache.Services;
 
 public class RedisCacheService : ICacheService
 {

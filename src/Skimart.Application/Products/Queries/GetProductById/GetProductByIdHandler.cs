@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Skimart.Application.Products.Errors;
 using Skimart.Application.Products.Gateways;
 using Skimart.Domain.Entities.Products;
 
@@ -26,7 +27,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ErrorO
         if (product is null)
         {
             _logger.LogError("Could not find the product with id {productId}", query.Id);
-            return Error.NotFound(description: "Could not find the product for the given id.");
+            return Error.NotFound(description: ProductErrors.ProductNotFound);
         }
         
         return product;

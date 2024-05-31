@@ -2,4 +2,4 @@
 
 namespace Skimart.Application.Products.Queries.GetAllProducts;
 
-public record ProductsResponseDto(int ProductCount, IReadOnlyList<Product> Products);
+public record ProductsResponseDto(int ProductCount, List<Product> Products);

@@ -1,7 +1,5 @@
 ﻿using ErrorOr;
-using FluentResults;
 using MediatR;
-using Skimart.Application.Identity.DTOs;
 using Skimart.Application.Identity.Errors;
 using Skimart.Application.Identity.Gateways;
 using Skimart.Domain.Entities.Auth;

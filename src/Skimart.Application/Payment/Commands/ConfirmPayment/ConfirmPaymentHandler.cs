@@ -25,7 +25,7 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Erro
         
         if (bodyContent is null)
         {
-            return Error.Failure(description: PaymentError.InvalidPaymentWebhookBody);
+            return Error.Failure(description: PaymentErrors.InvalidPaymentWebhookBody);
         }
         
         try
@@ -46,7 +46,7 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Erro
 
             return transactionResult.TransactionSuccess() ? 
                 Result.Success : 
-                Error.Failure(description: PaymentError.FailedToUpdateOrder); 
+                Error.Failure(description: PaymentErrors.FailedToUpdateOrder); 
         }
         catch (Exception ex)
         {

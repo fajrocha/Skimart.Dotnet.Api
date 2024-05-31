@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Skimart.Application.Cache;
+namespace Skimart.Infrastructure.Cache.Helpers;
 
 public class CacheKeyBuilder
 {

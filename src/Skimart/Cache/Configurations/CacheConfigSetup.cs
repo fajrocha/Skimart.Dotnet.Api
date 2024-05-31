@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-using Skimart.Application.Cache.Configurations;
+using Skimart.Infrastructure.Cache.Configurations;
 
 namespace Skimart.Cache.Configurations;
 
