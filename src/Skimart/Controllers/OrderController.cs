@@ -5,7 +5,6 @@ using Skimart.Application.Orders.Queries.GetDeliveryMethods;
 using Skimart.Application.Orders.Queries.GetOrderById;
 using Skimart.Application.Orders.Queries.GetOrdersByEmail;
 using Skimart.Contracts.Orders.Requests;
-using Skimart.Orders;
 using Skimart.Orders.Mappers;
 
 namespace Skimart.Controllers;
@@ -32,7 +31,7 @@ public class OrdersController : BaseController
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetOrderForUser()
+    public async Task<IActionResult> GetOrdersForUser()
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
         var query = new GetOrdersByEmailQuery(email);

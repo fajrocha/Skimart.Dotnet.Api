@@ -12,7 +12,6 @@ namespace Skimart.Controllers;
 public class AccountController : BaseController
 {
     private readonly IMediator _mediator;
-    private const string ErrorMessage = "Error on Account request.";
 
     public AccountController(IMediator mediator)
     {

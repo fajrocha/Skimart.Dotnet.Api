@@ -1,11 +1,9 @@
 using Skimart.Application.DependencyInjection;
 using Skimart.CORS.Extensions;
 using Skimart.DependencyInjection;
-using Skimart.Extensions;
 using Skimart.Identity.Extensions;
 using Skimart.Infrastructure.DependencyInjection;
 using Skimart.Infrastructure.Logging;
-using Skimart.Mappers;
 using Skimart.Migrations.Extensions;
 using Skimart.Shared.Extensions;
 
@@ -17,8 +15,6 @@ builder.Services.AddSwaggerDocumentation();
 builder.Services.AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
     .AddPresentationServices();
-
-builder.Services.BootstrapMapper();
 
 builder.AddAppAuthentication();
 builder.AddAppAuthorization();

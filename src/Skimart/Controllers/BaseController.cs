@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Extensions;
 using Skimart.Shared.Extensions;
 
 namespace Skimart.Controllers;

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Skimart.Application.Identity.Gateways;
+﻿using Skimart.Application.Identity.Gateways;
 using Skimart.Basket.Configurations;
 using Skimart.Cache.Configurations;
 using Skimart.Identity;

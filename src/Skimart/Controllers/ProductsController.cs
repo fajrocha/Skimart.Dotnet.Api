@@ -7,7 +7,7 @@ using Skimart.Application.Products.Queries.GetProductById;
 using Skimart.Contracts.Products.Requests;
 using Skimart.Contracts.Products.Responses;
 using Skimart.Contracts.Shared;
-using Skimart.Mappers.Products;
+using Skimart.Products.Mappers;
 using Skimart.Responses;
 
 namespace Skimart.Controllers;
@@ -38,8 +38,6 @@ public class ProductsController : BaseController
     }
     
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProductById(int id)
     {
         var query = new GetProductByIdQuery(id);

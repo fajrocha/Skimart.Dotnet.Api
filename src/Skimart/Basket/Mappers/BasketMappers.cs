@@ -4,7 +4,7 @@ using Skimart.Contracts.Basket.Responses;
 using Skimart.Contracts.Responses.Basket;
 using Skimart.Domain.Entities.Basket;
 
-namespace Skimart.Mappers.Basket;
+namespace Skimart.Basket.Mappers;
 
 public static class BasketMappers
 {

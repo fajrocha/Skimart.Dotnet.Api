@@ -2,10 +2,9 @@ using FluentResults;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
-using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
-using Skimart.Application.Gateways.Payment;
 using Skimart.Application.Payment.Commands.ConfirmPayment;
 using Skimart.Application.Payment.Configurations;
+using Skimart.Application.Payment.Gateways;
 using Skimart.Domain.Entities.Basket;
 using Stripe;
 

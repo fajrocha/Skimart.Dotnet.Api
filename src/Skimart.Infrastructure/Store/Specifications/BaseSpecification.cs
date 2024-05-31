@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Skimart.Application.Shared.Gateways;
 
-namespace Skimart.Infrastructure.Persistence.Specifications;
+namespace Skimart.Infrastructure.Store.Specifications;
 
 public class BaseSpecification<T> : ISpecification<T>
 {

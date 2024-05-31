@@ -1,4 +1,5 @@
 using Skimart.Domain.Entities.Order;
+using Skimart.Infrastructure.Store.Specifications;
 
 namespace Skimart.Infrastructure.Persistence.Specifications.OrderSpecifications;
 

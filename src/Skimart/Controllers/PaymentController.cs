@@ -1,19 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
-using Skimart.Application.Extensions.FluentResults;
+using Skimart.Application.Payment.Commands.ConfirmPayment;
 using Skimart.Application.Payment.Commands.CreateOrUpdatePaymentIntent;
-using Skimart.Domain.Entities.Basket;
-using Skimart.Extensions.FluentResults;
-using Skimart.Mappers.Basket;
+using Skimart.Basket.Mappers;
 
 namespace Skimart.Controllers;
 
 public class PaymentController : BaseController
 {
     private readonly IMediator _mediator;
-    private const string ErrorMessage = "Error on Payment request.";
     private const string EventHeader = "Stripe-Signature";
 
     public PaymentController(IMediator mediator)
@@ -35,7 +31,7 @@ public class PaymentController : BaseController
     
     [HttpPost("webhook")]
     [AllowAnonymous]
-    public async Task<ActionResult> PaymentServiceWebhook()
+    public async Task<IActionResult> PaymentServiceWebhook()
     {
         var bodyContent = await new StreamReader(Request.Body).ReadToEndAsync();
         var paymentEvent = Request.Headers[EventHeader];
@@ -43,6 +39,6 @@ public class PaymentController : BaseController
 
         var result = await _mediator.Send(command);
 
-        return result.ToOkOrBadRequest(ErrorMessage);
+        return result.Match( _ => Ok(), Problem);
     }
 }

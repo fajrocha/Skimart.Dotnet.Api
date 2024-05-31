@@ -3,6 +3,7 @@ using Skimart.Application.Orders.Gateways;
 using Skimart.Domain.Entities.Order;
 using Skimart.Infrastructure.Persistence.Specifications.OrderSpecifications;
 using Skimart.Infrastructure.Store;
+using Skimart.Infrastructure.Store.Specifications.OrderSpecifications;
 
 namespace Skimart.Infrastructure.Persistence.Repositories.Orders;
 

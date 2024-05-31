@@ -8,5 +8,6 @@ public record OrderResponse(
     DeliveryMethodResponse DeliveryMethod,
     List<OrderItemResponse> OrderItems,
     decimal Subtotal,
+    decimal Total,
     OrderStatusResponse Status,
     string PaymentIntentId);

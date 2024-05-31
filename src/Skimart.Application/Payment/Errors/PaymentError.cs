@@ -1,14 +1,11 @@
 using FluentResults;
 
-namespace Skimart.Application.Cases.Payment.Errors;
+namespace Skimart.Application.Payment.Errors;
 
-public class PaymentError : Error
+public static class PaymentError
 {
-    private PaymentError(string message) : base(message)
-    {
-    }      
-    
-    public static PaymentError DeliveryMethodNotFound => new("Could not find the delivery method.");
-    public static PaymentError ProductIdNotFound(int id) => new($"Could not find the product with id {id}.");
-    public static PaymentError InvalidPaymentWebhookBody => new("Body of payment webhook request is null or empty");
+    public static string DeliveryMethodNotFound => "Could not find the delivery method.";
+    public static string ProductIdNotFound(int id) => $"Could not find the product with id {id}.";
+    public static string InvalidPaymentWebhookBody => "Body of payment webhook request is null or empty.";
+    public static string FailedToUpdateOrder => "Failed to update the order with intent.";
 }

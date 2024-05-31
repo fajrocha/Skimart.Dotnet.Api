@@ -23,6 +23,4 @@ public static class OrderRequestsMappers
             shippingAddressRequest.Province,
             shippingAddressRequest.ZipCode);
     }
-
-    
 }

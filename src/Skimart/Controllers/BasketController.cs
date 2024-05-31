@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Skimart.Application.Basket.Commands.DeleteBasket;
 using Skimart.Application.Basket.Queries.GetBasketById;
+using Skimart.Basket.Mappers;
 using Skimart.Contracts.Basket.Requests;
-using Skimart.Mappers.Basket;
 
 namespace Skimart.Controllers;
 

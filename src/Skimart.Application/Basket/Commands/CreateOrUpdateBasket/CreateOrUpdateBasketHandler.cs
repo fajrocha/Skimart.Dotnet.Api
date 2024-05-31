@@ -1,6 +1,4 @@
 ﻿using ErrorOr;
-using FluentValidation;
-using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Skimart.Application.Basket.Gateways;

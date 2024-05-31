@@ -1,14 +1,14 @@
-﻿using FluentResults;
+﻿using ErrorOr;
 using MediatR;
-using Skimart.Application.Cases.Payment.Errors;
 using Skimart.Application.Extensions.Transaction;
-using Skimart.Application.Gateways.Payment;
 using Skimart.Application.Orders.Gateways;
+using Skimart.Application.Payment.Errors;
+using Skimart.Application.Payment.Gateways;
 using Skimart.Domain.Entities.Order;
 
-namespace Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
+namespace Skimart.Application.Payment.Commands.ConfirmPayment;
 
-public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Result>
+public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, ErrorOr<Success>>
 {
     private readonly IPaymentGateway _paymentGateway;
     private readonly IOrderRepository _orderRepository;
@@ -19,17 +19,15 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Resu
         _orderRepository = orderRepository;
     }
     
-    public async Task<Result> Handle(ConfirmPaymentCommand command, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Success>> Handle(ConfirmPaymentCommand command, CancellationToken cancellationToken)
     {
         var (bodyContent, paymentEvent) = command;
         
         if (bodyContent is null)
         {
-            return Result.Fail(PaymentError.InvalidPaymentWebhookBody);
+            return Error.Failure(description: PaymentError.InvalidPaymentWebhookBody);
         }
         
-        Result result;
-
         try
         {
             var paymentResult = _paymentGateway.ConfirmPayment(bodyContent, paymentEvent);
@@ -46,13 +44,13 @@ public class ConfirmPaymentHandler : IRequestHandler<ConfirmPaymentCommand, Resu
 
             var transactionResult = await _orderRepository.SaveChangesAsync();
 
-            result = transactionResult.TransactionSuccess() ? Result.Ok() : Result.Fail("Could not update the order."); 
+            return transactionResult.TransactionSuccess() ? 
+                Result.Success : 
+                Error.Failure(description: PaymentError.FailedToUpdateOrder); 
         }
         catch (Exception ex)
         {
-            result = Result.Fail(ex.Message);
+            return Error.Failure(description: ex.Message);
         }
-
-        return result;
     }
 }

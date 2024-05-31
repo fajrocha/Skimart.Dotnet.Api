@@ -1,9 +1,9 @@
+using Skimart.Domain.Entities.Products;
+
 namespace Skimart.Domain.Entities.Order;
 
 public class Order : BaseEntity
 {
-    private decimal _subtotal;
-    
     public Order()
     {
     }
@@ -23,13 +23,14 @@ public class Order : BaseEntity
     public ShippingAddress ShippingAddress { get; set; }
     public DeliveryMethod DeliveryMethod { get; set; }
     public List<OrderItem> OrderItems { get; set; } = new();
-    
+        
     public decimal Subtotal
     {
         get => OrderItems.Sum(item => item.Price * item.Quantity);
-        private set => _subtotal = value;
+        private set { }
     }
-    
+    public decimal Total => Subtotal + DeliveryMethod.Price;
+
     public OrderStatus Status { get; set; }
     public string PaymentIntentId { get; set; }
 }

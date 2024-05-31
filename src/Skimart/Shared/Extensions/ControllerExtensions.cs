@@ -8,6 +8,8 @@ public static class ControllerExtensions
     {
         services.AddControllers()
             .AddJsonOptions(opts =>
-                opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
+            {
+                opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
     }
 }

@@ -2,6 +2,8 @@
 
 public record OrderItemResponse(
     int Id,
-    ProductItemOrderedResponse ItemOrdered,
+    int ProductItemId,
+    string ProductName,
+    string PictureUrl,
     decimal Price,
     int Quantity);

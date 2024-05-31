@@ -1,5 +1,6 @@
 ﻿using Skimart.Contracts.Orders.Responses;
 using Skimart.Domain.Entities.Order;
+using Skimart.Shared.Extensions;
 
 namespace Skimart.Orders.Mappers;
 
@@ -15,6 +16,7 @@ public static class OrderResponseMappers
             order.DeliveryMethod.ToResponse(),
             order.OrderItems.ToResponse(),
             order.Subtotal,
+            order.Total,
             order.Status.ToResponse(),
             order.PaymentIntentId);
     }
@@ -38,17 +40,11 @@ public static class OrderResponseMappers
     {
         return new OrderItemResponse(
             orderItem.Id,
-            orderItem.ItemOrdered.ToResponse(),
+            orderItem.ItemOrdered.ProductItemId,
+            orderItem.ItemOrdered.ProductName,
+            orderItem.ItemOrdered.PictureUrl.CombineWithApiUrl(),
             orderItem.Price,
             orderItem.Quantity);
-    }
-    
-    private static ProductItemOrderedResponse ToResponse(this ProductItemOrdered productItemOrdered)
-    {
-        return new ProductItemOrderedResponse(
-            productItemOrdered.ProductItemId,
-            productItemOrdered.ProductName,
-            productItemOrdered.PictureUrl);
     }
     
     private static ShippingAddressResponse ToResponse(this ShippingAddress shippingAddress)
