@@ -81,19 +81,21 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         {
             // Create order:
             order = new Order(
-                orderItems,
                 user.Email,
                 command.ShippingAddress.ToAddress(),
                 deliveryMethod,
                 paymentIntentId);
+            order.AddOrUpdateOrderItems(orderItems);
+            
             await _orderRepository.AddAsync(order);
         }
         else
         {
             // Update order:
-            order.OrderItems = orderItems;
+            order.AddOrUpdateOrderItems(orderItems);
             order.ShippingAddress = command.ShippingAddress.ToAddress();
             order.DeliveryMethod = deliveryMethod;
+            
             _orderRepository.UpdateAsync(order);
         }
         
@@ -102,7 +104,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         if (transactionResult.TransactionFailed())
         {
             _logger.LogError("The transaction to update the order for {userEmail} failed.", user.Email);
-            Error.Failure(description: "Failed to create or update the order.");
+            return Error.Failure(description: "Failed to create or update the order.");
         }
 
         return order;
