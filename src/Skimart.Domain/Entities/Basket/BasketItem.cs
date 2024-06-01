@@ -23,7 +23,7 @@ public class BasketItem
         Type = type;
     }
 
-    public void VerifyPrice(Product product)
+    public void VerifyAgainstStoredPrice(Product product)
     {
         if (Price == product.Price) 
             return;

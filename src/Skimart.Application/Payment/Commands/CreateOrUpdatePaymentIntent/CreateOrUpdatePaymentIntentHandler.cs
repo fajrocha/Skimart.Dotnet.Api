@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Orders.Gateways;
+using Skimart.Application.Payment.Errors;
 using Skimart.Application.Payment.Gateways;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Gateways;
@@ -36,21 +37,22 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         var basket = await _basketRepository.GetBasketAsync(command.BasketId);
 
         if (basket is null)
-            return Error.Failure(description: "Customer basket was not found.");
+            return Error.Failure(description: PaymentErrors.BasketNotFound);
         
         if (!basket.DeliveryMethodId.HasValue)
-            return Error.Failure(description: "No delivery method on basket.");
+            return Error.Failure(description: PaymentErrors.NoDeliveryMethodOnBasket);
 
         var deliveryMethod = await _deliveryMethodRepository.GetEntityByIdAsync((int)basket.DeliveryMethodId);
 
         if (deliveryMethod is null)
-        {
-            return Error.Failure(description: "Delivery method was not found on storage.");
-        }
+            return Error.Failure(description: PaymentErrors.DeliveryMethodNotFound);
 
         var shippingPrice = deliveryMethod.Price;
         
-        await VerifyItemsPrices(basket);
+        var result = await VerifyItemsPrices(basket);
+
+        if (result.IsError)
+            return result.FirstError;
 
         await _paymentGateway.CreateOrUpdatePaymentIntentAsync(basket, shippingPrice);
         await _basketRepository.CreateOrUpdateBasketAsync(basket);
@@ -58,7 +60,7 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
         return basket;
     }
 
-    private async Task VerifyItemsPrices(CustomerBasket basket)
+    private async Task<ErrorOr<Success>> VerifyItemsPrices(CustomerBasket basket)
     {
         foreach (var basketItem in basket.Items)
         {
@@ -66,9 +68,11 @@ public class CreateOrUpdatePaymentIntentHandler : IRequestHandler<CreateOrUpdate
             var productItem = await _productRepository.GetEntityByIdAsync(itemId);
 
             if (productItem is null)
-                throw new InvalidOperationException($"Product with id {itemId} was not found.");
+                return Error.NotFound(description: PaymentErrors.ProductNotFound(itemId));
 
-            basketItem.VerifyPrice(productItem);
+            basketItem.VerifyAgainstStoredPrice(productItem);
         }
+        
+        return Result.Success;
     }
 }
