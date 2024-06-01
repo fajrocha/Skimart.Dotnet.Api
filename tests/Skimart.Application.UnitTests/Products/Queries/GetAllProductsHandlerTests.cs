@@ -11,15 +11,15 @@ namespace Skimart.Application.UnitTests.Products.Queries;
 public class GetAllProductsHandlerTests
 {
     private readonly Fixture _fixture;
-    private readonly IProductRepository _repositoryMock;
+    private readonly IProductRepository _mockRepository;
     private readonly GetAllProductHandler _sut;
 
     public GetAllProductsHandlerTests()
     {
         _fixture = new Fixture();
-        var loggerMock = Substitute.For<ILogger<GetAllProductHandler>>();
-        _repositoryMock = Substitute.For<IProductRepository>();
-        _sut = new GetAllProductHandler(loggerMock, _repositoryMock);
+        var mockLogger = Substitute.For<ILogger<GetAllProductHandler>>();
+        _mockRepository = Substitute.For<IProductRepository>();
+        _sut = new GetAllProductHandler(mockLogger, _mockRepository);
     }
 
     [Fact]
@@ -36,8 +36,8 @@ public class GetAllProductsHandlerTests
             Sort: null,
             Search: string.Empty);
 
-        _repositoryMock.GetEntitiesAsync(query).Returns(expectedProducts);
-        _repositoryMock.CountAsync(query).Returns(productsCount);
+        _mockRepository.GetEntitiesAsync(query).Returns(expectedProducts);
+        _mockRepository.CountAsync(query).Returns(productsCount);
 
         var result = await _sut.Handle(query, default);
 
@@ -58,8 +58,8 @@ public class GetAllProductsHandlerTests
             Sort: null,
             Search: string.Empty);
 
-        _repositoryMock.GetEntitiesAsync(query).Returns(expectedProducts);
-        _repositoryMock.CountAsync(query).Returns(productsCount);
+        _mockRepository.GetEntitiesAsync(query).Returns(expectedProducts);
+        _mockRepository.CountAsync(query).Returns(productsCount);
 
         var result = await _sut.Handle(query, default);
 

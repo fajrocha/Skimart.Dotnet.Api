@@ -7,24 +7,22 @@ using Skimart.Application.Basket.Commands.CreateOrUpdateBasket;
 using Skimart.Application.Basket.Errors;
 using Skimart.Application.Basket.Gateways;
 using Skimart.Application.Basket.Mappers;
-using Skimart.Application.Products.Gateways;
-using Skimart.Application.Products.Queries.GetAllProductBrands;
 using Skimart.Domain.Entities.Basket;
 
 namespace Skimart.Application.UnitTests.Basket.Commands;
 
 public class CreateOrUpdateBasketHandlerTests
 {
-    private readonly IBasketRepository _basketRepositoryMock;
+    private readonly IBasketRepository _mockBasketRepository;
     private readonly CreateOrUpdateBasketHandler _sut;
     private readonly Fixture _fixture;
 
     public CreateOrUpdateBasketHandlerTests()
     {
         _fixture = new Fixture();
-        var loggerMock = Substitute.For<ILogger<CreateOrUpdateBasketHandler>>();
-        _basketRepositoryMock = Substitute.For<IBasketRepository>();
-        _sut = new CreateOrUpdateBasketHandler(loggerMock, _basketRepositoryMock);
+        var mockLogger = Substitute.For<ILogger<CreateOrUpdateBasketHandler>>();
+        _mockBasketRepository = Substitute.For<IBasketRepository>();
+        _sut = new CreateOrUpdateBasketHandler(mockLogger, _mockBasketRepository);
     }
 
     [Fact]
@@ -33,7 +31,7 @@ public class CreateOrUpdateBasketHandlerTests
         var command = _fixture.Create<CreateOrUpdateBasketCommand>();
         var basket = command.ToDomain();
 
-        _basketRepositoryMock.CreateOrUpdateBasketAsync(Arg.Any<CustomerBasket>()).Returns(basket);
+        _mockBasketRepository.CreateOrUpdateBasketAsync(Arg.Any<CustomerBasket>()).Returns(basket);
 
         var result = await _sut.Handle(command, default);
 
@@ -47,7 +45,7 @@ public class CreateOrUpdateBasketHandlerTests
         var command = _fixture.Create<CreateOrUpdateBasketCommand>();
         CustomerBasket? basket = null;
 
-        _basketRepositoryMock.CreateOrUpdateBasketAsync(Arg.Any<CustomerBasket>()).Returns(basket);
+        _mockBasketRepository.CreateOrUpdateBasketAsync(Arg.Any<CustomerBasket>()).Returns(basket);
 
         var result = await _sut.Handle(command, default);
 

@@ -11,23 +11,23 @@ namespace Skimart.Application.UnitTests.Products.Queries;
 
 public class GetAllTypesHandlerTests
 {
-    private readonly IProductTypeRepository _repositoryMock;
+    private readonly IProductTypeRepository _mockRepository;
     private readonly GetAllTypesHandler _sut;
     private readonly Fixture _fixture;
 
     public GetAllTypesHandlerTests()
     {
         _fixture = new Fixture();
-        var loggerMock = Substitute.For<ILogger<GetAllTypesHandler>>();
-        _repositoryMock = Substitute.For<IProductTypeRepository>();
-        _sut = new GetAllTypesHandler(loggerMock, _repositoryMock);
+        var mockLogger = Substitute.For<ILogger<GetAllTypesHandler>>();
+        _mockRepository = Substitute.For<IProductTypeRepository>();
+        _sut = new GetAllTypesHandler(mockLogger, _mockRepository);
     }
 
     [Fact]
     public async Task Handle_WhenBrandsAreReturnedFromRepository_ShouldReturnBrandsCollection()
     {
         var expectedBrands = _fixture.CreateMany<ProductType>().ToList();
-        _repositoryMock.GetEntitiesAsync().Returns(expectedBrands);
+        _mockRepository.GetEntitiesAsync().Returns(expectedBrands);
 
         var query = new GetAllTypesQuery();
         var result = await _sut.Handle(query, default);
@@ -39,7 +39,7 @@ public class GetAllTypesHandlerTests
     public async Task Handle_WhenNoBrandsAreReturnedFromRepository_ShouldReturnEmptyCollection()
     {
         var expectedBrands = new List<ProductType>();
-        _repositoryMock.GetEntitiesAsync().Returns(expectedBrands);
+        _mockRepository.GetEntitiesAsync().Returns(expectedBrands);
 
         var query = new GetAllTypesQuery();
         var result = await _sut.Handle(query, default);
