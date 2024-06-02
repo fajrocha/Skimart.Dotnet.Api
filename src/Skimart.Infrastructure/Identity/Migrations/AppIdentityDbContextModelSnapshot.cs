@@ -154,7 +154,7 @@ namespace Skimart.Infrastructure.Auth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Skimart.Domain.Entities.Auth.Address", b =>
+            modelBuilder.Entity("Skimart.Api.Domain.Entities.Auth.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,7 +198,7 @@ namespace Skimart.Infrastructure.Auth.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Skimart.Domain.Entities.Auth.AppUser", b =>
+            modelBuilder.Entity("Skimart.Api.Domain.Entities.Auth.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -277,7 +277,7 @@ namespace Skimart.Infrastructure.Auth.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Skimart.Domain.Entities.Auth.AppUser", null)
+                    b.HasOne("Skimart.Api.Domain.Entities.Auth.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -286,7 +286,7 @@ namespace Skimart.Infrastructure.Auth.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Skimart.Domain.Entities.Auth.AppUser", null)
+                    b.HasOne("Skimart.Api.Domain.Entities.Auth.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +301,7 @@ namespace Skimart.Infrastructure.Auth.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Skimart.Domain.Entities.Auth.AppUser", null)
+                    b.HasOne("Skimart.Api.Domain.Entities.Auth.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -310,25 +310,25 @@ namespace Skimart.Infrastructure.Auth.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Skimart.Domain.Entities.Auth.AppUser", null)
+                    b.HasOne("Skimart.Api.Domain.Entities.Auth.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Skimart.Domain.Entities.Auth.Address", b =>
+            modelBuilder.Entity("Skimart.Api.Domain.Entities.Auth.Address", b =>
                 {
-                    b.HasOne("Skimart.Domain.Entities.Auth.AppUser", "AppUser")
+                    b.HasOne("Skimart.Api.Domain.Entities.Auth.AppUser", "AppUser")
                         .WithOne("Address")
-                        .HasForeignKey("Skimart.Domain.Entities.Auth.Address", "AppUserId")
+                        .HasForeignKey("Skimart.Api.Domain.Entities.Auth.Address", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("Skimart.Domain.Entities.Auth.AppUser", b =>
+            modelBuilder.Entity("Skimart.Api.Domain.Entities.Auth.AppUser", b =>
                 {
                     b.Navigation("Address")
                         .IsRequired();

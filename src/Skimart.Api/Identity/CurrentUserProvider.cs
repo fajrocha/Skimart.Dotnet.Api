@@ -23,17 +23,12 @@ public class CurrentUserProvider : ICurrentUserProvider
         var email = user.FindFirstValue(ClaimTypes.Email);
         var displayName = user.FindFirstValue(ClaimTypes.GivenName);
 
-        if (IsNull(email) || IsNull(displayName))
+        if (email is null || displayName is null)
         {
             _logger.LogWarning("Cannot find valid claims for user. Claims found: {@user}.", user.Claims);
             return default;
         }
 
         return new CurrentUserDto(email, displayName);
-    }
-
-    private bool IsNull<T>(T argument)
-    {
-        return argument is null;
     }
 }
