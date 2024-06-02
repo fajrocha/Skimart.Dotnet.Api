@@ -21,10 +21,14 @@ public class UpdateAddressHandler : IRequestHandler<UpdateAddressCommand, ErrorO
     public async Task<ErrorOr<Address>> Handle(UpdateAddressCommand command, CancellationToken cancellationToken)
     {
         var userFromToken = _currentUserProvider.GetCurrentUserFromClaims();
+        
+        if (userFromToken is null)
+            return Error.Failure(description: IdentityErrors.UserNotFoundOnToken);
+        
         var user = await _authService.FindUserWithAddressByEmail(userFromToken.Email);
 
         if (user is null)
-            return Error.Failure(description: IdentityErrors.UserFromTokenNotFound);
+            return Error.Failure(description: IdentityErrors.UserNotFoundOnAuthService);
 
         UpdateAddress(user.Address, command);
 

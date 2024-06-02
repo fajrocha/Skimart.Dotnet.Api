@@ -29,7 +29,7 @@ public class GetCurrentLoggedUserHandler : IRequestHandler<GetCurrentLoggedUserQ
         var user = await _authService.FindUserByEmailAsync(currentUser.Email);
         
         if (user is null) 
-            return Error.Failure(description: IdentityErrors.UserFromTokenNotFound);
+            return Error.Failure(description: IdentityErrors.UserNotFoundOnToken);
 
         return new UserDto(currentUser.Email, currentUser.DisplayName, _tokenService.CreateToken(user)) ;
     }

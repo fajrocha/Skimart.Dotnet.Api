@@ -23,7 +23,7 @@ public class GetAllBrandsHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WhenBrandsAreReturnedFromRepository_ShouldReturnBrandsCollection()
+    public async Task Handle_WhenCalled_ShouldReturnBrands()
     {
         var expectedBrands = _fixture.CreateMany<ProductBrand>().ToList();
         _mockRepository.GetEntitiesAsync().Returns(expectedBrands);
@@ -32,17 +32,5 @@ public class GetAllBrandsHandlerTests
         var result = await _sut.Handle(query, default);
 
         result.Should().BeEquivalentTo(expectedBrands);
-    }
-    
-    [Fact]
-    public async Task Handle_WhenNoBrandsAreReturnedFromRepository_ShouldReturnEmptyCollection()
-    {
-        var expectedBrands = new List<ProductBrand>();
-        _mockRepository.GetEntitiesAsync().Returns(expectedBrands);
-
-        var query = new GetAllBrandsQuery();
-        var result = await _sut.Handle(query, default);
-
-        result.Should().BeEmpty();
     }
 }

@@ -21,11 +21,16 @@ public class GetUserAddressHandler : IRequestHandler<GetUserAddressQuery, ErrorO
     public async Task<ErrorOr<Address>> Handle(GetUserAddressQuery query, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserProvider.GetCurrentUserFromClaims();
+
+        if (currentUser is null)
+        {
+            return Error.NotFound(description: IdentityErrors.UserNotFoundOnToken);
+        }
         
         var user = await _authService.FindUserWithAddressByEmail(currentUser.Email);
 
         if (user is null)
-            return Error.Failure(description: IdentityErrors.UserFromTokenNotFound);
+            return Error.Failure(description: IdentityErrors.UserNotFoundOnToken);
 
         return user.Address;
     }
