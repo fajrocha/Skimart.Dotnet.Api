@@ -1,10 +1,15 @@
 using ErrorOr;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Skimart.Application.Basket.Errors;
 using Skimart.Application.Basket.Gateways;
+using Skimart.Application.Identity.Errors;
 using Skimart.Application.Identity.Gateways;
+using Skimart.Application.Orders.Errors;
 using Skimart.Application.Orders.Gateways;
 using Skimart.Application.Orders.Mappers;
+using Skimart.Application.Payment.Errors;
+using Skimart.Application.Products.Errors;
 using Skimart.Application.Products.Gateways;
 using Skimart.Application.Shared.Extensions;
 using Skimart.Application.Shared.Gateways;
@@ -47,13 +52,18 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
     {
         var user = _currentUserProvider.GetCurrentUserFromClaims();
 
+        if (user is null)
+        {
+            return Error.Unexpected(description: IdentityErrors.UserNotFoundOnToken);
+        }
+
         var basketId = command.BasketId;
         var basket = await _basketRepos.GetBasketAsync(basketId);
         
         if (basket is null)
         {
             _logger.LogWarning("Basket with Id {basketId} not found to create order.", basketId);
-            return Error.Failure(description: "The basket was not found.");
+            return Error.Unexpected(description: BasketErrors.BasketNotFound);
         }
         
         var deliveryMethodId = command.DeliveryMethodId;
@@ -64,7 +74,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
             _logger.LogWarning(
                 "Delivery method with Id {deliveryMethodId} not found to create order.",
                 deliveryMethodId);
-            return Error.Unexpected(description: "The delivery method selected was not found.");
+            return Error.Unexpected(description: PaymentErrors.DeliveryMethodNotFound);
         }
 
         var result = await GetOrderItemsFromBasket(basket);
@@ -104,7 +114,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
         if (transactionResult.TransactionFailed())
         {
             _logger.LogError("The transaction to update the order for {userEmail} failed.", user.Email);
-            return Error.Failure(description: "Failed to create or update the order.");
+            return Error.Failure(description: OrderErrors.FailedToCreateOrder);
         }
 
         return order;
@@ -119,7 +129,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, ErrorOr<Or
             var productItem = await _productRepository.GetEntityByIdAsync(item.Id);
 
             if (productItem is null)
-                return Error.Failure("Product not found.");
+                return Error.Failure(description: ProductErrors.ProductNotFound);
             
             var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productItem.PictureUrl);
             var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity);
