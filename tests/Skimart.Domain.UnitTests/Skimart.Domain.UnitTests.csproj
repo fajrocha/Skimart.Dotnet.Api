@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Skimart.Api\Skimart.Api.csproj" />
+      <ProjectReference Include="..\..\src\Skimart.Domain\Skimart.Domain.csproj" />
       <ProjectReference Include="..\Skimart.Testing\Skimart.Testing.csproj" />
     </ItemGroup>
 

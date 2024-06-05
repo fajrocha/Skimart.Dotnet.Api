@@ -2,7 +2,7 @@
 
 namespace Skimart.Domain.Entities.Basket;
 
-public class BasketItem
+public class  BasketItem
 {
     public int Id { get; }
     public string ProductName { get; }
