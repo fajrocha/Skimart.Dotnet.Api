@@ -1,16 +1,15 @@
-using FluentResults;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
-using Skimart.Application.Abstractions.Payment;
-using Skimart.Application.Cases.Payment.Commands.ConfirmPayment;
-using Skimart.Application.Configurations.Payment;
+using Skimart.Application.Payment.Commands.ConfirmPayment;
+using Skimart.Application.Payment.Configurations;
+using Skimart.Application.Payment.Gateways;
 using Skimart.Domain.Entities.Basket;
 using Stripe;
 
 namespace Skimart.Infrastructure.Payment.Services;
 
-public class StripePaymentService : IPaymentService
+public class StripePaymentService : IPaymentGateway
 {
     private readonly ILogger<StripePaymentService> _logger;
     private readonly PaymentConfiguration _paymentConfig;

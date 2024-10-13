@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyVersion>0.4.0</AssemblyVersion>
+        <FileVersion>0.4.0</FileVersion>
+        <UserSecretsId>170f97e7-1e1e-48fc-b720-f3b0c6eaab25</UserSecretsId>
+        <RootNamespace>Skimart</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.25">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Skimart.Application\Skimart.Application.csproj" />
+      <ProjectReference Include="..\Skimart.Contracts\Skimart.Contracts.csproj" />
+      <ProjectReference Include="..\Skimart.Infrastructure\Skimart.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Payment\" />
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+</Project>

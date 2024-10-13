@@ -2,19 +2,26 @@
 
 public class CustomerBasket
 {
-    public string Id { get; set; } = string.Empty;
-    public List<BasketItem> Items { get; set; } = new();
-    public decimal ShippingPrice { get; set; }
-    public int? DeliveryMethodId { get; set; }
-    public string ClientSecret { get; set; } = string.Empty;
-    public string PaymentIntentId { get; set; } = string.Empty;
+    public string Id { get; init; }
+    public List<BasketItem> Items { get; init; }
+    public decimal ShippingPrice { get; init; }
+    public int? DeliveryMethodId { get; init; }
+    public string ClientSecret { get; set; }
+    public string PaymentIntentId { get; set; }
     
-    public CustomerBasket(string id)
+    public CustomerBasket(
+        string id,
+        List<BasketItem> items,
+        decimal shippingPrice,
+        int? deliveryMethodId,
+        string clientSecret = "",
+        string paymentIntentId = "")
     {
         Id = id;
-    }
-
-    public CustomerBasket()
-    {
+        Items = items;
+        ShippingPrice = shippingPrice;
+        DeliveryMethodId = deliveryMethodId;
+        ClientSecret = clientSecret;
+        PaymentIntentId = paymentIntentId;
     }
 }

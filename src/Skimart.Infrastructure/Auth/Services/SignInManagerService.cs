@@ -1,1 +1,0 @@
-﻿namespace Skimart.Infrastructure.Auth.Services;
